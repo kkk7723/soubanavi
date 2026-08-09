@@ -1,0 +1,673 @@
+/* ==================================================
+   メーカー個別ページ専用
+   maker_detail.css
+
+   読み込み順:
+   common.css
+   layout.css
+   sidebar.css
+   machine_list.css
+   maker_detail.css
+================================================== */
+
+
+/* ==================================================
+   ページ全体
+================================================== */
+
+.maker-detail-page,
+.maker-detail-section,
+.maker-machine-section {
+    min-width: 0;
+}
+
+
+/* ==================================================
+   メーカー見出し
+================================================== */
+
+.maker-detail-header {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 26px 28px;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f5f8fc 100%
+        );
+    border: 1px solid #dfe5ec;
+    border-radius: 16px;
+    box-shadow:
+        0 8px 24px
+        rgba(15, 23, 42, 0.06);
+}
+
+.maker-detail-header::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    content: "";
+    background: #2368c4;
+}
+
+.maker-detail-label {
+    margin: 0 0 8px;
+    color: #58708f;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+}
+
+.maker-detail-title {
+    margin: 0;
+    color: #1f2937;
+    font-size:
+        clamp(
+            1.65rem,
+            3vw,
+            2.25rem
+        );
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+}
+
+.maker-detail-description {
+    max-width: 760px;
+    margin: 12px 0 0;
+    color: #52606d;
+    font-size: 0.96rem;
+    line-height: 1.8;
+}
+
+
+/* 既存のpage-headerを使う場合 */
+.maker-detail-page .page-header {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 26px 28px;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f5f8fc 100%
+        );
+    border: 1px solid #dfe5ec;
+    border-radius: 16px;
+    box-shadow:
+        0 8px 24px
+        rgba(15, 23, 42, 0.06);
+}
+
+.maker-detail-page .page-header::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    content: "";
+    background: #2368c4;
+}
+
+.maker-detail-page .page-header-label {
+    margin-bottom: 8px;
+    color: #58708f;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.maker-detail-page .page-title {
+    margin: 0;
+    font-size:
+        clamp(
+            1.65rem,
+            3vw,
+            2.25rem
+        );
+    line-height: 1.35;
+}
+
+.maker-detail-page .page-description {
+    max-width: 760px;
+    margin-top: 12px;
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   集計情報
+================================================== */
+
+.maker-detail-summary {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.maker-detail-summary-item {
+    min-width: 0;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e1e6ec;
+    border-radius: 12px;
+}
+
+.maker-detail-summary-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #687583;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.maker-detail-summary-value {
+    display: block;
+    color: #1f2937;
+    font-size: 1.22rem;
+    font-weight: 800;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+
+/* 既存のsummaryを使う場合 */
+.maker-detail-page .summary {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.maker-detail-page .summary-item {
+    min-width: 0;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e1e6ec;
+    border-radius: 12px;
+}
+
+.maker-detail-page .summary-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #687583;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.maker-detail-page .summary-value {
+    display: block;
+    color: #1f2937;
+    font-size: 1.22rem;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+
+/* ==================================================
+   セクション見出し
+================================================== */
+
+.maker-detail-page .section-heading,
+.maker-detail-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8edf3;
+}
+
+.maker-detail-page .section-title,
+.maker-detail-section-title {
+    margin: 0;
+    color: #1f2937;
+    font-size: 1.24rem;
+    font-weight: 800;
+    line-height: 1.45;
+}
+
+.maker-detail-page .section-count,
+.maker-detail-count {
+    flex-shrink: 0;
+    margin: 0;
+    color: #667381;
+    font-size: 0.84rem;
+}
+
+
+/* ==================================================
+   検索・並び替え
+================================================== */
+
+.maker-detail-page .machine-filter-section,
+.maker-detail-filter {
+    margin-bottom: 28px;
+    padding: 18px;
+    background: #f8fafc;
+    border: 1px solid #e1e6ec;
+    border-radius: 12px;
+}
+
+.maker-detail-page .machine-filter {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(190px, 240px);
+    gap: 14px;
+    align-items: end;
+}
+
+.maker-detail-page .filter-field {
+    min-width: 0;
+}
+
+.maker-detail-page .filter-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #455362;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.maker-detail-page .filter-input,
+.maker-detail-page .filter-select {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 12px;
+    color: #1f2937;
+    font: inherit;
+    background: #fff;
+    border: 1px solid #cfd7e1;
+    border-radius: 9px;
+}
+
+.maker-detail-page .filter-input:focus,
+.maker-detail-page .filter-select:focus {
+    border-color: #2368c4;
+    outline: 3px solid rgba(35, 104, 196, 0.14);
+}
+
+.maker-detail-page .filter-result-count {
+    margin: 12px 0 0;
+    color: #687583;
+    font-size: 0.84rem;
+}
+
+
+/* ==================================================
+   機種カード一覧
+================================================== */
+
+.maker-detail-page .machine-grid,
+.maker-machine-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 16px;
+}
+
+.maker-detail-page .machine-card,
+.maker-machine-card {
+    min-width: 0;
+}
+
+.maker-detail-page .machine-card[hidden],
+.maker-machine-card[hidden] {
+    display: none;
+}
+
+.maker-detail-page .machine-card-link,
+.maker-machine-card-link {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid #dfe5ec;
+    border-radius: 13px;
+    overflow: hidden;
+    box-shadow:
+        0 2px 8px
+        rgba(15, 23, 42, 0.04);
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.maker-detail-page .machine-card-link:hover,
+.maker-machine-card-link:hover {
+    transform: translateY(-2px);
+    border-color: #9aabc0;
+    box-shadow:
+        0 10px 24px
+        rgba(15, 23, 42, 0.09);
+}
+
+.maker-detail-page .machine-card-link:focus-visible,
+.maker-machine-card-link:focus-visible {
+    outline: 3px solid #2368c4;
+    outline-offset: 3px;
+}
+
+.maker-detail-page .machine-card-body,
+.maker-machine-card-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 18px;
+}
+
+.maker-detail-page .machine-card-maker {
+    margin: 0 0 6px;
+    color: #66788d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.maker-detail-page .machine-card-title,
+.maker-machine-card-title {
+    margin: 0;
+    color: #1f2937;
+    font-size: 1.02rem;
+    font-weight: 800;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   カード内価格
+================================================== */
+
+.maker-detail-page .machine-card-price-list {
+    display: grid;
+    gap: 0;
+    margin: 16px 0 0;
+    padding: 0;
+    border-top: 1px solid #edf0f4;
+}
+
+.maker-detail-page .machine-card-price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.maker-detail-page .machine-card-price-row dt {
+    color: #687583;
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+.maker-detail-page .machine-card-price-row dd {
+    margin: 0;
+    color: #263442;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.maker-detail-page .machine-card-price-primary dd {
+    color: #b42318;
+    font-size: 1.08rem;
+    font-weight: 800;
+}
+
+
+/* ==================================================
+   カード補足情報
+================================================== */
+
+.maker-detail-page .machine-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-top: 12px;
+    color: #687583;
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.maker-detail-page .machine-card-lowest-shop {
+    margin: 8px 0 0;
+    color: #73808e;
+    font-size: 0.74rem;
+    line-height: 1.5;
+}
+
+.maker-detail-page .machine-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 16px;
+    color: #2368c4;
+    font-size: 0.84rem;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.maker-detail-page .machine-card-button::after {
+    flex-shrink: 0;
+    content: "→";
+    transition: transform 0.18s ease;
+}
+
+.maker-detail-page
+.machine-card-link:hover
+.machine-card-button::after {
+    transform: translateX(3px);
+}
+
+
+/* ==================================================
+   空表示
+================================================== */
+
+.maker-detail-page .empty-state {
+    padding: 36px 20px;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+}
+
+.maker-detail-page .empty-state-title {
+    margin: 0;
+    color: #334155;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.maker-detail-page .empty-state-description {
+    margin: 8px 0 0;
+    color: #64748b;
+    font-size: 0.86rem;
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   更新情報
+================================================== */
+
+.maker-detail-page .page-update-section {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid #e5eaf0;
+}
+
+.maker-detail-page .page-update-text {
+    margin: 0;
+    color: #73808e;
+    font-size: 0.78rem;
+    text-align: right;
+}
+
+
+/* ==================================================
+   タブレット
+================================================== */
+
+@media (max-width: 1100px) {
+
+    .maker-detail-page .machine-grid,
+    .maker-machine-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+/* ==================================================
+   スマートフォン
+================================================== */
+
+@media (max-width: 767px) {
+
+    .maker-detail-header,
+    .maker-detail-page .page-header {
+        margin-bottom: 18px;
+        padding: 20px 18px;
+        border-radius: 12px;
+    }
+
+    .maker-detail-title,
+    .maker-detail-page .page-title {
+        font-size: 1.55rem;
+    }
+
+    .maker-detail-description,
+    .maker-detail-page .page-description {
+        font-size: 0.88rem;
+        line-height: 1.75;
+    }
+
+    .maker-detail-summary,
+    .maker-detail-page .summary {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+        gap: 9px;
+        margin-bottom: 22px;
+    }
+
+    .maker-detail-summary-item,
+    .maker-detail-page .summary-item {
+        padding: 14px;
+    }
+
+    .maker-detail-summary-value,
+    .maker-detail-page .summary-value {
+        font-size: 1.06rem;
+    }
+
+    .maker-detail-page .machine-filter-section,
+    .maker-detail-filter {
+        margin-bottom: 22px;
+        padding: 14px;
+    }
+
+    .maker-detail-page .machine-filter {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .maker-detail-page .machine-grid,
+    .maker-machine-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .maker-detail-page .machine-card-body,
+    .maker-machine-card-body {
+        padding: 15px;
+    }
+
+    .maker-detail-page .machine-card-title,
+    .maker-machine-card-title {
+        font-size: 0.96rem;
+    }
+
+    .maker-detail-page .machine-card-price-list {
+        margin-top: 12px;
+    }
+
+    .maker-detail-page .machine-card-price-row {
+        padding: 8px 0;
+    }
+
+    .maker-detail-page .section-heading,
+    .maker-detail-heading {
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+
+}
+
+
+/* ==================================================
+   小さいスマートフォン
+================================================== */
+
+@media (max-width: 420px) {
+
+    .maker-detail-summary,
+    .maker-detail-page .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .maker-detail-summary-item,
+    .maker-detail-page .summary-item {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .maker-detail-summary-label,
+    .maker-detail-page .summary-label {
+        margin-bottom: 0;
+    }
+
+    .maker-detail-page .machine-card-price-row {
+        gap: 8px;
+    }
+
+}

@@ -1,0 +1,1127 @@
+{% extends "base.html" %}
+
+{# ==================================================
+   最近導入された機種ページ専用CSS
+================================================== #}
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/recent_machines_index.css"
+>
+
+{% endblock %}
+
+
+{# ==================================================
+   メインコンテンツ
+================================================== #}
+
+{% block main %}
+
+<div class="page-content">
+
+
+{# ==================================================
+   ページヘッダー
+================================================== #}
+
+<header class="recent-machines-header">
+
+    <h1 class="page-title">
+        {{ recent_machines_title }}
+    </h1>
+
+
+    <p class="recent-machines-description">
+        {{ recent_machines_description }}
+    </p>
+
+
+    <p class="recent-machines-period">
+
+        <span class="recent-machines-period-label">
+            対象期間
+        </span>
+
+        <time
+            datetime="{{ period_start.strftime('%Y-%m-%d') }}"
+        >
+            {{ period_start_display }}
+        </time>
+
+        <span aria-hidden="true">
+            ～
+        </span>
+
+        <time
+            datetime="{{ period_end.strftime('%Y-%m-%d') }}"
+        >
+            {{ period_end_display }}
+        </time>
+
+    </p>
+
+</header>
+
+
+{# ==================================================
+   カテゴリページ切り替え
+================================================== #}
+
+{% if category_links %}
+
+    <nav
+        class="recent-machines-category-nav"
+        aria-label="最近導入された機種のカテゴリ"
+    >
+
+        <ul class="recent-machines-category-nav-list">
+
+            {% for link in category_links %}
+
+                <li class="recent-machines-category-nav-item">
+
+                    {% if link.is_current %}
+
+                        <span
+                            class="
+                                recent-machines-category-nav-link
+                                is-current
+                            "
+                            aria-current="page"
+                        >
+                            {{ link.label }}
+                        </span>
+
+                    {% else %}
+
+                        <a
+                            class="recent-machines-category-nav-link"
+                            href="{{ link.url }}"
+                        >
+                            {{ link.label }}
+                        </a>
+
+                    {% endif %}
+
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </nav>
+
+{% endif %}
+
+
+{# ==================================================
+   件数サマリー
+================================================== #}
+
+<section
+    class="recent-machines-summary"
+    aria-label="掲載機種の集計"
+>
+
+    <div class="recent-machines-summary-item">
+
+        <span class="recent-machines-summary-label">
+            掲載機種
+        </span>
+
+        <strong class="recent-machines-summary-value">
+            {{ machine_count | number }}
+        </strong>
+
+        <span class="recent-machines-summary-unit">
+            機種
+        </span>
+
+    </div>
+
+
+    <div class="recent-machines-summary-item">
+
+        <span class="recent-machines-summary-label">
+            在庫あり
+        </span>
+
+        <strong class="recent-machines-summary-value">
+            {{ in_stock_count | number }}
+        </strong>
+
+        <span class="recent-machines-summary-unit">
+            機種
+        </span>
+
+    </div>
+
+
+    <div class="recent-machines-summary-item">
+
+        <span class="recent-machines-summary-label">
+            現在出品なし
+        </span>
+
+        <strong class="recent-machines-summary-value">
+            {{ out_of_stock_count | number }}
+        </strong>
+
+        <span class="recent-machines-summary-unit">
+            機種
+        </span>
+
+    </div>
+
+</section>
+
+
+{# ==================================================
+   絞り込み
+================================================== #}
+
+{% if machines %}
+
+    <section
+        class="recent-machines-filter"
+        aria-labelledby="recent-machines-filter-title"
+    >
+
+        <h2
+            id="recent-machines-filter-title"
+            class="recent-machines-filter-title"
+        >
+            機種を絞り込む
+        </h2>
+
+
+        <div class="recent-machines-filter-grid">
+
+
+            {# ------------------------------------------
+               機種名検索
+            ------------------------------------------ #}
+
+            <div class="recent-machines-filter-field">
+
+                <label
+                    class="recent-machines-filter-label"
+                    for="recent-machine-keyword"
+                >
+                    機種名
+                </label>
+
+                <input
+                    id="recent-machine-keyword"
+                    class="recent-machines-filter-input"
+                    type="search"
+                    placeholder="機種名・メーカー名で検索"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            {# ------------------------------------------
+               カテゴリ
+               総合ページだけ表示
+            ------------------------------------------ #}
+
+            {% if show_category_filter and categories %}
+
+                <div class="recent-machines-filter-field">
+
+                    <label
+                        class="recent-machines-filter-label"
+                        for="recent-machine-category"
+                    >
+                        カテゴリ
+                    </label>
+
+                    <select
+                        id="recent-machine-category"
+                        class="recent-machines-filter-select"
+                    >
+
+                        <option value="">
+                            すべて
+                        </option>
+
+                        {% for category in categories %}
+
+                            {% set category_key = category | lower %}
+
+                            <option value="{{ category }}">
+
+                                {% if category_key in [
+                                    "slot",
+                                    "slots",
+                                    "パチスロ",
+                                    "スロット"
+                                ] %}
+
+                                    パチスロ
+
+                                {% elif category_key in [
+                                    "pachi",
+                                    "pachinko",
+                                    "パチンコ"
+                                ] %}
+
+                                    パチンコ
+
+                                {% else %}
+
+                                    {{ category }}
+
+                                {% endif %}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            {% endif %}
+
+
+            {# ------------------------------------------
+               メーカー
+            ------------------------------------------ #}
+
+            {% if makers %}
+
+                <div class="recent-machines-filter-field">
+
+                    <label
+                        class="recent-machines-filter-label"
+                        for="recent-machine-maker"
+                    >
+                        メーカー
+                    </label>
+
+                    <select
+                        id="recent-machine-maker"
+                        class="recent-machines-filter-select"
+                    >
+
+                        <option value="">
+                            すべて
+                        </option>
+
+                        {% for maker in makers %}
+
+                            <option value="{{ maker }}">
+                                {{ maker }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            {% endif %}
+
+
+            {# ------------------------------------------
+               機種タイプ
+            ------------------------------------------ #}
+
+            {% if machine_types %}
+
+                <div class="recent-machines-filter-field">
+
+                    <label
+                        class="recent-machines-filter-label"
+                        for="recent-machine-type"
+                    >
+                        機種タイプ
+                    </label>
+
+                    <select
+                        id="recent-machine-type"
+                        class="recent-machines-filter-select"
+                    >
+
+                        <option value="">
+                            すべて
+                        </option>
+
+                        {% for machine_type in machine_types %}
+
+                            <option value="{{ machine_type }}">
+                                {{ machine_type }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            {% endif %}
+
+
+            {# ------------------------------------------
+               在庫状況
+            ------------------------------------------ #}
+
+            <div class="recent-machines-filter-field">
+
+                <label
+                    class="recent-machines-filter-label"
+                    for="recent-machine-stock"
+                >
+                    在庫状況
+                </label>
+
+                <select
+                    id="recent-machine-stock"
+                    class="recent-machines-filter-select"
+                >
+
+                    <option value="">
+                        すべて
+                    </option>
+
+                    <option value="in-stock">
+                        在庫あり
+                    </option>
+
+                    <option value="out-of-stock">
+                        現在出品なし
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="recent-machines-filter-actions">
+
+            <button
+                id="recent-machine-filter-reset"
+                class="button recent-machines-filter-reset"
+                type="button"
+            >
+                絞り込みを解除
+            </button>
+
+        </div>
+
+
+        <p
+            id="recent-machine-visible-count"
+            class="recent-machines-visible-count"
+            aria-live="polite"
+        >
+            {{ machine_count | number }}機種を表示しています。
+        </p>
+
+    </section>
+
+{% endif %}
+
+
+{# ==================================================
+   最近導入された機種一覧
+================================================== #}
+
+{% if machines %}
+
+    <section
+        class="recent-machines-section"
+        aria-labelledby="recent-machines-list-title"
+    >
+
+        <h2
+            id="recent-machines-list-title"
+            class="section-title"
+        >
+
+            {% if is_pachinko_page %}
+
+                最近導入されたパチンコ一覧
+
+            {% elif is_slot_page %}
+
+                最近導入されたパチスロ一覧
+
+            {% else %}
+
+                最近導入された機種一覧
+
+            {% endif %}
+
+        </h2>
+
+
+        <div
+            id="recent-machines-list"
+            class="recent-machines-list"
+        >
+
+            {% for machine in machines %}
+
+                <article
+                    class="recent-machine-card"
+                    data-machine-name="{{ machine.master_machine_name | default('', true) | lower }}"
+                    data-machine-maker="{{ machine.master_machine_maker | default('', true) | lower }}"
+                    data-machine-category="{{ machine.master_machine_category | default('', true) }}"
+                    data-machine-type="{{ machine.master_machine_type | default('', true) }}"
+                    data-machine-stock="{% if machine.has_products %}in-stock{% else %}out-of-stock{% endif %}"
+                >
+
+                    <a
+                        class="recent-machine-card-link"
+                        href="{{ machine.detail_url }}"
+                    >
+
+
+                        {# ------------------------------------------
+                           画像
+                        ------------------------------------------ #}
+
+                        <div class="recent-machine-image-area">
+
+                            {% if machine.master_machine_pworld_image_url %}
+
+                                <img
+                                    class="recent-machine-image"
+                                    src="{{ machine.master_machine_pworld_image_url }}"
+                                    alt="{{ machine.master_machine_name }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+
+                            {% else %}
+
+                                <div class="recent-machine-image-placeholder">
+
+                                    <span aria-hidden="true">
+                                        画像なし
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if machine.master_machine_category %}
+
+                                <span
+                                    class="
+                                        recent-machine-category
+                                        recent-machine-category-{{ machine.normalized_category_key | default('other', true) }}
+                                    "
+                                >
+
+                                    {% if machine.normalized_category_key == "slot" %}
+
+                                        パチスロ
+
+                                    {% elif machine.normalized_category_key == "pachinko" %}
+
+                                        パチンコ
+
+                                    {% else %}
+
+                                        {{ machine.master_machine_category }}
+
+                                    {% endif %}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {# ------------------------------------------
+                           内容
+                        ------------------------------------------ #}
+
+                        <div class="recent-machine-content">
+
+
+                            {# 導入日 #}
+
+                            <p class="recent-machine-introduced-date">
+
+                                <span class="recent-machine-introduced-label">
+                                    導入日
+                                </span>
+
+                                <time
+                                    datetime="{{ machine.introduced_date_iso }}"
+                                >
+                                    {{ machine.introduced_date_display }}
+                                </time>
+
+                            </p>
+
+
+                            {# メーカー #}
+
+                            {% if machine.master_machine_maker %}
+
+                                <p class="recent-machine-maker">
+                                    {{ machine.master_machine_maker }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {# 機種名 #}
+
+                            <h3 class="recent-machine-name">
+                                {{ machine.master_machine_name }}
+                            </h3>
+
+
+                            {# 型式・機種タイプ #}
+
+                            {% if machine.master_machine_model
+                                  or machine.master_machine_type
+                                  or machine.master_machine_gouki %}
+
+                                <dl class="recent-machine-properties">
+
+                                    {% if machine.master_machine_model %}
+
+                                        <div class="recent-machine-property">
+
+                                            <dt>
+                                                型式
+                                            </dt>
+
+                                            <dd>
+                                                {{ machine.master_machine_model }}
+                                            </dd>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    {% if machine.master_machine_type %}
+
+                                        <div class="recent-machine-property">
+
+                                            <dt>
+                                                タイプ
+                                            </dt>
+
+                                            <dd>
+                                                {{ machine.master_machine_type }}
+                                            </dd>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    {% if machine.master_machine_gouki %}
+
+                                        <div class="recent-machine-property">
+
+                                            <dt>
+                                                号機
+                                            </dt>
+
+                                            <dd>
+                                                {{ machine.master_machine_gouki }}
+                                            </dd>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </dl>
+
+                            {% endif %}
+
+
+                            {# ------------------------------------------
+                               在庫・価格情報
+                            ------------------------------------------ #}
+
+                            <div class="recent-machine-market">
+
+                                {% if machine.has_products %}
+
+                                    <p class="recent-machine-stock recent-machine-stock-available">
+                                        在庫あり
+                                    </p>
+
+
+                                    {% if machine.min_price %}
+
+                                        <p class="recent-machine-price">
+
+                                            <span class="recent-machine-price-label">
+                                                最安価格
+                                            </span>
+
+                                            <strong class="recent-machine-price-value">
+                                                {{ machine.min_price | price }}
+                                            </strong>
+
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <div class="recent-machine-market-counts">
+
+                                        <span>
+                                            商品
+                                            <strong>
+                                                {{ machine.price_count | number }}
+                                            </strong>
+                                            件
+                                        </span>
+
+                                        <span>
+                                            ショップ
+                                            <strong>
+                                                {{ machine.shop_count | number }}
+                                            </strong>
+                                            店
+                                        </span>
+
+                                    </div>
+
+                                {% else %}
+
+                                    <p class="recent-machine-stock recent-machine-stock-empty">
+                                        現在出品なし
+                                    </p>
+
+
+                                    <p class="recent-machine-stock-note">
+                                        商品が掲載されると価格情報が表示されます。
+                                    </p>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <span class="recent-machine-detail-text">
+                                詳細を見る
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div
+            id="recent-machines-no-result"
+            class="recent-machines-no-result"
+            hidden
+        >
+
+            <p>
+                条件に一致する機種はありません。
+            </p>
+
+            <button
+                id="recent-machine-no-result-reset"
+                class="button"
+                type="button"
+            >
+                絞り込みを解除
+            </button>
+
+        </div>
+
+    </section>
+
+
+{% else %}
+
+    {# ==================================================
+       対象機種がない場合
+    ================================================== #}
+
+    <section
+        class="recent-machines-empty"
+        aria-labelledby="recent-machines-empty-title"
+    >
+
+        <h2
+            id="recent-machines-empty-title"
+            class="section-title"
+        >
+
+            {% if is_pachinko_page %}
+
+                最近導入されたパチンコ
+
+            {% elif is_slot_page %}
+
+                最近導入されたパチスロ
+
+            {% else %}
+
+                最近導入された機種
+
+            {% endif %}
+
+        </h2>
+
+
+        <p>
+
+            {% if is_pachinko_page %}
+
+                現在、過去{{ recent_months }}か月以内に
+                導入されたパチンコは登録されていません。
+
+            {% elif is_slot_page %}
+
+                現在、過去{{ recent_months }}か月以内に
+                導入されたパチスロは登録されていません。
+
+            {% else %}
+
+                現在、過去{{ recent_months }}か月以内に
+                導入された機種は登録されていません。
+
+            {% endif %}
+
+        </p>
+
+
+        <p>
+            <a
+                class="button button-primary"
+                href="{{ root_prefix }}machines/"
+            >
+                全機種一覧を見る
+            </a>
+        </p>
+
+    </section>
+
+{% endif %}
+
+
+{# ==================================================
+   下部ナビゲーション
+================================================== #}
+
+<nav
+    class="recent-machines-footer-nav"
+    aria-label="機種ページメニュー"
+>
+
+    {% if not is_all_page %}
+
+        <a
+            class="button"
+            href="../"
+        >
+            最近導入された機種をすべて見る
+        </a>
+
+    {% endif %}
+
+
+    <a
+        class="button button-primary"
+        href="{{ root_prefix }}machines/"
+    >
+        全機種一覧を見る
+    </a>
+
+</nav>
+
+</div>
+
+
+{# ==================================================
+   絞り込み処理
+================================================== #}
+
+{% if machines %}
+
+<script>
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        const keywordInput = document.getElementById(
+            "recent-machine-keyword"
+        );
+
+        const categorySelect = document.getElementById(
+            "recent-machine-category"
+        );
+
+        const makerSelect = document.getElementById(
+            "recent-machine-maker"
+        );
+
+        const typeSelect = document.getElementById(
+            "recent-machine-type"
+        );
+
+        const stockSelect = document.getElementById(
+            "recent-machine-stock"
+        );
+
+        const resetButton = document.getElementById(
+            "recent-machine-filter-reset"
+        );
+
+        const noResultResetButton = document.getElementById(
+            "recent-machine-no-result-reset"
+        );
+
+        const visibleCountElement = document.getElementById(
+            "recent-machine-visible-count"
+        );
+
+        const noResultElement = document.getElementById(
+            "recent-machines-no-result"
+        );
+
+        const cards = Array.from(
+            document.querySelectorAll(
+                ".recent-machine-card"
+            )
+        );
+
+
+        const normalizeText = (value) => {
+            return String(value || "")
+                .normalize("NFKC")
+                .trim()
+                .toLocaleLowerCase("ja-JP");
+        };
+
+
+        const getSelectValue = (element) => {
+            if (!element) {
+                return "";
+            }
+
+            return normalizeText(
+                element.value
+            );
+        };
+
+
+        const applyFilters = () => {
+            const keyword = normalizeText(
+                keywordInput
+                    ? keywordInput.value
+                    : ""
+            );
+
+            const category = getSelectValue(
+                categorySelect
+            );
+
+            const maker = getSelectValue(
+                makerSelect
+            );
+
+            const machineType = getSelectValue(
+                typeSelect
+            );
+
+            const stock = getSelectValue(
+                stockSelect
+            );
+
+            let visibleCount = 0;
+
+
+            cards.forEach(
+                (card) => {
+                    const machineName = normalizeText(
+                        card.dataset.machineName
+                    );
+
+                    const machineMaker = normalizeText(
+                        card.dataset.machineMaker
+                    );
+
+                    const machineCategory = normalizeText(
+                        card.dataset.machineCategory
+                    );
+
+                    const cardMachineType = normalizeText(
+                        card.dataset.machineType
+                    );
+
+                    const machineStock = normalizeText(
+                        card.dataset.machineStock
+                    );
+
+
+                    const keywordMatched = (
+                        !keyword
+                        || machineName.includes(
+                            keyword
+                        )
+                        || machineMaker.includes(
+                            keyword
+                        )
+                    );
+
+                    const categoryMatched = (
+                        !category
+                        || machineCategory
+                            === category
+                    );
+
+                    const makerMatched = (
+                        !maker
+                        || machineMaker
+                            === maker
+                    );
+
+                    const typeMatched = (
+                        !machineType
+                        || cardMachineType
+                            === machineType
+                    );
+
+                    const stockMatched = (
+                        !stock
+                        || machineStock
+                            === stock
+                    );
+
+
+                    const isVisible = (
+                        keywordMatched
+                        && categoryMatched
+                        && makerMatched
+                        && typeMatched
+                        && stockMatched
+                    );
+
+
+                    card.hidden = !isVisible;
+
+                    if (isVisible) {
+                        visibleCount += 1;
+                    }
+                }
+            );
+
+
+            if (visibleCountElement) {
+                visibleCountElement.textContent = (
+                    `${visibleCount.toLocaleString("ja-JP")}機種を表示しています。`
+                );
+            }
+
+
+            if (noResultElement) {
+                noResultElement.hidden = (
+                    visibleCount !== 0
+                );
+            }
+        };
+
+
+        const resetFilters = () => {
+            if (keywordInput) {
+                keywordInput.value = "";
+            }
+
+            if (categorySelect) {
+                categorySelect.value = "";
+            }
+
+            if (makerSelect) {
+                makerSelect.value = "";
+            }
+
+            if (typeSelect) {
+                typeSelect.value = "";
+            }
+
+            if (stockSelect) {
+                stockSelect.value = "";
+            }
+
+            applyFilters();
+
+            if (keywordInput) {
+                keywordInput.focus();
+            }
+        };
+
+
+        if (keywordInput) {
+            keywordInput.addEventListener(
+                "input",
+                applyFilters
+            );
+        }
+
+
+        [
+            categorySelect,
+            makerSelect,
+            typeSelect,
+            stockSelect,
+        ].forEach(
+            (element) => {
+                if (!element) {
+                    return;
+                }
+
+                element.addEventListener(
+                    "change",
+                    applyFilters
+                );
+            }
+        );
+
+
+        if (resetButton) {
+            resetButton.addEventListener(
+                "click",
+                resetFilters
+            );
+        }
+
+
+        if (noResultResetButton) {
+            noResultResetButton.addEventListener(
+                "click",
+                resetFilters
+            );
+        }
+
+
+        applyFilters();
+    }
+);
+</script>
+
+{% endif %}
+
+{% endblock %}

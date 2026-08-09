@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{# =========================================
+閲覧履歴ページ専用CSS
+========================================= #}
+
+
+
+{# =========================================
+メインコンテンツ
+========================================= #}
+
+{% block main %}
+
+<div class="page-content">
+
+    <section
+        class="user-machine-section"
+        aria-labelledby="history-page-title"
+    >
+        <div class="user-machine-heading">
+
+            <div>
+
+                <h1
+                    id="history-page-title"
+                    class="page-title"
+                >
+                    閲覧履歴
+                </h1>
+
+                <p class="user-machine-description">
+                    最近閲覧した機種を表示します。
+                </p>
+
+            </div>
+
+
+            <button
+                id="clear-history-button"
+                class="user-machine-clear-button"
+                type="button"
+                hidden
+            >
+                履歴をすべて削除
+            </button>
+
+        </div>
+
+
+        <div
+            id="history-list"
+            class="user-machine-list"
+            aria-live="polite"
+            aria-busy="true"
+        >
+        </div>
+
+
+        <div
+            id="history-empty"
+            class="user-machine-empty"
+            hidden
+        >
+            <p class="user-machine-empty-title">
+                閲覧履歴はありません
+            </p>
+
+            <p class="user-machine-empty-description">
+                機種詳細ページを閲覧すると、
+                ここに履歴が表示されます。
+            </p>
+
+            <p class="user-machine-empty-action">
+
+                <a
+                    class="button button-primary"
+                    href="{{ root_prefix }}machines/"
+                >
+                    機種一覧を見る
+                </a>
+
+            </p>
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,447 @@
+{% extends "base.html" %}
+
+{% block title %}
+機種一覧｜実機相場サイト
+{% endblock %}
+
+{% block description %}
+パチンコ・パチスロ実機の中古価格、最安値、平均価格、出品件数を機種別に一覧で確認できます。
+{% endblock %}
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/machine_list.css"
+>
+{% endblock %}
+
+{% block main %}
+<div class="page-content">
+
+    {# =========================================
+       ページ見出し
+    ========================================= #}
+
+    <header class="page-title-header">
+
+        <h1 class="page-title">
+            機種一覧
+        </h1>
+
+    </header>
+
+
+    {# =========================================
+       検索・絞り込み
+    ========================================= #}
+    
+    <section
+        class="machine-filter-section"
+        aria-label="機種の絞り込み"
+    >
+    
+        <details
+            id="machine-filter-details"
+            class="machine-filter-details"
+        >
+    
+            <summary class="machine-filter-summary">
+    
+                <span class="machine-filter-summary-left">
+    
+                    <span
+                        class="machine-filter-summary-icon"
+                        aria-hidden="true"
+                    >
+                        ☰
+                    </span>
+    
+                    <span class="machine-filter-summary-title">
+                        絞り込み
+                    </span>
+    
+                    <span
+                        id="machine-filter-active-count"
+                        class="machine-filter-active-count"
+                        hidden
+                    >
+                        0件
+                    </span>
+    
+                </span>
+    
+    
+                <span
+                    class="machine-filter-summary-arrow"
+                    aria-hidden="true"
+                ></span>
+    
+            </summary>
+    
+    
+            <div class="machine-filter-content">
+    
+                <div class="machine-filter">
+    
+                    <div class="filter-field filter-keyword">
+    
+                        <label
+                            class="filter-label"
+                            for="machine-keyword"
+                        >
+                            機種名
+                        </label>
+    
+                        <input
+                            id="machine-keyword"
+                            class="filter-input"
+                            type="search"
+                            placeholder="機種名を入力"
+                            autocomplete="off"
+                        >
+    
+                    </div>
+    
+    
+                    <div class="filter-field">
+    
+                        <label
+                            class="filter-label"
+                            for="maker-filter"
+                        >
+                            メーカー
+                        </label>
+    
+                        <select
+                            id="maker-filter"
+                            class="filter-select"
+                        >
+                            <option value="">
+                                すべてのメーカー
+                            </option>
+    
+                            {% for maker in makers %}
+                                <option value="{{ maker }}">
+                                    {{ maker }}
+                                </option>
+                            {% endfor %}
+                        </select>
+    
+                    </div>
+    
+    
+                    {% if machine_types is defined and machine_types %}
+    
+                        <div class="filter-field">
+    
+                            <label
+                                class="filter-label"
+                                for="machine-type-filter"
+                            >
+                                タイプ
+                            </label>
+    
+                            <select
+                                id="machine-type-filter"
+                                class="filter-select"
+                            >
+                                <option value="">
+                                    すべてのタイプ
+                                </option>
+    
+                                {% for machine_type in machine_types %}
+                                    <option value="{{ machine_type }}">
+                                        {{ machine_type }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+    
+                        </div>
+    
+                    {% endif %}
+    
+    
+                    {% if machine_goukis is defined and machine_goukis %}
+    
+                        <div class="filter-field">
+    
+                            <label
+                                class="filter-label"
+                                for="machine-gouki-filter"
+                            >
+                                号機
+                            </label>
+    
+                            <select
+                                id="machine-gouki-filter"
+                                class="filter-select"
+                            >
+                                <option value="">
+                                    すべての号機
+                                </option>
+    
+                                {% for machine_gouki in machine_goukis %}
+                                    <option value="{{ machine_gouki }}">
+                                        {{ machine_gouki }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+    
+                        </div>
+    
+                    {% endif %}
+    
+    
+                    <div class="filter-actions">
+    
+                        <button
+                            id="machine-filter-reset"
+                            class="button button-secondary"
+                            type="button"
+                        >
+                            条件をリセット
+                        </button>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+        </details>
+    
+    
+        {# =========================================
+           検索結果・掲載情報
+        ========================================= #}
+    
+        <div class="machine-filter-meta">
+    
+            <p
+                id="machine-filter-result"
+                class="filter-result-count"
+                aria-live="polite"
+            >
+                {{ machine_count | default(machines | length) | number }}件を表示中
+            </p>
+    
+    
+            <p class="machine-list-summary">
+    
+                <span class="machine-list-summary-item">
+                    全
+                    <strong>
+                        {{ machine_count | default(machines | length) | number }}
+                    </strong>
+                    機種
+                </span>
+    
+                {% if maker_count is defined %}
+    
+                    <span class="machine-list-summary-separator">
+                        ｜
+                    </span>
+    
+                    <span class="machine-list-summary-item">
+                        {{ maker_count | number }}メーカー
+                    </span>
+    
+                {% endif %}
+    
+                {% if updated_at %}
+    
+                    <span class="machine-list-summary-separator">
+                        ｜
+                    </span>
+    
+                    <span class="machine-list-summary-item machine-list-summary-updated">
+                        最終更新：{{ updated_at | datetime_format }}
+                    </span>
+    
+                {% endif %}
+    
+            </p>
+    
+        </div>
+    
+    </section>
+
+
+    {# =========================================
+       機種一覧
+    ========================================= #}
+
+    <section
+        class="machine-list-section"
+        aria-labelledby="machine-list-title"
+    >
+
+        <div class="section-heading">
+
+            <h2
+                id="machine-list-title"
+                class="section-title"
+            >
+                中古実機一覧
+            </h2>
+
+
+        </div>
+
+
+        {% if machines %}
+
+            <div
+                id="machine-list"
+                class="machine-grid"
+            >
+
+                {% for machine in machines %}
+
+                    <article
+                        class="machine-card"
+                        data-machine-name="{{ machine.master_machine_name | default('', true) | lower }}"
+                        data-maker="{{ machine.master_machine_maker | default('', true) }}"
+                        data-machine-type="{{ machine.master_machine_type | default('', true) }}"
+                        data-machine-gouki="{{ machine.master_machine_gouki | default('', true) }}"
+                    >
+
+                        <a
+                            class="machine-card-link"
+                            href="{{ root_prefix | default('/') }}machines/{{ machine.master_machine_id }}.html"
+                        >
+
+                            <div class="machine-card-image-area">
+
+                                <img
+                                    class="machine-card-image"
+                                    src="{{ asset_prefix }}img/machines/{{ machine.master_machine_id }}.webp"
+                                    alt="{{ machine.master_machine_name }}の実機画像"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="
+                                        this.onerror = null;
+                                        this.src = '{{ asset_prefix }}img/no_image.webp';
+                                    "
+                                >
+
+                            </div>
+
+
+                            <div class="machine-card-body">
+
+                                {% if machine.master_machine_maker %}
+
+                                    <p class="machine-card-maker">
+                                        {{ machine.master_machine_maker }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                <h3 class="machine-card-title">
+                                    {{ machine.master_machine_name }}
+                                </h3>
+
+
+                                <dl class="machine-card-price-list">
+
+                                    <div class="machine-card-price-row machine-card-price-primary">
+
+                                        <dt>
+                                            最安価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.min_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="machine-card-price-row">
+
+                                        <dt>
+                                            平均価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.avg_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="machine-card-price-row">
+
+                                        <dt>
+                                            最高価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.max_price | price }}
+                                        </dd>
+
+                                    </div>
+
+                                </dl>
+
+
+                                <span class="machine-card-button">
+                                    価格と商品を見る
+                                </span>
+
+                            </div>
+
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div
+                id="machine-empty-result"
+                class="empty-state"
+                hidden
+            >
+
+                <p class="empty-state-title">
+                    条件に一致する機種がありません。
+                </p>
+
+                <p class="empty-state-description">
+                    検索キーワードや絞り込み条件を変更してください。
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <p class="empty-state-title">
+                    現在、掲載中の機種はありません。
+                </p>
+
+                <p class="empty-state-description">
+                    機種情報が取得され次第、このページに表示されます。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+{% endblock %}
+{% block page_js %}
+
+<script
+    src="{{ asset_prefix }}js/machine_list.js"
+></script>
+
+{% endblock %}

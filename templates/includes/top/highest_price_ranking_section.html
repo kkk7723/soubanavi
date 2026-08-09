@@ -1,0 +1,117 @@
+{# =====================================
+   平均価格が高い機種
+===================================== #}
+
+{% if highest_avg_price_machines is defined
+      and highest_avg_price_machines %}
+
+<section
+    class="ranking-section"
+    aria-labelledby="highest-average-ranking-title"
+>
+
+    <div class="section-heading">
+
+        <h2
+            id="highest-average-ranking-title"
+            class="section-title"
+        >
+            平均価格が高い実機
+        </h2>
+
+    </div>
+
+
+    <ol class="ranking-list">
+
+        {% for machine in highest_avg_price_machines %}
+
+        <li class="ranking-item">
+
+            <a
+                class="ranking-item-link"
+                href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+            >
+
+                <span
+                    class="ranking-position"
+                    aria-label="{{ loop.index }}位"
+                >
+                    {{ loop.index }}
+                </span>
+
+
+                <div class="ranking-image-area">
+
+                    {% if machine.master_machine_pworld_image_url %}
+
+                    <img
+                        class="ranking-image"
+                        src="{{ machine.master_machine_pworld_image_url }}"
+                        alt="{{ machine.master_machine_name }}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                    {% else %}
+
+                    <div class="ranking-image-placeholder">
+                        画像なし
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="ranking-content">
+
+                    {% if machine.master_machine_maker %}
+
+                    <p class="ranking-maker">
+                        {{ machine.master_machine_maker }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <h3 class="ranking-machine-name">
+                        {{ machine.master_machine_name }}
+                    </h3>
+
+
+                    <p class="ranking-price">
+                        {{ machine.avg_price | price }}
+                    </p>
+
+
+                    <p class="ranking-meta">
+                        最安価格：
+                        {{ machine.min_price | price }}
+                    </p>
+
+                </div>
+
+            </a>
+
+        </li>
+
+        {% endfor %}
+
+    </ol>
+
+
+    <div class="section-more-area">
+
+        <a
+            class="section-more-link"
+            href="{{ root_prefix }}rankings/highest-price/"
+        >
+            もっと見る
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}

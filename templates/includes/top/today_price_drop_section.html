@@ -1,0 +1,201 @@
+{# =====================================
+   本日の値下げ情報
+===================================== #}
+
+{% if today_price_drop_machines is defined
+      and today_price_drop_machines %}
+
+<section
+    class="today-price-drop-section"
+    aria-labelledby="today-price-drop-title"
+>
+
+    <div class="section-heading">
+
+        <h2
+            id="today-price-drop-title"
+            class="section-title"
+        >
+            本日の値下げ情報
+        </h2>
+
+    </div>
+
+    <ol class="price-drop-list">
+
+        {% for machine in today_price_drop_machines %}
+
+        <li class="price-drop-item">
+
+            <a
+                class="price-drop-item-link"
+                href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+            >
+
+                <div class="price-drop-image-area">
+
+                    {% if machine.master_machine_pworld_image_url %}
+
+                    <img
+                        class="price-drop-image"
+                        src="{{ machine.master_machine_pworld_image_url }}"
+                        alt="{{ machine.master_machine_name }}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                    {% else %}
+
+                    <div class="price-drop-image-placeholder">
+                        画像なし
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="price-drop-content">
+
+                    {% if machine.master_machine_maker %}
+
+                    <p class="price-drop-maker">
+                        {{ machine.master_machine_maker }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <h3 class="price-drop-machine-name">
+                        {{ machine.master_machine_name }}
+                    </h3>
+
+
+                    <div class="price-drop-price-row">
+
+                        <div class="price-drop-price-before">
+
+                            <span class="price-drop-price-label">
+                                値下げ前
+                            </span>
+
+                            <span class="price-drop-price-old">
+                                {{ machine.previous_min_price | price }}
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            class="price-drop-arrow"
+                            aria-hidden="true"
+                        >
+                            →
+                        </span>
+
+
+                        <div class="price-drop-price-current">
+
+                            <span class="price-drop-price-label">
+                                現在価格
+                            </span>
+
+                            <span class="price-drop-price-new">
+                                {{ machine.min_price | price }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="price-drop-summary">
+
+                        <span class="price-drop-amount">
+                            {{ machine.price_down_amount | price }}
+                            値下げ
+                        </span>
+
+                        {% if machine.price_down_rate is not none %}
+
+                        <span class="price-drop-rate">
+                            {{ machine.price_down_rate }}%
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </li>
+
+        {% endfor %}
+
+    </ol>
+
+
+    <div class="section-more-area">
+
+        <a
+            class="section-more-link"
+            href="{{ root_prefix }}price-down-today/"
+        >
+            値下げ一覧を見る
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{# =====================================
+   本日の値下げデータがない場合
+===================================== #}
+
+{% if today_price_drop_machines is not defined
+      or not today_price_drop_machines %}
+
+<section
+    class="today-price-drop-section"
+    aria-labelledby="today-price-drop-title"
+>
+
+    <div class="section-heading">
+
+        <h2
+            id="today-price-drop-title"
+            class="section-title"
+        >
+            本日の値下げ情報
+        </h2>
+
+    </div>
+
+
+    <div class="price-drop-empty">
+
+        <p>
+            現在、表示できる値下げ情報はありません。
+        </p>
+
+    </div>
+
+
+    <div class="section-more-area">
+
+        <a
+            class="section-more-link"
+            href="{{ root_prefix }}price-down-today/"
+        >
+            値下げ一覧を見る
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}

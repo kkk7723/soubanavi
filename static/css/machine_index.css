@@ -1,0 +1,729 @@
+
+/* ==================================================
+   1. Filter Area
+================================================== */
+
+.machine-filter-section {
+    margin-top: 20px;
+}
+
+
+/* details全体 */
+
+.machine-filter-details {
+    overflow: hidden;
+    border: 1px solid #e1e6eb;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* 開閉ボタン部分 */
+
+.machine-filter-summary {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    color: #176fc1;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+
+/* ブラウザ標準の三角を消す */
+
+.machine-filter-summary::-webkit-details-marker {
+    display: none;
+}
+
+.machine-filter-summary::marker {
+    content: "";
+}
+
+
+/* 左側 */
+
+.machine-filter-summary-left {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+}
+
+.machine-filter-summary-icon {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    line-height: 1;
+}
+
+.machine-filter-summary-title {
+    white-space: nowrap;
+}
+
+
+/* 有効な条件数 */
+
+.machine-filter-active-count {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: #eaf4ff;
+    color: #176fc1;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.machine-filter-active-count[hidden] {
+    display: none;
+}
+
+
+/* 右側の矢印 */
+
+.machine-filter-summary-arrow {
+    width: 9px;
+    height: 9px;
+    margin-left: 14px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+.machine-filter-details[open]
+.machine-filter-summary-arrow {
+    transform: rotate(225deg) translate(-2px, -2px);
+}
+
+
+/* 開いたフォーム部分 */
+
+.machine-filter-content {
+    padding: 18px;
+    border-top: 1px solid #edf0f3;
+}
+
+
+/* hover・キーボード操作 */
+
+.machine-filter-summary:hover {
+    background: #f8fbff;
+}
+
+.machine-filter-summary:focus-visible {
+    outline: 3px solid rgba(35, 119, 185, 0.18);
+    outline-offset: -3px;
+}
+
+
+/* ==================================================
+   2. Filter Grid
+================================================== */
+
+.machine-filter {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr);
+    gap: 12px;
+}
+
+.filter-field {
+    min-width: 0;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.filter-input,
+.filter-select {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid #ccd2d8;
+    border-radius: 7px;
+    background: #fff;
+    color: #222;
+    font-size: 15px;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    border-color: #2377b9;
+    outline: 2px solid rgba(35, 119, 185, 0.15);
+}
+
+.filter-actions {
+    display: flex;
+    align-items: end;
+}
+
+.filter-actions .button {
+    width: 100%;
+    min-height: 46px;
+}
+
+.machine-filter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 16px;
+    margin-top: 10px;
+    padding: 0 2px;
+    border-top: 0;
+}
+
+.filter-result-count {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   3. Machine List
+================================================== */
+
+.machine-list-section {
+    margin-top: 28px;
+}
+
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.section-heading .section-title {
+    margin: 0;
+}
+
+.section-count {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.machine-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+
+/* ==================================================
+   4. Machine Card
+================================================== */
+
+.machine-card {
+    min-width: 0;
+}
+
+.machine-card[hidden] {
+    display: none;
+}
+
+.machine-card-link {
+    display: grid;
+    grid-template-columns: 105px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+
+    min-width: 0;
+    height: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.machine-card-link:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.machine-card-body {
+    display: flex;
+    grid-column: 2;
+    min-width: 0;
+    min-height: 145px;
+    height: auto;
+    flex-direction: column;
+    overflow: visible;
+}
+
+.machine-card-maker {
+    order: -1;
+    margin: 0 0 2px;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.machine-card-title {
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    overflow: visible;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.machine-card-button {
+    display: block;
+    margin-top: auto;
+    padding-top: 3px;
+    color: #1264a3;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: right;
+}
+
+
+/* ==================================================
+   5. Machine Thumbnail
+================================================== */
+
+.machine-card-image-area {
+    display: flex;
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    width: 105px;
+    height: 145px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f7f8fa;
+}
+
+.machine-card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+}
+
+.machine-image-placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: #888;
+    font-size: 11px;
+    text-align: center;
+}
+
+
+/* ==================================================
+   6. Price Box
+================================================== */
+
+.machine-card-price-list {
+    margin: 6px 0 0;
+    padding: 0;
+    border-top: 1px solid #e4e7eb;
+}
+
+.machine-card-price-row {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    min-height: 24px;
+    padding: 2px 0;
+    border-bottom: 1px solid #e4e7eb;
+    background: transparent;
+}
+
+.machine-card-price-row dt {
+    color: #666;
+    font-size: 10px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.machine-card-price-row dd {
+    min-width: 0;
+    margin: 0;
+    color: #222;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.machine-card-price-primary dt {
+    color: #a83228;
+    font-weight: 600;
+}
+
+.machine-card-price-primary dd,
+.machine-card-price-row:first-child dd {
+    color: #d13b2f;
+    font-size: 16px;
+}
+
+
+/* ==================================================
+   7. Machine Stats
+================================================== */
+
+.machine-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 15px 0 0;
+    color: #606770;
+    font-size: 13px;
+}
+
+.machine-card-meta strong {
+    color: #333;
+}
+
+.machine-card-meta-item {
+    display: inline-block;
+}
+
+.machine-card-lowest-shop {
+    margin: 10px 0 0;
+    color: #606770;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.machine-list-summary {
+    margin: 0;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.machine-list-summary strong {
+    color: #333;
+    font-size: 15px;
+}
+
+
+/* ==================================================
+   8. Empty State
+================================================== */
+
+.empty-state {
+    padding: 32px 20px;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state[hidden] {
+    display: none;
+}
+
+.empty-state-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.empty-state-description {
+    margin: 10px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   9. Tablet
+================================================== */
+
+@media (max-width: 1000px) {
+
+    .machine-filter {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .filter-actions {
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .machine-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .machine-filter {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==================================================
+   10. Mobile
+================================================== */
+
+@media (max-width: 767px) {
+    
+    .machine-filter-section {
+        margin-top: 14px;
+    }
+
+    .machine-filter-details {
+        border-radius: 9px;
+    }
+
+    .machine-filter-summary {
+        min-height: 54px;
+        padding: 0 15px;
+        font-size: 15px;
+    }
+
+    .machine-filter-content {
+        padding: 15px;
+    }
+
+    .machine-filter-meta {
+        margin-top: 8px;
+    }
+    
+    
+    .machine-list-summary {
+        margin: 10px 0 16px;
+        font-size: 13px;
+    }
+
+    .machine-list-summary-updated {
+        display: block;
+    }
+
+    .machine-card-link {
+        grid-template-columns: 90px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        padding: 10px;
+    }
+
+    .machine-card-image-area {
+        position: static;
+        grid-column: 1;
+        grid-row: 1;
+        width: 90px;
+        height: 125px;
+        flex: none;
+        margin: 0;
+    }
+
+    .machine-card-image {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        object-fit: contain;
+    }
+
+    .machine-card-body {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+        min-height: 125px;
+        height: auto;
+        padding-right: 0;
+        overflow: visible;
+    }
+
+    .machine-card-title {
+        display: block;
+        overflow: visible;
+        font-size: 14px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .machine-card-maker {
+        margin-bottom: 1px;
+        font-size: 10px;
+    }
+
+    .machine-card-price-list {
+        margin-top: 4px;
+    }
+
+    .machine-card-price-row {
+        grid-template-columns: 52px minmax(0, 1fr);
+        min-height: 20px;
+        gap: 4px;
+        padding: 1px 0;
+    }
+
+    .machine-card-price-row dt {
+        font-size: 9px;
+        line-height: 1.1;
+    }
+
+    .machine-card-price-row dd {
+        font-size: 12px;
+        line-height: 1.1;
+    }
+
+    .machine-card-price-primary dd,
+    .machine-card-price-row:first-child dd {
+        font-size: 14px;
+    }
+
+    .machine-card-button {
+        margin-top: auto;
+        padding-top: 4px;
+        font-size: 10px;
+        line-height: 1.1;
+    }
+
+    .machine-card-meta {
+        gap: 4px 12px;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+
+    .machine-card-lowest-shop {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+}
+
+
+/* ==================================================
+   11. Small Mobile
+================================================== */
+
+@media (max-width: 520px) {
+
+    .machine-filter-summary {
+        min-height: 54px;
+        padding: 0 14px;
+        font-size: 15px;
+    }
+
+    .machine-filter-content {
+        padding: 14px;
+    }
+
+    .machine-filter-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 8px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+/* ==================================================
+   12. Extra Small Mobile
+================================================== */
+
+@media (max-width: 380px) {
+
+    .machine-card-link {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 8px;
+        align-items: start;
+        padding: 9px;
+    }
+
+    .machine-card-image-area {
+        width: 82px;
+        height: 115px;
+    }
+
+    .machine-card-body {
+        min-height: 115px;
+        height: auto;
+        overflow: visible;
+    }
+
+    .machine-card-title {
+        display: block;
+        overflow: visible;
+        font-size: 13px;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .machine-card-price-list {
+        margin-top: 3px;
+    }
+
+    .machine-card-price-row {
+        grid-template-columns: 48px minmax(0, 1fr);
+        min-height: 18px;
+        padding: 1px 0;
+    }
+
+    .machine-card-price-row dt {
+        font-size: 8px;
+    }
+
+    .machine-card-price-row dd {
+        font-size: 11px;
+    }
+
+    .machine-card-price-primary dd,
+    .machine-card-price-row:first-child dd {
+        font-size: 13px;
+    }
+
+    .machine-card-button {
+        padding-top: 3px;
+        font-size: 9px;
+    }
+}

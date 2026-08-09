@@ -1,0 +1,110 @@
+{# =====================================
+   最近導入された機種
+===================================== #}
+
+{% if recent_machines %}
+
+<section
+    class="ranking-section"
+    aria-labelledby="recent-machines-title"
+>
+
+    <div class="section-heading">
+
+        <h2
+            id="recent-machines-title"
+            class="section-title"
+        >
+            最近導入された機種
+        </h2>
+
+    </div>
+
+    <ol class="ranking-list">
+
+        {% for machine in recent_machines %}
+
+        <li class="ranking-item">
+
+            <a
+                class="ranking-item-link"
+                href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+            >
+
+                <div class="ranking-image-area">
+
+                    {% if machine.master_machine_pworld_image_url %}
+
+                    <img
+                        class="ranking-image"
+                        src="{{ machine.master_machine_pworld_image_url }}"
+                        alt="{{ machine.master_machine_name }}"
+                        loading="lazy"
+                    >
+
+                    {% else %}
+
+                    <div class="ranking-image-placeholder">
+                        画像なし
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="ranking-content">
+
+                    {% if machine.master_machine_maker %}
+
+                    <p class="ranking-maker">
+                        {{ machine.master_machine_maker }}
+                    </p>
+
+                    {% endif %}
+
+
+                    <h3 class="ranking-machine-name">
+                        {{ machine.master_machine_name }}
+                    </h3>
+
+
+                    <p class="ranking-meta">
+                        導入日：
+                        {{ machine.master_machine_introduced_date }}
+                    </p>
+
+
+                    {% if machine.min_price %}
+
+                    <p class="ranking-price">
+                        {{ machine.min_price | price }}
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+        </li>
+
+        {% endfor %}
+
+    </ol>
+
+
+    <div class="section-more-area">
+
+        <a
+            class="section-more-link"
+            href="{{ root_prefix }}recent-machines/"
+        >
+            もっと見る
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}

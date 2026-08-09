@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ page_title }}
+{% endblock %}
+
+
+{% block description %}
+{{ page_description }}
+{% endblock %}
+
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/price_range_index.css"
+>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page-content">
+
+
+    {# =========================================
+       ページ見出し
+    ========================================= #}
+
+    <section class="ranking-header">
+
+        <p class="ranking-header-label">
+            パチンコ・パチスロ中古実機
+        </p>
+
+        <h1 class="ranking-title">
+            {{ price_range_title }}
+        </h1>
+
+        <p class="ranking-description">
+            {{ price_range_description }}
+        </p>
+
+
+        {% if total_machine_count is defined %}
+
+            <p class="ranking-count">
+
+                掲載機種数：
+
+                <strong>
+                    {{ total_machine_count | number }}機種
+                </strong>
+
+            </p>
+
+        {% endif %}
+
+
+        {% if updated_at is defined and updated_at %}
+
+            <p class="ranking-updated-at">
+
+                最終更新：
+                {{ updated_at | datetime_format }}
+
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    {# =========================================
+       価格帯一覧
+    ========================================= #}
+
+    {% if price_ranges is defined and price_ranges %}
+
+        <section
+            class="price-range-index-section"
+            aria-labelledby="price-range-index-title"
+        >
+
+            <h2
+                id="price-range-index-title"
+                class="price-range-index-heading"
+            >
+                予算から中古実機を探す
+            </h2>
+
+            <p class="price-range-index-introduction">
+
+                現在の最安価格を基準に、
+                ご希望の価格帯から中古実機を探せます。
+
+            </p>
+
+
+            <div class="price-range-index-grid">
+
+                {% for price_range in price_ranges %}
+
+                    <article
+                        class="
+                            price-range-index-card
+
+                            {% if not price_range.machine_count %}
+                                price-range-index-card-empty
+                            {% endif %}
+                        "
+                    >
+
+
+                        {% if price_range.machine_count %}
+
+                            <a
+                                class="price-range-index-card-link"
+                                href="{{ price_range.url }}"
+                            >
+
+                                <div class="price-range-index-card-content">
+
+                                    <p class="price-range-index-card-label">
+                                        価格帯
+                                    </p>
+
+                                    <h3 class="price-range-index-card-title">
+
+                                        {% if (
+                                            price_range.short_label
+                                            is defined
+                                            and price_range.short_label
+                                        ) %}
+
+                                            {{ price_range.short_label }}
+
+                                        {% else %}
+
+                                            {{ price_range.label }}
+
+                                        {% endif %}
+
+                                    </h3>
+
+                                    <p class="price-range-index-card-range">
+                                        {{ price_range.range_text }}
+                                    </p>
+
+                                    <p class="price-range-index-card-count">
+
+                                        <strong>
+                                            {{ price_range.machine_count | number }}
+                                        </strong>
+
+                                        <span>
+                                            機種を掲載
+                                        </span>
+
+                                    </p>
+
+                                    <span class="price-range-index-card-button">
+                                        この価格帯を見る
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+
+                        {% else %}
+
+
+                            <div class="price-range-index-card-content">
+
+                                <p class="price-range-index-card-label">
+                                    価格帯
+                                </p>
+
+                                <h3 class="price-range-index-card-title">
+
+                                    {% if (
+                                        price_range.short_label
+                                        is defined
+                                        and price_range.short_label
+                                    ) %}
+
+                                        {{ price_range.short_label }}
+
+                                    {% else %}
+
+                                        {{ price_range.label }}
+
+                                    {% endif %}
+
+                                </h3>
+
+                                <p class="price-range-index-card-range">
+                                    {{ price_range.range_text }}
+                                </p>
+
+                                <p class="price-range-index-card-count">
+                                    現在、掲載機種はありません
+                                </p>
+
+                            </div>
+
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+    {% else %}
+
+
+        {# =========================================
+           価格帯データが存在しない場合
+        ========================================= #}
+
+        <section
+            class="ranking-empty-section"
+            aria-labelledby="price-range-empty-title"
+        >
+
+            <div class="ranking-empty">
+
+                <h2
+                    id="price-range-empty-title"
+                    class="ranking-empty-title"
+                >
+                    価格帯情報がありません
+                </h2>
+
+                <p class="ranking-empty-description">
+
+                    現在、価格帯別に表示できる
+                    中古実機の価格情報はありません。
+
+                </p>
+
+                <p class="ranking-empty-link">
+
+                    <a
+                        class="button button-primary"
+                        href="{{ root_prefix }}machines/"
+                    >
+                        機種一覧を見る
+                    </a>
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+    {% endif %}
+
+
+    {# =========================================
+       価格帯ページについて
+    ========================================= #}
+
+    <section
+        class="price-range-index-guide"
+        aria-labelledby="price-range-guide-title"
+    >
+
+        <h2
+            id="price-range-guide-title"
+            class="price-range-index-guide-title"
+        >
+            価格帯別ページについて
+        </h2>
+
+        <div class="price-range-index-guide-content">
+
+            <p>
+
+                各価格帯には、販売中商品の
+                <strong>現在の最安価格</strong>
+                が該当する中古実機を掲載しています。
+
+            </p>
+
+            <p>
+
+                機種ごとに最安価格、平均価格、最高価格、
+                商品数、取扱ショップ数を確認できます。
+
+            </p>
+
+            <p>
+
+                中古実機の価格は販売状況によって変動するため、
+                最新の販売価格は各機種の相場ページから
+                ご確認ください。
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    {# =========================================
+       ページ下部ナビゲーション
+    ========================================= #}
+
+    <nav
+        class="ranking-bottom-navigation"
+        aria-label="価格帯一覧ページナビゲーション"
+    >
+
+        <a
+            class="button button-secondary"
+            href="{{ root_prefix }}"
+        >
+            トップへ戻る
+        </a>
+
+        <a
+            class="button button-primary"
+            href="{{ root_prefix }}machines/"
+        >
+            機種一覧を見る
+        </a>
+
+    </nav>
+
+
+</div>
+
+{% endblock %}

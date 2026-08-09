@@ -1,0 +1,553 @@
+{% extends "base.html" %}
+
+
+{# ==================================================
+   ページタイトル
+================================================== #}
+
+{% block title %}
+メーカー一覧 | {{ site_name }}
+{% endblock %}
+
+
+{# ==================================================
+   meta description
+================================================== #}
+
+{% block description %}
+パチンコ・パチスロ実機をメーカー別に探せます。各メーカーの掲載機種合計を確認できます。
+{% endblock %}
+
+
+{# ==================================================
+   ページ固有CSS
+================================================== #}
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/machine_list.css"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/maker_list.css"
+>
+
+{% endblock %}
+
+
+{# ==================================================
+   メインコンテンツ
+================================================== #}
+
+{% block main %}
+
+
+    {# ------------------------------------------
+       ページ見出し
+    ------------------------------------------ #}
+
+    <section class="page-header">
+
+        <p class="page-header-label">
+            メーカーから探す
+        </p>
+
+        <h1 class="page-title">
+            メーカー一覧
+        </h1>
+
+        <p class="page-description">
+            パチンコ・パチスロ実機をメーカー別に探せます。
+            各メーカーの掲載機種合計を確認できます。
+        </p>
+
+    </section>
+
+
+    {# ------------------------------------------
+       全体集計
+    ------------------------------------------ #}
+
+    <section
+        class="summary maker-summary"
+        aria-label="メーカー一覧の集計情報"
+    >
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                掲載メーカー
+            </span>
+
+            <strong class="summary-value">
+                {{ maker_count | number }}社
+            </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                掲載機種合計
+            </span>
+
+            <strong class="summary-value">
+                {{ machine_count | number }}機種
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    {# ------------------------------------------
+       メーカー検索・並び替え
+    ------------------------------------------ #}
+
+    <section class="machine-filter-section maker-filter-section">
+
+        <h2 class="section-title">
+            メーカーを検索
+        </h2>
+
+
+        <div class="machine-filter">
+
+            <div class="filter-field">
+
+                <label
+                    class="filter-label"
+                    for="maker-search"
+                >
+                    メーカー名
+                </label>
+
+                <input
+                    id="maker-search"
+                    class="filter-input"
+                    type="search"
+                    placeholder="メーカー名を入力"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label
+                    class="filter-label"
+                    for="maker-sort"
+                >
+                    並び順
+                </label>
+
+                <select
+                    id="maker-sort"
+                    class="filter-select"
+                >
+
+                    <option value="default">
+                        メーカー名順
+                    </option>
+
+                    <option value="machines-desc">
+                        掲載機種数が多い順
+                    </option>
+
+                    <option value="machines-asc">
+                        掲載機種数が少ない順
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <p class="filter-result-count">
+            表示中:
+            <strong id="visible-maker-count">
+                {{ makers | length | number }}
+            </strong>
+            メーカー
+        </p>
+
+    </section>
+
+
+    {# ------------------------------------------
+       メーカー一覧
+    ------------------------------------------ #}
+
+    <section class="machine-list-section maker-list-section">
+
+        <div class="section-heading">
+
+            <h2 class="section-title">
+                掲載メーカー
+            </h2>
+
+            <p class="section-count">
+                全{{ makers | length | number }}社
+            </p>
+
+        </div>
+
+
+        {% if makers %}
+
+            <div
+                id="maker-grid"
+                class="maker-grid"
+            >
+
+                {% for maker in makers %}
+
+                    <article
+                        class="maker-card"
+                        data-maker-name="{{ maker.name | lower }}"
+                        data-machine-count="{{ maker.machine_count or 0 }}"
+                    >
+
+                        <a
+                            class="maker-card-link"
+                            href="{{ root_prefix }}makers/{{ maker.slug }}/index.html"
+                        >
+
+                            <div class="maker-card-content">
+
+                                <h3 class="maker-card-title">
+                                    {{ maker.name }}
+                                </h3>
+
+
+                                <p class="maker-card-count">
+
+                                    <span class="maker-card-count-label">
+                                        掲載機種合計
+                                    </span>
+
+                                    <strong class="maker-card-count-value">
+                                        {{ maker.machine_count | number }}機種
+                                    </strong>
+
+                                </p>
+
+
+                                <span class="maker-card-action">
+                                    機種一覧を見る
+                                </span>
+
+                            </div>
+
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div
+                id="maker-empty-state"
+                class="empty-state"
+                hidden
+            >
+
+                <p class="empty-state-title">
+                    該当するメーカーがありません
+                </p>
+
+                <p class="empty-state-description">
+                    メーカー名を変更して検索してください。
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <p class="empty-state-title">
+                    メーカー情報がありません
+                </p>
+
+                <p class="empty-state-description">
+                    メーカー情報は現在準備中です。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    {# ------------------------------------------
+       ページ全体の更新情報
+    ------------------------------------------ #}
+
+    {% if updated_at %}
+
+        <section class="page-update-section">
+
+            <p class="page-update-text">
+
+                最終更新:
+
+                <time datetime="{{ updated_at }}">
+                    {{ updated_at | datetime_format }}
+                </time>
+
+            </p>
+
+        </section>
+
+    {% endif %}
+
+{% endblock %}
+
+
+{# ==================================================
+   ページ固有JavaScript
+================================================== #}
+
+{% block page_js %}
+
+<script>
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        const searchInput =
+            document.getElementById(
+                "maker-search"
+            );
+
+        const sortSelect =
+            document.getElementById(
+                "maker-sort"
+            );
+
+        const makerGrid =
+            document.getElementById(
+                "maker-grid"
+            );
+
+        const visibleCount =
+            document.getElementById(
+                "visible-maker-count"
+            );
+
+        const emptyState =
+            document.getElementById(
+                "maker-empty-state"
+            );
+
+
+        if (!makerGrid) {
+            return;
+        }
+
+
+        const cards = Array.from(
+            makerGrid.querySelectorAll(
+                ".maker-card"
+            )
+        );
+
+
+        function normalizeText(value) {
+            return String(value || "")
+                .toLowerCase()
+                .normalize("NFKC")
+                .replace(/\s+/g, "");
+        }
+
+
+        function getMachineCount(card) {
+            const value = Number(
+                card.dataset.machineCount || 0
+            );
+
+            return Number.isNaN(value)
+                ? 0
+                : value;
+        }
+
+
+        function compareMakerNames(
+            firstCard,
+            secondCard
+        ) {
+            const firstName =
+                firstCard.dataset.makerName || "";
+
+            const secondName =
+                secondCard.dataset.makerName || "";
+
+            return firstName.localeCompare(
+                secondName,
+                "ja"
+            );
+        }
+
+
+        function filterMakers() {
+            const keyword = normalizeText(
+                searchInput
+                    ? searchInput.value
+                    : ""
+            );
+
+            let visibleMakerCount = 0;
+
+
+            cards.forEach(
+                function (card) {
+                    const makerName =
+                        normalizeText(
+                            card.dataset.makerName
+                        );
+
+                    const isVisible =
+                        !keyword
+                        || makerName.includes(
+                            keyword
+                        );
+
+
+                    card.hidden = !isVisible;
+
+
+                    if (isVisible) {
+                        visibleMakerCount += 1;
+                    }
+                }
+            );
+
+
+            if (visibleCount) {
+                visibleCount.textContent =
+                    visibleMakerCount.toLocaleString(
+                        "ja-JP"
+                    );
+            }
+
+
+            if (emptyState) {
+                emptyState.hidden =
+                    visibleMakerCount !== 0;
+            }
+        }
+
+
+        function sortMakers() {
+            const sortValue =
+                sortSelect
+                    ? sortSelect.value
+                    : "default";
+
+
+            const sortedCards = [
+                ...cards
+            ].sort(
+                function (
+                    firstCard,
+                    secondCard
+                ) {
+                    const firstMachineCount =
+                        getMachineCount(
+                            firstCard
+                        );
+
+                    const secondMachineCount =
+                        getMachineCount(
+                            secondCard
+                        );
+
+
+                    if (
+                        sortValue ===
+                        "machines-desc"
+                    ) {
+                        const difference =
+                            secondMachineCount
+                            - firstMachineCount;
+
+                        return difference !== 0
+                            ? difference
+                            : compareMakerNames(
+                                firstCard,
+                                secondCard
+                            );
+                    }
+
+
+                    if (
+                        sortValue ===
+                        "machines-asc"
+                    ) {
+                        const difference =
+                            firstMachineCount
+                            - secondMachineCount;
+
+                        return difference !== 0
+                            ? difference
+                            : compareMakerNames(
+                                firstCard,
+                                secondCard
+                            );
+                    }
+
+
+                    return compareMakerNames(
+                        firstCard,
+                        secondCard
+                    );
+                }
+            );
+
+
+            sortedCards.forEach(
+                function (card) {
+                    makerGrid.appendChild(
+                        card
+                    );
+                }
+            );
+        }
+
+
+        if (searchInput) {
+            searchInput.addEventListener(
+                "input",
+                filterMakers
+            );
+        }
+
+
+        if (sortSelect) {
+            sortSelect.addEventListener(
+                "change",
+                function () {
+                    sortMakers();
+                    filterMakers();
+                }
+            );
+        }
+
+
+        sortMakers();
+        filterMakers();
+    }
+);
+</script>
+
+{% endblock %}

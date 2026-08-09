@@ -1,0 +1,746 @@
+{% extends "base.html" %}
+
+
+{# ==================================================
+   ページタイトル
+================================================== #}
+
+{% block title %}
+{{ maker.name }}の中古実機・価格相場 | {{ site_name }}
+{% endblock %}
+
+
+{# ==================================================
+   meta description
+================================================== #}
+
+{% block description %}
+{{ maker.name }}のパチンコ・パチスロ中古実機を一覧で掲載しています。掲載機種数、商品数、最安価格、平均価格を確認できます。
+{% endblock %}
+
+
+{# ==================================================
+   ページ固有CSS
+================================================== #}
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/machine_list.css"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/maker_detail.css"
+>
+
+{% endblock %}
+
+{# ==================================================
+   メインコンテンツ
+================================================== #}
+
+{% block main %}
+<div class="maker-detail-page">
+    
+    {# ------------------------------------------
+       ページ見出し
+    ------------------------------------------ #}
+
+    <section class="page-header">
+
+        <p class="page-header-label">
+            メーカーから探す
+        </p>
+
+        <h1 class="page-title">
+            {{ maker.name }}の中古実機・価格相場
+        </h1>
+
+        <p class="page-description">
+            {{ maker.name }}のパチンコ・パチスロ中古実機を
+            一覧で掲載しています。
+            機種ごとの最安価格や平均価格を比較できます。
+        </p>
+
+    </section>
+
+
+    {# ------------------------------------------
+       メーカー集計
+    ------------------------------------------ #}
+
+    <section
+        class="summary"
+        aria-label="{{ maker.name }}の集計情報"
+    >
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                掲載機種数
+            </span>
+
+            <strong class="summary-value">
+                {{ maker.machine_count | number }}機種
+            </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                掲載商品数
+            </span>
+
+            <strong class="summary-value">
+                {{ maker.product_count | number }}件
+            </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                最安価格
+            </span>
+
+            <strong class="summary-value">
+                {{ maker.min_price | price }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <span class="summary-label">
+                平均価格
+            </span>
+
+            <strong class="summary-value">
+                {{ maker.avg_price | price }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    {# ------------------------------------------
+       機種検索・並び替え
+    ------------------------------------------ #}
+
+    <section class="machine-filter-section">
+
+        <h2 class="section-title">
+            {{ maker.name }}の機種を検索
+        </h2>
+
+        <div class="machine-filter">
+
+            <div class="filter-field">
+
+                <label
+                    class="filter-label"
+                    for="machine-search"
+                >
+                    機種名
+                </label>
+
+                <input
+                    id="machine-search"
+                    class="filter-input"
+                    type="search"
+                    placeholder="機種名を入力"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label
+                    class="filter-label"
+                    for="machine-sort"
+                >
+                    並び順
+                </label>
+
+                <select
+                    id="machine-sort"
+                    class="filter-select"
+                >
+
+                    <option value="default">
+                        標準順
+                    </option>
+
+                    <option value="price-asc">
+                        最安価格が安い順
+                    </option>
+
+                    <option value="price-desc">
+                        最安価格が高い順
+                    </option>
+
+                    <option value="products-desc">
+                        掲載商品数が多い順
+                    </option>
+
+                    <option value="updated-desc">
+                        更新日が新しい順
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <p class="filter-result-count">
+            表示中:
+            <strong id="visible-machine-count">
+                {{ machines | length }}
+            </strong>
+            機種
+        </p>
+
+    </section>
+
+
+    {# ------------------------------------------
+       機種一覧
+    ------------------------------------------ #}
+
+    <section class="machine-list-section">
+
+        <div class="section-heading">
+
+            <h2 class="section-title">
+                {{ maker.name }}の掲載機種
+            </h2>
+
+            <p class="section-count">
+                全{{ machines | length | number }}機種
+            </p>
+
+        </div>
+
+
+        {% if machines %}
+
+            <div
+                id="machine-grid"
+                class="machine-grid"
+            >
+
+                {% for machine in machines %}
+
+                    <article
+                        class="machine-card"
+                        data-machine-name="{{ machine.master_machine_name | lower }}"
+                        data-price="{{ machine.min_price or 0 }}"
+                        data-product-count="{{ machine.price_count or 0 }}"
+                        data-updated-at="{{ machine.updated_at or '' }}"
+                    >
+
+                        <a
+                            class="machine-card-link"
+                            href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+                        >
+
+                            <div class="machine-card-body">
+                                                            
+                                <div class="machine-card-image">
+                                
+                                    <img
+                                        class="machine-card-thumbnail"
+                                        src="{{ asset_prefix }}img/machines/{{ machine.master_machine_id }}.webp"
+                                        alt="{{ machine.master_machine_name }}の実機画像"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="
+                                            this.onerror = null;
+                                            this.src = '{{ asset_prefix }}img/machines/no-image.webp';
+                                        "
+                                    >
+                                
+                                </div>
+                            
+                            
+                                <p class="machine-card-maker">
+                                    {{ machine.master_machine_maker }}
+                                </p>
+                            
+                                <h3 class="machine-card-title">
+                                    {{ machine.master_machine_name }}
+                                </h3>
+
+
+                                <dl class="machine-card-price-list">
+
+                                    <div class="machine-card-price-row machine-card-price-primary">
+
+                                        <dt>
+                                            最安価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.min_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="machine-card-price-row">
+
+                                        <dt>
+                                            平均価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.avg_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="machine-card-price-row">
+
+                                        <dt>
+                                            最高価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.max_price | price }}
+                                        </dd>
+
+                                    </div>
+
+                                </dl>
+
+
+                                <div class="machine-card-meta">
+
+                                    <span class="machine-card-meta-item">
+
+                                        商品数:
+
+                                        <strong>
+                                            {{ machine.price_count | number }}件
+                                        </strong>
+
+                                    </span>
+
+
+                                    {% if machine.shop_count %}
+
+                                        <span class="machine-card-meta-item">
+
+                                            店舗数:
+
+                                            <strong>
+                                                {{ machine.shop_count | number }}店
+                                            </strong>
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if machine.lowest_shop_name %}
+                                
+                                    <p class="machine-card-lowest-shop">
+                                
+                                        最安店舗:
+                                
+                                        {{ machine.lowest_shop_name }}
+                                
+                                    </p>
+                                
+                                {% endif %}
+
+
+                                {% if machine.updated_at %}
+
+                                    <p class="machine-card-lowest-shop">
+
+                                        最終更新:
+
+                                        {{ machine.updated_at | datetime_format }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <span class="machine-card-button">
+                                    価格相場を見る
+                                </span>
+
+                            </div>
+
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div
+                id="machine-empty-state"
+                class="empty-state"
+                hidden
+            >
+
+                <p class="empty-state-title">
+                    該当する機種がありません
+                </p>
+
+                <p class="empty-state-description">
+                    検索条件を変更してください。
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <p class="empty-state-title">
+                    掲載機種がありません
+                </p>
+
+                <p class="empty-state-description">
+                    {{ maker.name }}の機種情報は現在準備中です。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    {# ------------------------------------------
+       メーカー一覧へ戻る
+    ------------------------------------------ #}
+
+    <section class="page-navigation">
+
+        <a
+            class="button"
+            href="{{ root_prefix }}makers/index.html"
+        >
+            メーカー一覧へ戻る
+        </a>
+
+    </section>
+
+
+    {# ------------------------------------------
+       更新情報
+    ------------------------------------------ #}
+
+    {% if maker.updated_at %}
+
+        <section class="page-update-section">
+
+            <p class="page-update-text">
+
+                最終更新:
+
+                <time datetime="{{ maker.updated_at }}">
+                    {{ maker.updated_at | datetime_format }}
+                </time>
+
+            </p>
+
+        </section>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+
+{# ==================================================
+   ページ固有JavaScript
+================================================== #}
+
+{% block page_js %}
+
+<script>
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        const searchInput =
+            document.getElementById(
+                "machine-search"
+            );
+
+        const sortSelect =
+            document.getElementById(
+                "machine-sort"
+            );
+
+        const machineGrid =
+            document.getElementById(
+                "machine-grid"
+            );
+
+        const visibleCount =
+            document.getElementById(
+                "visible-machine-count"
+            );
+
+        const emptyState =
+            document.getElementById(
+                "machine-empty-state"
+            );
+
+
+        if (!machineGrid) {
+            return;
+        }
+
+
+        const cards = Array.from(
+            machineGrid.querySelectorAll(
+                ".machine-card"
+            )
+        );
+
+
+        function normalizeText(value) {
+            return String(value || "")
+                .toLowerCase()
+                .normalize("NFKC")
+                .replace(/\s+/g, "");
+        }
+
+
+        function getNumber(
+            card,
+            key
+        ) {
+            const value = Number(
+                card.dataset[key] || 0
+            );
+
+            if (Number.isNaN(value)) {
+                return 0;
+            }
+
+            return value;
+        }
+
+
+        function filterMachines() {
+            const keyword = normalizeText(
+                searchInput
+                    ? searchInput.value
+                    : ""
+            );
+
+            let visibleMachineCount = 0;
+
+
+            cards.forEach(
+                function (card) {
+                    const machineName =
+                        normalizeText(
+                            card.dataset.machineName
+                        );
+
+                    const isVisible =
+                        !keyword
+                        || machineName.includes(
+                            keyword
+                        );
+
+
+                    card.hidden = !isVisible;
+
+
+                    if (isVisible) {
+                        visibleMachineCount += 1;
+                    }
+                }
+            );
+
+
+            if (visibleCount) {
+                visibleCount.textContent =
+                    visibleMachineCount.toLocaleString(
+                        "ja-JP"
+                    );
+            }
+
+
+            if (emptyState) {
+                emptyState.hidden =
+                    visibleMachineCount !== 0;
+            }
+        }
+
+
+        function sortMachines() {
+            const sortValue =
+                sortSelect
+                    ? sortSelect.value
+                    : "default";
+
+
+            const sortedCards = [
+                ...cards
+            ].sort(
+                function (
+                    firstCard,
+                    secondCard
+                ) {
+                    const firstPrice =
+                        getNumber(
+                            firstCard,
+                            "price"
+                        );
+
+                    const secondPrice =
+                        getNumber(
+                            secondCard,
+                            "price"
+                        );
+
+
+                    const firstProductCount =
+                        getNumber(
+                            firstCard,
+                            "productCount"
+                        );
+
+                    const secondProductCount =
+                        getNumber(
+                            secondCard,
+                            "productCount"
+                        );
+
+
+                    const firstUpdatedAt =
+                        firstCard.dataset
+                            .updatedAt || "";
+
+                    const secondUpdatedAt =
+                        secondCard.dataset
+                            .updatedAt || "";
+
+
+                    if (
+                        sortValue ===
+                        "price-asc"
+                    ) {
+                        if (
+                            firstPrice === 0
+                            && secondPrice === 0
+                        ) {
+                            return 0;
+                        }
+
+                        if (firstPrice === 0) {
+                            return 1;
+                        }
+
+                        if (secondPrice === 0) {
+                            return -1;
+                        }
+
+                        return (
+                            firstPrice
+                            - secondPrice
+                        );
+                    }
+
+
+                    if (
+                        sortValue ===
+                        "price-desc"
+                    ) {
+                        return (
+                            secondPrice
+                            - firstPrice
+                        );
+                    }
+
+
+                    if (
+                        sortValue ===
+                        "products-desc"
+                    ) {
+                        return (
+                            secondProductCount
+                            - firstProductCount
+                        );
+                    }
+
+
+                    if (
+                        sortValue ===
+                        "updated-desc"
+                    ) {
+                        return secondUpdatedAt
+                            .localeCompare(
+                                firstUpdatedAt
+                            );
+                    }
+
+
+                    return 0;
+                }
+            );
+
+
+            sortedCards.forEach(
+                function (card) {
+                    machineGrid.appendChild(
+                        card
+                    );
+                }
+            );
+        }
+
+
+        if (searchInput) {
+            searchInput.addEventListener(
+                "input",
+                filterMachines
+            );
+        }
+
+
+        if (sortSelect) {
+            sortSelect.addEventListener(
+                "change",
+                function () {
+                    sortMachines();
+                    filterMachines();
+                }
+            );
+        }
+
+
+        filterMachines();
+    }
+);
+</script>
+
+{% endblock %}

@@ -1,0 +1,369 @@
+<li class="price-down-item">
+
+    <a
+        class="price-down-machine-link"
+        href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+    >
+
+
+        {# =========================================
+           機種画像
+        ========================================= #}
+
+        <div class="price-down-image-area">
+
+            <img
+                class="price-down-image"
+                src="{{ asset_prefix }}img/machines/{{ machine.master_machine_id }}.webp"
+                alt="{{ machine.master_machine_name }}の実機画像"
+                loading="lazy"
+                decoding="async"
+                onerror="
+                    this.onerror = null;
+                    this.src = '{{ asset_prefix }}img/no_image.webp';
+                "
+            >
+
+        </div>
+
+
+        {# =========================================
+           機種情報
+        ========================================= #}
+
+        <div class="price-down-content">
+
+
+            {# =========================
+               バッジ・更新日
+            ========================= #}
+
+            <div class="price-down-badge-area">
+
+                <span class="price-down-badge">
+                    本日値下げ
+                </span>
+
+
+                {% if machine.category is defined
+                      and machine.category %}
+
+                    {% set normalized_category =
+                        machine.category
+                        | string
+                        | lower
+                        | trim
+                    %}
+
+
+                    {% if normalized_category
+                          in [
+                              "pachinko",
+                              "pachi",
+                              "p",
+                              "パチンコ"
+                          ] %}
+
+                        <span
+                            class="
+                                price-down-category-badge
+                                price-down-category-badge-pachinko
+                            "
+                        >
+                            パチンコ
+                        </span>
+
+                    {% elif normalized_category
+                            in [
+                                "slot",
+                                "s",
+                                "パチスロ",
+                                "スロット"
+                            ] %}
+
+                        <span
+                            class="
+                                price-down-category-badge
+                                price-down-category-badge-slot
+                            "
+                        >
+                            パチスロ
+                        </span>
+
+                    {% endif %}
+
+                {% endif %}
+
+
+                {% if machine.record_date is defined
+                      and machine.record_date %}
+
+                    <time
+                        class="price-down-record-date"
+                        datetime="{{ machine.record_date }}"
+                    >
+                        {{ machine.record_date | date_format }}更新
+                    </time>
+
+                {% endif %}
+
+            </div>
+
+
+            {# =========================
+               メーカー・機種名
+            ========================= #}
+
+            {% if machine.master_machine_maker is defined
+                  and machine.master_machine_maker %}
+
+                <p class="price-down-maker">
+                    {{ machine.master_machine_maker }}
+                </p>
+
+            {% endif %}
+
+
+            <h3 class="price-down-machine-name">
+                {{ machine.master_machine_name }}
+            </h3>
+
+
+            {# =========================
+               型式など
+            ========================= #}
+
+            {% if machine.master_machine_model
+                  or machine.master_machine_gouki %}
+
+                <p class="price-down-machine-subinformation">
+
+                    {% if machine.master_machine_model %}
+
+                        <span class="price-down-machine-model">
+                            型式：{{ machine.master_machine_model }}
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if machine.master_machine_gouki %}
+
+                        <span class="price-down-machine-gouki">
+                            {{ machine.master_machine_gouki }}
+                        </span>
+
+                    {% endif %}
+
+                </p>
+
+            {% endif %}
+
+
+            {# =========================================
+               値下げ情報
+            ========================================= #}
+
+            <div class="price-down-summary">
+
+
+                {% if machine.price_down_amount is defined
+                      and machine.price_down_amount is not none %}
+
+                    <p class="price-down-summary-item">
+
+                        <span class="price-down-summary-label">
+                            値下げ額
+                        </span>
+
+                        <strong class="price-down-summary-value">
+                            −{{ machine.price_down_amount | price }}
+                        </strong>
+
+                    </p>
+
+                {% endif %}
+
+
+                {% if machine.price_down_rate is defined
+                      and machine.price_down_rate is not none %}
+
+                    <p class="price-down-summary-item">
+
+                        <span class="price-down-summary-label">
+                            値下げ率
+                        </span>
+
+                        <strong class="price-down-summary-rate">
+                            −{{ machine.price_down_rate }}%
+                        </strong>
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            {# =========================================
+               価格一覧
+            ========================================= #}
+
+            <dl class="price-down-price-list">
+
+
+                {% if machine.previous_min_price is defined
+                      and machine.previous_min_price is not none %}
+
+                    <div class="price-down-price-row">
+
+                        <dt>
+                            前回の最安価格
+                        </dt>
+
+                        <dd class="price-down-previous-price">
+                            {{ machine.previous_min_price | price }}
+                        </dd>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div
+                    class="
+                        price-down-price-row
+                        price-down-price-row-primary
+                    "
+                >
+
+                    <dt>
+                        現在の最安価格
+                    </dt>
+
+                    <dd>
+                        {{ machine.min_price | price }}
+                    </dd>
+
+                </div>
+
+
+                {% if machine.avg_price is defined
+                      and machine.avg_price is not none %}
+
+                    <div class="price-down-price-row">
+
+                        <dt>
+                            平均価格
+                        </dt>
+
+                        <dd>
+                            {{ machine.avg_price | price }}
+                        </dd>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if machine.median_price is defined
+                      and machine.median_price is not none %}
+
+                    <div class="price-down-price-row">
+
+                        <dt>
+                            中央価格
+                        </dt>
+
+                        <dd>
+                            {{ machine.median_price | price }}
+                        </dd>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if machine.max_price is defined
+                      and machine.max_price is not none %}
+
+                    <div class="price-down-price-row">
+
+                        <dt>
+                            最高価格
+                        </dt>
+
+                        <dd>
+                            {{ machine.max_price | price }}
+                        </dd>
+
+                    </div>
+
+                {% endif %}
+
+            </dl>
+
+
+            {# =========================================
+               商品数・ショップ数
+            ========================================= #}
+
+            <div class="price-down-meta">
+
+                <p class="price-down-meta-item">
+
+                    <span class="price-down-meta-label">
+                        商品数
+                    </span>
+
+                    <strong class="price-down-meta-value">
+                        {{ machine.price_count | number }}件
+                    </strong>
+
+                </p>
+
+
+                <p class="price-down-meta-item">
+
+                    <span class="price-down-meta-label">
+                        ショップ数
+                    </span>
+
+                    <strong class="price-down-meta-value">
+                        {{ machine.shop_count | number }}店
+                    </strong>
+
+                </p>
+
+            </div>
+
+
+            {# =========================================
+               最安ショップ
+            ========================================= #}
+
+            {% if machine.lowest_shop_name is defined
+                  and machine.lowest_shop_name %}
+
+                <p class="price-down-lowest-shop">
+
+                    <span class="price-down-lowest-shop-label">
+                        最安ショップ：
+                    </span>
+
+                    {{ machine.lowest_shop_name }}
+
+                </p>
+
+            {% endif %}
+
+
+            <span class="price-down-detail-button">
+                価格推移を見る
+            </span>
+
+        </div>
+
+    </a>
+
+</li>

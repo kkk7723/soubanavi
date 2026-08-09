@@ -1,0 +1,763 @@
+{% extends "base.html" %}
+
+
+{# ==================================================
+   最近導入された機種・詳細ページ専用CSS
+================================================== #}
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/recent_machines_detail.css"
+>
+
+{% endblock %}
+
+
+{# ==================================================
+   メインコンテンツ
+================================================== #}
+
+{% block main %}
+
+<div class="page-content recent-machine-detail-page">
+
+
+{# ==================================================
+   詳細ページヘッダー
+================================================== #}
+
+<header class="recent-machine-detail-header">
+
+    <div class="recent-machine-detail-header-main">
+
+        <div class="recent-machine-detail-heading-area">
+
+            {% if machine.master_machine_category %}
+
+                <p class="recent-machine-detail-category-area">
+
+                    <span
+                        class="
+                            recent-machine-detail-category
+                            recent-machine-detail-category-{{ machine.normalized_category_key | default('other', true) }}
+                        "
+                    >
+
+                        {% if machine.normalized_category_key == "slot" %}
+
+                            パチスロ
+
+                        {% elif machine.normalized_category_key == "pachinko" %}
+
+                            パチンコ
+
+                        {% else %}
+
+                            {{ machine.master_machine_category }}
+
+                        {% endif %}
+
+                    </span>
+
+                </p>
+
+            {% endif %}
+
+
+            {% if machine.master_machine_maker %}
+
+                <p class="recent-machine-detail-maker">
+                    {{ machine.master_machine_maker }}
+                </p>
+
+            {% endif %}
+
+
+            <h1 class="page-title recent-machine-detail-title">
+                {{ machine.master_machine_name }}
+            </h1>
+
+
+            {% if machine.master_machine_model %}
+
+                <p class="recent-machine-detail-model">
+                    型式：{{ machine.master_machine_model }}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if machine.introduced_date_display %}
+
+            <div class="recent-machine-detail-introduced">
+
+                <span class="recent-machine-detail-introduced-label">
+                    導入日
+                </span>
+
+                <time
+                    datetime="{{ machine.introduced_date_iso }}"
+                    class="recent-machine-detail-introduced-value"
+                >
+                    {{ machine.introduced_date_display }}
+                </time>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+{# ==================================================
+   メイン情報
+================================================== #}
+
+<section
+    class="recent-machine-detail-overview"
+    aria-label="機種の概要"
+>
+
+    <div class="recent-machine-detail-image-column">
+
+        <div class="recent-machine-detail-image-area">
+
+            {% if machine.master_machine_pworld_image_url %}
+
+                <img
+                    class="recent-machine-detail-image"
+                    src="{{ machine.master_machine_pworld_image_url }}"
+                    alt="{{ machine.master_machine_name }}"
+                    decoding="async"
+                >
+
+            {% else %}
+
+                <div class="recent-machine-detail-image-placeholder">
+
+                    <span aria-hidden="true">
+                        画像なし
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if machine.master_machine_pworld_url %}
+
+            <p class="recent-machine-detail-source-link">
+
+                <a
+                    href="{{ machine.master_machine_pworld_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                >
+                    P-WORLDで機種情報を見る
+                </a>
+
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="recent-machine-detail-info-column">
+
+
+        {# ==================================================
+           在庫状況
+        ================================================== #}
+
+        <section
+            class="recent-machine-detail-stock-panel"
+            aria-labelledby="recent-machine-detail-stock-title"
+        >
+
+            <h2
+                id="recent-machine-detail-stock-title"
+                class="recent-machine-detail-panel-title"
+            >
+                中古実機の販売状況
+            </h2>
+
+
+            {% if machine.has_products %}
+
+                <p class="recent-machine-detail-stock-status is-available">
+                    在庫あり
+                </p>
+
+
+                {% if machine.min_price is not none %}
+
+                    <div class="recent-machine-detail-lowest-price">
+
+                        <span class="recent-machine-detail-price-label">
+                            現在の最安価格
+                        </span>
+
+                        <strong class="recent-machine-detail-price-value">
+                            {{ machine.min_price | price }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+
+                <dl class="recent-machine-detail-market-counts">
+
+                    <div class="recent-machine-detail-market-count">
+
+                        <dt>
+                            商品数
+                        </dt>
+
+                        <dd>
+                            {{ machine.price_count | number }}件
+                        </dd>
+
+                    </div>
+
+
+                    <div class="recent-machine-detail-market-count">
+
+                        <dt>
+                            取扱ショップ数
+                        </dt>
+
+                        <dd>
+                            {{ machine.shop_count | number }}店
+                        </dd>
+
+                    </div>
+
+                </dl>
+
+
+                {% if machine.lowest_product_url %}
+
+                    <p class="recent-machine-detail-purchase-action">
+
+                        <a
+                            class="button button-primary"
+                            href="{{ machine.lowest_product_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer nofollow sponsored"
+                        >
+
+                            {% if machine.lowest_shop_name %}
+
+                                {{ machine.lowest_shop_name }}で商品を見る
+
+                            {% else %}
+
+                                最安商品を見る
+
+                            {% endif %}
+
+                        </a>
+
+                    </p>
+
+                {% endif %}
+
+            {% else %}
+
+                <p class="recent-machine-detail-stock-status is-empty">
+                    現在出品なし
+                </p>
+
+
+                <p class="recent-machine-detail-stock-description">
+                    現在、この機種の中古実機は登録されていません。
+                    商品が確認されると価格情報が表示されます。
+                </p>
+
+            {% endif %}
+
+        </section>
+
+
+        {# ==================================================
+           価格情報
+        ================================================== #}
+
+        {% if machine.has_products %}
+
+            <section
+                class="recent-machine-detail-price-panel"
+                aria-labelledby="recent-machine-detail-price-title"
+            >
+
+                <h2
+                    id="recent-machine-detail-price-title"
+                    class="recent-machine-detail-panel-title"
+                >
+                    中古価格情報
+                </h2>
+
+
+                <dl class="recent-machine-detail-price-grid">
+
+
+                    {% if machine.latest_price is not none %}
+
+                        <div class="recent-machine-detail-price-item">
+
+                            <dt>
+                                最新価格
+                            </dt>
+
+                            <dd>
+                                {{ machine.latest_price | price }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if machine.min_price is not none %}
+
+                        <div class="recent-machine-detail-price-item">
+
+                            <dt>
+                                最安価格
+                            </dt>
+
+                            <dd>
+                                {{ machine.min_price | price }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if machine.max_price is not none %}
+
+                        <div class="recent-machine-detail-price-item">
+
+                            <dt>
+                                最高価格
+                            </dt>
+
+                            <dd>
+                                {{ machine.max_price | price }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if machine.avg_price is not none %}
+
+                        <div class="recent-machine-detail-price-item">
+
+                            <dt>
+                                平均価格
+                            </dt>
+
+                            <dd>
+                                {{ machine.avg_price | price }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if machine.median_price is not none %}
+
+                        <div class="recent-machine-detail-price-item">
+
+                            <dt>
+                                中央価格
+                            </dt>
+
+                            <dd>
+                                {{ machine.median_price | price }}
+                            </dd>
+
+                        </div>
+
+                    {% endif %}
+
+                </dl>
+
+            </section>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+{# ==================================================
+   機種基本情報
+================================================== #}
+
+<section
+    class="recent-machine-detail-section"
+    aria-labelledby="recent-machine-detail-basic-title"
+>
+
+    <h2
+        id="recent-machine-detail-basic-title"
+        class="section-title"
+    >
+        機種基本情報
+    </h2>
+
+
+    <dl class="recent-machine-detail-definition-list">
+
+
+        {% if machine.master_machine_name %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    機種名
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_name }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_maker %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    メーカー
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_maker }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_category %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    カテゴリ
+                </dt>
+
+                <dd>
+
+                    {% if machine.normalized_category_key == "slot" %}
+
+                        パチスロ
+
+                    {% elif machine.normalized_category_key == "pachinko" %}
+
+                        パチンコ
+
+                    {% else %}
+
+                        {{ machine.master_machine_category }}
+
+                    {% endif %}
+
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_model %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    型式
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_model }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_type %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    機種タイプ
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_type }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_gouki %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    号機
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_gouki }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.introduced_date_display %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    導入日
+                </dt>
+
+                <dd>
+
+                    <time datetime="{{ machine.introduced_date_iso }}">
+                        {{ machine.introduced_date_display }}
+                    </time>
+
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if machine.master_machine_game_system %}
+
+            <div class="recent-machine-detail-definition-row">
+
+                <dt>
+                    ゲーム性
+                </dt>
+
+                <dd>
+                    {{ machine.master_machine_game_system }}
+                </dd>
+
+            </div>
+
+        {% endif %}
+
+    </dl>
+
+</section>
+
+
+{# ==================================================
+   機種説明・メモ
+================================================== #}
+
+{% if machine.master_machine_memo %}
+
+    <section
+        class="recent-machine-detail-section"
+        aria-labelledby="recent-machine-detail-description-title"
+    >
+
+        <h2
+            id="recent-machine-detail-description-title"
+            class="section-title"
+        >
+            機種情報
+        </h2>
+
+
+        <div class="recent-machine-detail-description">
+            {{ machine.master_machine_memo | e | replace('\n', '<br>') | safe }}
+        </div>
+
+    </section>
+
+{% endif %}
+
+
+{# ==================================================
+   データ更新情報
+================================================== #}
+
+{% if updated_at
+      or machine.first_seen
+      or machine.last_seen
+      or machine.latest_scraped_at %}
+
+    <section
+        class="recent-machine-detail-update-section"
+        aria-labelledby="recent-machine-detail-update-title"
+    >
+
+        <h2
+            id="recent-machine-detail-update-title"
+            class="recent-machine-detail-update-title"
+        >
+            データ情報
+        </h2>
+
+
+        <dl class="recent-machine-detail-update-list">
+
+
+            {% if machine.first_seen %}
+
+                <div>
+
+                    <dt>
+                        初回確認
+                    </dt>
+
+                    <dd>
+                        {{ machine.first_seen }}
+                    </dd>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if machine.last_seen %}
+
+                <div>
+
+                    <dt>
+                        最終商品確認
+                    </dt>
+
+                    <dd>
+                        {{ machine.last_seen }}
+                    </dd>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if machine.latest_scraped_at %}
+
+                <div>
+
+                    <dt>
+                        最終取得
+                    </dt>
+
+                    <dd>
+                        {{ machine.latest_scraped_at }}
+                    </dd>
+
+                </div>
+
+            {% endif %}
+
+
+            {% if updated_at %}
+
+                <div>
+
+                    <dt>
+                        ページ更新
+                    </dt>
+
+                    <dd>
+                        {{ updated_at }}
+                    </dd>
+
+                </div>
+
+            {% endif %}
+
+        </dl>
+
+    </section>
+
+{% endif %}
+
+
+{# ==================================================
+   ページ下部ナビゲーション
+================================================== #}
+
+<nav
+    class="recent-machine-detail-footer-nav"
+    aria-label="最近導入された機種ページメニュー"
+>
+
+    <a
+        class="button"
+        href="{{ recent_machines_index_url | default(root_prefix ~ 'recent-machines/', true) }}"
+    >
+        最近導入された機種一覧へ戻る
+    </a>
+
+
+    {% if machine.normalized_category_key == "pachinko" %}
+
+        <a
+            class="button"
+            href="{{ root_prefix }}recent-machines/pachinko/"
+        >
+            最近導入されたパチンコを見る
+        </a>
+
+    {% elif machine.normalized_category_key == "slot" %}
+
+        <a
+            class="button"
+            href="{{ root_prefix }}recent-machines/slot/"
+        >
+            最近導入されたパチスロを見る
+        </a>
+
+    {% endif %}
+
+
+    <a
+        class="button button-primary"
+        href="{{ root_prefix }}machines/"
+    >
+        全機種一覧を見る
+    </a>
+
+</nav>
+
+</div>
+
+{% endblock %}

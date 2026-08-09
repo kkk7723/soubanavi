@@ -1,0 +1,831 @@
+/* ==================================================
+   最近導入された機種ページ
+================================================== */
+
+
+/* ==================================================
+   ページ全体
+================================================== */
+
+.page-content {
+    width: min(
+        1180px,
+        calc(100% - 32px)
+    );
+    margin: 0 auto;
+}
+
+
+/* ==================================================
+   ページヘッダー
+================================================== */
+
+.recent-machines-header {
+    margin-bottom: 28px;
+}
+
+.recent-machines-description {
+    margin: 14px 0 0;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.recent-machines-period {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.recent-machines-period-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #f1f3f5;
+    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   件数サマリー
+================================================== */
+
+.recent-machines-summary {
+    display: grid;
+    grid-template-columns: repeat(
+        3,
+        minmax(0, 1fr)
+    );
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.recent-machines-summary-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+    min-height: 110px;
+    padding: 22px 16px;
+    border: 1px solid #e2e5e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 5%);
+    text-align: center;
+}
+
+.recent-machines-summary-label {
+    width: 100%;
+    color: #666;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recent-machines-summary-value {
+    color: #222;
+    font-size: clamp(
+        26px,
+        3vw,
+        34px
+    );
+    line-height: 1;
+}
+
+.recent-machines-summary-unit {
+    color: #555;
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   絞り込み
+================================================== */
+
+.recent-machines-filter {
+    margin-bottom: 32px;
+    padding: 22px;
+    border: 1px solid #e2e5e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 5%);
+}
+
+.recent-machines-filter-title {
+    margin: 0 0 18px;
+    color: #222;
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.recent-machines-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        4,
+        minmax(0, 1fr)
+    );
+    gap: 16px;
+}
+
+.recent-machines-filter-field {
+    min-width: 0;
+}
+
+.recent-machines-filter-field:first-child {
+    grid-column: span 2;
+}
+
+.recent-machines-filter-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #444;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recent-machines-filter-input,
+.recent-machines-filter-select {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 12px;
+    border: 1px solid #cfd4d9;
+    border-radius: 8px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-size: 15px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recent-machines-filter-input:focus,
+.recent-machines-filter-select:focus {
+    border-color: #666;
+    box-shadow: 0 0 0 3px rgb(0 0 0 / 8%);
+}
+
+.recent-machines-filter-input::placeholder {
+    color: #999;
+}
+
+.recent-machines-filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.recent-machines-filter-reset {
+    min-height: 42px;
+    padding: 9px 18px;
+    border: 1px solid #cfd4d9;
+    border-radius: 8px;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.recent-machines-filter-reset:hover {
+    background: #f5f6f7;
+}
+
+.recent-machines-visible-count {
+    margin: 14px 0 0;
+    color: #666;
+    font-size: 14px;
+    text-align: right;
+}
+
+
+/* ==================================================
+   機種一覧セクション
+================================================== */
+
+.recent-machines-section {
+    margin-bottom: 36px;
+}
+
+.recent-machines-section > .section-title {
+    margin-bottom: 20px;
+}
+
+.recent-machines-list {
+    display: grid;
+    grid-template-columns: repeat(
+        3,
+        minmax(0, 1fr)
+    );
+    gap: 20px;
+}
+
+
+/* ==================================================
+   機種カード
+================================================== */
+
+.recent-machine-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 6%);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.recent-machine-card:hover {
+    transform: translateY(-3px);
+    border-color: #c8cdd2;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+}
+
+.recent-machine-card[hidden] {
+    display: none;
+}
+
+.recent-machine-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ==================================================
+   機種画像
+================================================== */
+
+.recent-machine-image-area {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: #f4f5f6;
+}
+
+.recent-machine-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+}
+
+.recent-machine-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #999;
+    font-size: 14px;
+}
+
+.recent-machine-category {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+}
+
+.recent-machine-category-slot {
+    background: #333;
+}
+
+.recent-machine-category-pachinko {
+    background: #555;
+}
+
+
+/* ==================================================
+   機種カード内容
+================================================== */
+
+.recent-machine-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px;
+}
+
+.recent-machine-introduced-date {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 10px;
+    color: #444;
+    font-size: 13px;
+}
+
+.recent-machine-introduced-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1f3f5;
+    color: #555;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.recent-machine-maker {
+    margin: 0 0 5px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.recent-machine-name {
+    margin: 0;
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   型式・タイプ・号機
+================================================== */
+
+.recent-machine-properties {
+    display: grid;
+    gap: 7px;
+    margin: 16px 0 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f7f8f9;
+}
+
+.recent-machine-property {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.recent-machine-property dt {
+    color: #777;
+    font-weight: 700;
+}
+
+.recent-machine-property dd {
+    min-width: 0;
+    margin: 0;
+    color: #333;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   価格・在庫情報
+================================================== */
+
+.recent-machine-market {
+    margin-top: auto;
+    padding-top: 18px;
+}
+
+.recent-machine-stock {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    margin: 0 0 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.recent-machine-stock-available {
+    background: #e9f7ef;
+    color: #176b3a;
+}
+
+.recent-machine-stock-empty {
+    background: #f1f2f3;
+    color: #666;
+}
+
+.recent-machine-price {
+    margin: 0 0 12px;
+}
+
+.recent-machine-price-label {
+    display: block;
+    margin-bottom: 3px;
+    color: #777;
+    font-size: 12px;
+}
+
+.recent-machine-price-value {
+    color: #222;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.recent-machine-market-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    color: #666;
+    font-size: 13px;
+}
+
+.recent-machine-market-counts strong {
+    color: #333;
+}
+
+.recent-machine-stock-note {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.recent-machine-detail-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    min-height: 34px;
+    margin-top: 16px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recent-machine-card-link:hover
+.recent-machine-detail-text {
+    background: #444;
+}
+
+
+/* ==================================================
+   絞り込み結果なし
+================================================== */
+
+.recent-machines-no-result {
+    margin-top: 24px;
+    padding: 32px 20px;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fafafa;
+    text-align: center;
+}
+
+.recent-machines-no-result[hidden] {
+    display: none;
+}
+
+.recent-machines-no-result p {
+    margin: 0 0 16px;
+    color: #555;
+}
+
+
+/* ==================================================
+   対象機種なし
+================================================== */
+
+.recent-machines-empty {
+    margin-bottom: 32px;
+    padding: 30px 24px;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+    text-align: center;
+}
+
+.recent-machines-empty .section-title {
+    margin-bottom: 14px;
+}
+
+.recent-machines-empty p {
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   下部ナビゲーション
+================================================== */
+
+.recent-machines-footer-nav {
+    display: flex;
+    justify-content: center;
+    margin: 34px 0 10px;
+}
+
+.recent-machines-footer-nav .button {
+    min-width: 220px;
+}
+
+
+/* ==================================================
+   タブレット
+================================================== */
+
+@media (max-width: 960px) {
+
+    .recent-machines-filter-grid {
+        grid-template-columns: repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    }
+
+    .recent-machines-filter-field:first-child {
+        grid-column: span 2;
+    }
+
+    .recent-machines-list {
+        grid-template-columns: repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    }
+}
+
+
+/* ==================================================
+   スマートフォン
+================================================== */
+
+@media (max-width: 640px) {
+
+    .page-content {
+        width: min(
+            100%,
+            calc(100% - 20px)
+        );
+    }
+
+    .recent-machines-header {
+        margin-bottom: 22px;
+    }
+
+    .recent-machines-description {
+        font-size: 14px;
+    }
+
+    .recent-machines-period {
+        align-items: flex-start;
+        font-size: 13px;
+    }
+
+    .recent-machines-summary {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .recent-machines-summary-item {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr)
+            auto
+            auto;
+        align-items: baseline;
+        justify-content: initial;
+        min-height: auto;
+        padding: 16px;
+        text-align: left;
+    }
+
+    .recent-machines-summary-label {
+        width: auto;
+    }
+
+    .recent-machines-summary-value {
+        font-size: 26px;
+    }
+
+    .recent-machines-filter {
+        padding: 16px;
+    }
+
+    .recent-machines-filter-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .recent-machines-filter-field:first-child {
+        grid-column: auto;
+    }
+
+    .recent-machines-filter-actions {
+        justify-content: stretch;
+    }
+
+    .recent-machines-filter-reset {
+        width: 100%;
+    }
+
+    .recent-machines-visible-count {
+        text-align: left;
+    }
+
+    .recent-machines-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .recent-machine-card-link {
+        display: grid;
+        grid-template-columns:
+            120px
+            minmax(0, 1fr);
+    }
+
+    .recent-machine-image-area {
+        aspect-ratio: auto;
+        min-height: 100%;
+    }
+
+    .recent-machine-content {
+        padding: 14px;
+    }
+
+    .recent-machine-name {
+        font-size: 16px;
+    }
+
+    .recent-machine-properties {
+        margin-top: 12px;
+        padding: 10px;
+    }
+
+    .recent-machine-property {
+        grid-template-columns: 48px minmax(0, 1fr);
+    }
+
+    .recent-machine-price-value {
+        font-size: 19px;
+    }
+
+    .recent-machine-detail-text {
+        align-self: flex-start;
+        margin-top: 12px;
+    }
+
+    .recent-machine-category {
+        top: 7px;
+        left: 7px;
+    }
+}
+
+
+/* ==================================================
+   小さいスマートフォン
+================================================== */
+
+@media (max-width: 420px) {
+
+    .recent-machine-card-link {
+        display: flex;
+    }
+
+    .recent-machine-image-area {
+        aspect-ratio: 16 / 9;
+        min-height: 0;
+    }
+
+    .recent-machine-content {
+        padding: 15px;
+    }
+
+    .recent-machines-period {
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+
+    .recent-machines-period > span[aria-hidden="true"] {
+        display: none;
+    }
+
+    .recent-machines-period time {
+        grid-column: 2;
+    }
+}
+
+
+/* ==================================================
+   キーボード操作
+================================================== */
+
+.recent-machine-card-link:focus-visible,
+.recent-machines-filter-input:focus-visible,
+.recent-machines-filter-select:focus-visible,
+.recent-machines-filter-reset:focus-visible,
+.recent-machines-footer-nav .button:focus-visible,
+.recent-machines-no-result .button:focus-visible {
+    outline: 3px solid #555;
+    outline-offset: 3px;
+}
+
+/* ==================================================
+   カテゴリ切替
+================================================== */
+
+.recent-machines-category-nav {
+    margin: 0 0 28px;
+}
+
+.recent-machines-category-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.recent-machines-category-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 18px;
+    border: 1px solid #d7dbe0;
+    border-radius: 999px;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    font-weight: 700;
+    transition:
+        background .2s,
+        color .2s,
+        border-color .2s;
+}
+
+.recent-machines-category-nav-link:hover {
+    background: #f5f6f7;
+}
+
+.recent-machines-category-nav-link.is-current {
+    border-color: #222;
+    background: #222;
+    color: #fff;
+}
+
+@media (max-width:640px){
+
+    .recent-machines-category-nav-list{
+        gap:8px;
+    }
+
+    .recent-machines-category-nav-link{
+        flex:1;
+        min-width:90px;
+    }
+
+}
+
+
+/* ==================================================
+   動きを減らす設定
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .recent-machine-card,
+    .recent-machines-filter-input,
+    .recent-machines-filter-select {
+        transition: none;
+    }
+
+    .recent-machine-card:hover {
+        transform: none;
+    }
+}

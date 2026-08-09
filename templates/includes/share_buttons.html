@@ -1,0 +1,60 @@
+<section
+    class="share-section"
+    aria-labelledby="share-section-title"
+>
+    <h2
+        id="share-section-title"
+        class="share-section-title"
+    >
+        このページをシェア
+    </h2>
+
+    <div class="share-buttons">
+
+        <a
+            class="share-button share-button-x"
+            href="https://twitter.com/intent/tweet?url={{ canonical_url | urlencode }}&amp;text={{ (machine.master_machine_name ~ 'の中古価格・相場') | urlencode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Xでシェアする"
+        >
+            X
+        </a>
+
+        <a
+            class="share-button share-button-facebook"
+            href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url | urlencode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebookでシェアする"
+        >
+            Facebook
+        </a>
+
+        <a
+            class="share-button share-button-line"
+            href="https://social-plugins.line.me/lineit/share?url={{ canonical_url | urlencode }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LINEでシェアする"
+        >
+            LINE
+        </a>
+
+        <button
+            class="share-button share-button-copy"
+            type="button"
+            data-share-url="{{ canonical_url }}"
+            aria-label="ページURLをコピーする"
+        >
+            URLをコピー
+        </button>
+
+    </div>
+
+    <p
+        class="share-copy-message"
+        role="status"
+        aria-live="polite"
+    ></p>
+</section>

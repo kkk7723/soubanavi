@@ -1,0 +1,32 @@
+/* ==================================================
+   Main Container
+================================================== */
+
+.site-container {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* ==================================================
+   Main Layout
+================================================== */
+
+.site-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        260px;
+    align-items: start;
+    gap: 28px;
+}
+
+.site-content {
+    min-width: 0;
+}
+
+.sidebar {
+    min-width: 0;
+}

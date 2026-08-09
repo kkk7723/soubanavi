@@ -1,0 +1,1417 @@
+/* ==================================================
+   1. Machine Detail Header
+================================================== */
+
+.machine-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/*
+ * common.css の .page-header を
+ * 機種詳細ページだけ上書きする
+ */
+.page-header.machine-detail-header {
+    padding: 10px 14px;
+}
+
+.machine-detail-header .page-title {
+    font-size: clamp(
+        18px,
+        2.4vw,
+        26px
+    );
+    line-height: 1.25;
+}
+
+.machine-detail-header .page-description {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.machine-detail-header .updated-at {
+    margin-top: 2px;
+    font-size: 10px;
+}
+
+
+/* ==================================================
+   2. Common Section Heading
+================================================== */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.section-heading .section-title {
+    margin-bottom: 0;
+}
+
+.section-count {
+    flex-shrink: 0;
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   3. Machine Overview Card
+================================================== */
+
+
+
+
+.machine-overview-grid {
+    display: grid;
+    grid-template-columns:
+        150px
+        minmax(0, 1fr);
+    gap: 14px;
+    align-items: stretch;
+}
+
+
+/* =========================
+   Machine image
+========================= */
+
+.machine-image-area {
+    display: flex;
+    min-width: 0;
+    min-height: 230px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.machine-main-image {
+    display: block;
+    width: 100%;
+    max-width: 150px;
+    height: 215px;
+    object-fit: contain;
+}
+
+.machine-image-placeholder {
+    display: flex;
+    width: 100%;
+    min-height: 280px;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 13px;
+}
+
+
+/* =========================
+   Machine information
+========================= */
+
+.machine-information {
+    display: flex;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* 情報全体を1つの表のようにする */
+.machine-information-list {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    background: #fff;
+}
+
+/* ラベルと値を常に横並び */
+.machine-information-row {
+    display: grid;
+    grid-template-columns:
+        90px
+        minmax(0, 1fr);
+    min-height: 44px;
+    border-bottom: 1px solid #dedede;
+}
+
+.machine-information-row:last-child {
+    border-bottom: 0;
+}
+
+.machine-information-row dt,
+.machine-information-row dd {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    padding: 8px 10px;
+}
+
+.machine-information-row dt {
+    border-right: 1px solid #dedede;
+    background: #fafafa;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.machine-information-row dd {
+    margin: 0;
+    color: #222;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.machine-reference-link {
+    margin: 14px 0 0;
+}
+
+.machine-reference-link .button {
+    display: inline-flex;
+    min-width: 190px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+}
+
+
+/* ==================================================
+   4. Price Summary Cards
+================================================== */
+
+.price-summary-section {
+    margin-top: 0;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(135px, 1fr)
+        );
+    gap: 10px;
+}
+
+.summary-item {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
+}
+
+.summary-label {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.summary-value {
+    display: block;
+    margin-top: 5px;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.summary-item:first-child .summary-value {
+    color: #d13b2f;
+}
+
+
+/* ==================================================
+   5. Price History
+================================================== */
+
+.price-history-section {
+    margin-top: 0;
+}
+
+.price-history-chart-container {
+    position: relative;
+    width: 100%;
+    height: 330px;
+    padding: 12px;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.price-history-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.price-history-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+}
+
+.price-history-legend-item {
+    color: #555;
+    font-size: 12px;
+}
+
+.price-history-note {
+    margin: 8px 0 0;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   6. Lowest Product Card
+================================================== */
+
+.lowest-product-section {
+    margin-top: 0;
+}
+
+.lowest-product {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.lowest-product-image-area {
+    display: flex;
+    width: 170px;
+    height: 170px;
+    flex: 0 0 170px;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #eee;
+    background: #fafafa;
+}
+
+.lowest-product-image {
+    display: block;
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+}
+
+.lowest-product-content {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px 22px;
+}
+
+.lowest-product-shop {
+    margin: 0 0 5px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.lowest-product-name {
+    margin: 0 0 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.lowest-product-price {
+    margin: 0;
+    color: #d13b2f;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.lowest-product-date {
+    margin: 7px 0 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.lowest-product-link {
+    margin: 13px 0 0;
+}
+
+.lowest-product-link .button {
+    display: inline-flex;
+    min-width: 180px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+}
+
+
+/* ==================================================
+   7. Product List
+================================================== */
+
+.product-list-section {
+    margin-top: 0;
+}
+
+.product-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* ==================================================
+   8. Compact Product Card
+================================================== */
+
+.product-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 4%);
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+.product-card:hover {
+    border-color: #c8cdd2;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+    transform: translateY(-1px);
+}
+
+.product-card-full-link {
+    display: grid;
+    grid-template-columns:
+        100px
+        minmax(0, 1fr)
+        28px;
+    min-height: 118px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    color: inherit;
+    text-decoration: none;
+    opacity: 1;
+}
+
+.product-card-full-link:hover {
+    background: #fafbfc;
+    opacity: 1;
+}
+
+.product-card-full-link:focus-visible {
+    outline: 3px solid rgb(29 115 183 / 25%);
+    outline-offset: -3px;
+}
+
+.product-card-full-link-disabled {
+    grid-template-columns:
+        100px
+        minmax(0, 1fr);
+}
+
+.product-card-image-area {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 7px;
+    background: #fafafa;
+}
+
+.product-card-image {
+    display: block;
+    width: 86px;
+    height: 96px;
+    object-fit: contain;
+}
+
+.product-image-placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    color: #89929a;
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.product-card-body {
+    min-width: 0;
+}
+
+.product-shop-name {
+    margin: 0 0 3px;
+    color: #69737c;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.product-name {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: #222;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.product-price {
+    margin: 8px 0 0;
+    color: #d32f2f;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.product-card-arrow {
+    display: flex;
+    width: 28px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    color: #68737d;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.product-url-missing {
+    margin: 6px 0 0;
+    color: #999;
+    font-size: 11px;
+}
+
+
+/* ==================================================
+   9. Related Machines
+================================================== */
+
+.related-machines-section {
+    min-width: 0;
+    margin-top: 0;
+}
+
+.related-machine-grid {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    padding: 2px 2px 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 2px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #bbb #f1f1f1;
+}
+
+.related-machine-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.related-machine-grid::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: #f1f1f1;
+}
+
+.related-machine-grid::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #bbb;
+}
+
+.related-machine-grid::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+.related-machine-card {
+    width: 220px;
+    min-width: 220px;
+    height: auto;
+    flex: 0 0 220px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: #fff;
+    scroll-snap-align: start;
+    align-self: flex-start;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.related-machine-card:hover {
+    border-color: #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.related-machine-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.related-machine-image-area {
+    display: flex;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+}
+
+.related-machine-image {
+    display: block;
+    width: 105px;
+    max-width: 100%;
+    height: 130px;
+    object-fit: contain;
+}
+
+.related-machine-body {
+    min-width: 0;
+    padding: 9px 10px 10px;
+}
+
+.related-machine-name {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.related-machine-price {
+    margin: 8px 0 0;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.related-machine-price strong {
+    display: block;
+    margin-top: 2px;
+    color: #d13b2f;
+    font-size: 17px;
+}
+
+
+/* ==================================================
+   10. Machine Note
+================================================== */
+.machine-supplement-section {
+    min-width: 0;
+    margin-top: 0;
+}
+
+.machine-supplement-list {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.machine-supplement-row {
+    display: grid;
+    grid-template-columns:
+        150px
+        minmax(0, 1fr);
+    min-height: 44px;
+    border-bottom: 1px solid #dedede;
+}
+
+.machine-supplement-row:last-child {
+    border-bottom: 0;
+}
+
+.machine-supplement-row dt,
+.machine-supplement-row dd {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    padding: 9px 12px;
+}
+
+.machine-supplement-row dt {
+    border-right: 1px solid #dedede;
+    background: #fafafa;
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.machine-supplement-row dd {
+    margin: 0;
+    color: #222;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.machine-note-section {
+    margin-top: 0;
+}
+
+.machine-note {
+    padding: 16px;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    background: #fff;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   11. Share Section
+================================================== */
+
+.share-section {
+    margin-top: 0;
+    padding-top: 18px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.share-section .section-title {
+    margin-bottom: 10px;
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.share-button {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fff;
+    color: #333;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.share-button:hover {
+    border-color: #bbb;
+    background: #f7f7f7;
+}
+
+.share-icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+.share-copy-message {
+    margin: 8px 0 0;
+    color: #555;
+    font-size: 12px;
+}
+
+.share-copy-message.is-error {
+    color: #c62828;
+}
+
+.share-button-copy:disabled {
+    cursor: default;
+    opacity: 0.65;
+}
+
+
+/* ==================================================
+   12. Empty State
+================================================== */
+
+.empty-state {
+    padding: 26px 18px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    background: #fff;
+    text-align: center;
+}
+
+.empty-state-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.empty-state-description {
+    margin: 7px 0 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   13. Tablet Responsive
+================================================== */
+
+@media (max-width: 900px) {
+
+    .machine-overview-grid {
+        grid-template-columns:
+            160px
+            minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .machine-image-area {
+        min-height: 250px;
+        padding: 12px;
+    }
+
+    .machine-main-image {
+        max-width: 145px;
+        height: 230px;
+    }
+
+    .machine-information-row {
+        grid-template-columns:
+            100px
+            minmax(0, 1fr);
+        min-height: 58px;
+    }
+
+    .machine-information-row dt,
+    .machine-information-row dd {
+        padding: 12px;
+    }
+}
+
+
+/* ==================================================
+   14. Mobile Responsive
+================================================== */
+
+@media (max-width: 700px) {
+
+    .section-title {
+        font-size: 18px;
+    }
+    
+    .page-header.machine-detail-header {
+        padding: 9px 11px;
+    }
+
+    .machine-detail-header .page-title {
+        font-size: 18px;
+        line-height: 1.3;
+    }
+
+    .machine-detail-header .page-description {
+        font-size: 11px;
+    }
+
+    .machine-detail-header .updated-at {
+        font-size: 9px;
+    }
+
+    .machine-overview {
+        padding: 8px;
+    }
+
+    .machine-overview-grid {
+        display: grid;
+        grid-template-columns:
+            82px
+            minmax(0, 1fr);
+        gap: 7px;
+        align-items: start;
+    }
+
+    .machine-image-area {
+        min-height: 170px;
+        padding: 4px;
+    }
+
+    .machine-main-image {
+        max-width: 74px;
+        height: 160px;
+    }
+
+    .machine-information-row {
+        grid-template-columns:
+            54px
+            minmax(0, 1fr);
+        min-height: 36px;
+    }
+
+    .machine-information-row dt,
+    .machine-information-row dd {
+        padding: 5px;
+    }
+
+    .machine-information-row dt {
+        font-size: 9px;
+    }
+
+    .machine-information-row dd {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    /* 現在の最安商品 */
+
+    .lowest-product-image-area {
+        width: 120px;
+        height: 140px;
+        flex-basis: 120px;
+    }
+
+    .lowest-product-image {
+        width: 92px;
+        height: 110px;
+    }
+
+    .lowest-product-content {
+        padding: 14px;
+    }
+
+    .lowest-product-name {
+        font-size: 14px;
+    }
+
+    .lowest-product-price {
+        font-size: 22px;
+    }
+
+    .lowest-product-link .button {
+        width: 100%;
+        min-width: 0;
+    }
+
+
+    /* ショップ別商品一覧 */
+
+    .product-grid {
+        gap: 8px;
+    }
+
+    .product-card-full-link {
+        grid-template-columns:
+            82px
+            minmax(0, 1fr)
+            22px;
+        min-height: 98px;
+        gap: 10px;
+        padding: 8px 9px;
+    }
+
+    .product-card-full-link-disabled {
+        grid-template-columns:
+            82px
+            minmax(0, 1fr);
+    }
+
+    .product-card-image-area {
+        width: 82px;
+        height: 82px;
+    }
+
+    .product-card-image {
+        width: 70px;
+        height: 76px;
+    }
+
+    .product-shop-name {
+        margin-bottom: 2px;
+        font-size: 11px;
+    }
+
+    .product-name {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .product-price {
+        margin-top: 5px;
+        font-size: 19px;
+    }
+
+    .product-card-arrow {
+        width: 22px;
+        font-size: 29px;
+    }
+}
+
+/* ==================================================
+   15. Small Mobile Responsive
+================================================== */
+
+@media (max-width: 520px) {
+
+    .section-title {
+        font-size: 17px;
+    }
+
+    .favorite-toggle-button {
+        padding: 5px 8px;
+        min-height: 30px;
+    }
+
+    .favorite-toggle-icon {
+        font-size: 13px;
+    }
+
+    .favorite-toggle-label {
+        font-size: 10px;
+    }
+
+    .machine-detail {
+        gap: 18px;
+    }
+
+    .page-header.machine-detail-header {
+        padding: 8px 10px;
+    }
+
+    .machine-detail-header .page-title {
+        font-size: 17px;
+        line-height: 1.25;
+    }
+
+    .machine-detail-header .page-description {
+        margin-top: 3px;
+        font-size: 10px;
+    }
+
+    .machine-detail-header .updated-at {
+        margin-top: 1px;
+        font-size: 9px;
+    }
+
+
+    /* 基本情報 */
+
+    .machine-overview {
+        padding: 7px;
+    }
+
+    .machine-overview-grid {
+        display: grid;
+        grid-template-columns:
+            74px
+            minmax(0, 1fr);
+        gap: 6px;
+        align-items: start;
+    }
+
+    .machine-image-area {
+        min-height: 0;
+        height: 138px;
+        padding: 3px;
+    }
+
+    .machine-main-image {
+        width: 100%;
+        max-width: 68px;
+        height: 132px;
+    }
+
+    .machine-image-placeholder {
+        min-height: 132px;
+        font-size: 9px;
+    }
+
+    .machine-information {
+        align-items: flex-start;
+    }
+
+    .machine-information-row {
+        display: grid;
+        grid-template-columns:
+            48px
+            minmax(0, 1fr);
+        min-height: 31px;
+    }
+
+    .machine-information-row dt,
+    .machine-information-row dd {
+        padding: 4px;
+    }
+
+    .machine-information-row dt {
+        font-size: 8px;
+        line-height: 1.25;
+    }
+
+    .machine-information-row dd {
+        font-size: 9px;
+        line-height: 1.3;
+    }
+
+
+    /* 現在の最安商品 */
+
+    .lowest-product-image-area {
+        width: 100px;
+        height: 125px;
+        flex-basis: 100px;
+    }
+
+    .lowest-product-image {
+        width: 80px;
+        height: 95px;
+    }
+
+    .lowest-product-content {
+        padding: 11px 12px;
+    }
+
+    .lowest-product-shop {
+        font-size: 11px;
+    }
+
+    .lowest-product-name {
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+
+    .lowest-product-price {
+        font-size: 20px;
+    }
+
+    .lowest-product-date {
+        margin-top: 4px;
+        font-size: 10px;
+    }
+
+    .lowest-product-link {
+        margin-top: 8px;
+    }
+
+    .lowest-product-link .button {
+        min-height: 36px;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+
+    /* ショップ別商品一覧 */
+
+    .product-card-full-link {
+        grid-template-columns:
+            72px
+            minmax(0, 1fr)
+            18px;
+        min-height: 88px;
+        gap: 8px;
+        padding: 7px 8px;
+    }
+
+    .product-card-full-link-disabled {
+        grid-template-columns:
+            72px
+            minmax(0, 1fr);
+    }
+
+    .product-card-image-area {
+        width: 72px;
+        height: 72px;
+    }
+
+    .product-card-image {
+        width: 60px;
+        height: 66px;
+    }
+
+    .product-shop-name {
+        font-size: 10px;
+    }
+
+    .product-name {
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .product-price {
+        margin-top: 4px;
+        font-size: 18px;
+    }
+
+    .product-card-arrow {
+        width: 18px;
+        font-size: 27px;
+    }
+
+    .product-url-missing {
+        margin-top: 4px;
+        font-size: 9px;
+    }
+}
+
+/* ==================================================
+   kanren
+================================================== */
+
+@media (max-width: 700px) {
+
+    .machine-supplement-row {
+        grid-template-columns:
+            105px
+            minmax(0, 1fr);
+        min-height: 40px;
+    }
+
+    .machine-supplement-row dt,
+    .machine-supplement-row dd {
+        padding: 7px 8px;
+    }
+
+    .machine-supplement-row dt {
+        font-size: 10px;
+    }
+
+    .machine-supplement-row dd {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+    
+    .related-machine-grid {
+        gap: 9px;
+        padding-bottom: 10px;
+    }
+
+    .related-machine-card {
+        width: 150px;
+        min-width: 150px;
+        flex-basis: 150px;
+    }
+
+    .related-machine-image-area {
+        height: 105px;
+        padding: 6px;
+    }
+
+    .related-machine-image {
+        width: 78px;
+        height: 94px;
+    }
+
+    .related-machine-body {
+        padding: 7px 8px 8px;
+    }
+
+    .related-machine-name {
+        display: -webkit-box;
+        overflow: hidden;
+        font-size: 11px;
+        line-height: 1.4;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .related-machine-price {
+        margin-top: 5px;
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .related-machine-price strong {
+        margin-top: 1px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .related-machine-card {
+        width: 132px;
+        min-width: 132px;
+        flex-basis: 132px;
+    }
+
+    .related-machine-image-area {
+        height: 92px;
+        padding: 5px;
+    }
+
+    .related-machine-image {
+        width: 68px;
+        height: 82px;
+    }
+
+    .related-machine-name {
+        font-size: 10px;
+    }
+
+    .related-machine-price {
+        font-size: 9px;
+    }
+
+    .related-machine-price strong {
+        font-size: 13px;
+    }
+}
+
+/* ==================================================
+   16. Extra Small Mobile
+================================================== */
+
+@media (max-width: 360px) {
+
+    .machine-overview-grid {
+        display: grid;
+        grid-template-columns:
+            66px
+            minmax(0, 1fr);
+        gap: 5px;
+        align-items: start;
+    }
+
+    .machine-image-area {
+        min-height: 0;
+        height: 126px;
+        padding: 2px;
+    }
+
+    .machine-main-image {
+        max-width: 60px;
+        height: 120px;
+    }
+
+    .machine-image-placeholder {
+        min-height: 120px;
+        font-size: 8px;
+    }
+
+    .machine-information-row {
+        grid-template-columns:
+            44px
+            minmax(0, 1fr);
+        min-height: 29px;
+    }
+
+    .machine-information-row dt,
+    .machine-information-row dd {
+        padding: 3px;
+    }
+
+    .machine-information-row dt {
+        font-size: 7px;
+    }
+
+    .machine-information-row dd {
+        font-size: 8px;
+    }
+
+
+    /* 現在の最安商品 */
+
+    .lowest-product-image-area {
+        width: 88px;
+        flex-basis: 88px;
+    }
+
+    .lowest-product-image {
+        width: 68px;
+        height: 88px;
+    }
+
+
+    /* ショップ別商品一覧 */
+
+    .product-card-full-link {
+        grid-template-columns:
+            64px
+            minmax(0, 1fr)
+            16px;
+        min-height: 80px;
+        gap: 7px;
+        padding: 6px 7px;
+    }
+
+    .product-card-full-link-disabled {
+        grid-template-columns:
+            64px
+            minmax(0, 1fr);
+    }
+
+    .product-card-image-area {
+        width: 64px;
+        height: 64px;
+    }
+
+    .product-card-image {
+        width: 53px;
+        height: 58px;
+    }
+
+    .product-shop-name {
+        font-size: 9px;
+    }
+
+    .product-name {
+        font-size: 11px;
+    }
+
+    .product-price {
+        font-size: 16px;
+    }
+
+    .product-card-arrow {
+        width: 16px;
+        font-size: 24px;
+    }
+}

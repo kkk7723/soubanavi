@@ -1,0 +1,43 @@
+id INTEGER PRIMARY KEY AUTOINCREMENT
+master_machine_id TEXT NOT NULL UNIQUE
+master_machine_category TEXT NOT NULL
+master_machine_name TEXT NOT NULL
+master_machine_maker TEXT
+master_machine_model TEXT
+master_machine_type TEXT
+master_machine_gouki TEXT
+master_machine_memo TEXT
+master_machine_introduced_date TEXT
+master_machine_game_system TEXT
+master_machine_pworld_url TEXT
+master_machine_pworld_image_url TEXT
+
+master_machine_ptown_url TEXT
+master_machine_ptown_image_url TEXT
+master_machine_ptown_model TEXT
+master_machine_ptown_name TEXT
+master_machine_ptown_maker TEXT
+master_machine_ptown_introduced_date TEXT
+
+master_machine_pworld_normalized_model_search TEXT
+master_machine_pworld_normalized_name_search TEXT
+master_machine_ptown_normalized_model_search TEXT
+master_machine_ptown_normalized_name_search TEXT
+
+master_machine_special_search_1 TEXT
+master_machine_special_search_2 TEXT
+master_machine_special_search_3 TEXT
+master_machine_special_search_4 TEXT
+master_machine_exception_search TEXT
+
+source_sheet_row INTEGER
+created_at TEXT NOT NULL
+updated_at TEXT NOT NULL
+
+master_machine_pworld_type TEXT
+master_machine_pworld_gaiyou TEXT
+master_machine_ptown_name_kana TEXT
+master_machine_ptown_gaiyou TEXT
+master_machine_alias TEXT
+master_machine_series TEXT
+master_machine_short_name TEXT

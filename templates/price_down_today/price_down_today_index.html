@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ page_title }}｜{{ site_name }}
+{% endblock %}
+
+
+{% block description %}
+{{ page_description }}
+{% endblock %}
+
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/price_down_today_index.css"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/price_down_today_detail.css"
+>
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page-content">
+
+
+    {# =========================================
+       ページ見出し
+    ========================================= #}
+
+    <section class="price-down-header">
+
+        <p class="price-down-header-label">
+
+            {% if page_type == "pachinko" %}
+
+                パチンコ中古実機
+
+            {% elif page_type == "slot" %}
+
+                パチスロ中古実機
+
+            {% else %}
+
+                パチンコ・パチスロ中古実機
+
+            {% endif %}
+
+        </p>
+
+
+        <h1 class="price-down-title">
+            {{ price_down_today_title }}
+        </h1>
+
+
+        <p class="price-down-description">
+            {{ page_description }}
+        </p>
+
+
+        {% if total_machine_count is defined %}
+
+            <p class="price-down-count">
+
+                値下げ機種数：
+
+                <strong>
+                    {{ total_machine_count | number }}機種
+                </strong>
+
+            </p>
+
+        {% endif %}
+
+
+        {% if updated_at is defined
+              and updated_at %}
+
+            <p class="price-down-updated-at">
+
+                最終更新：
+                {{ updated_at | datetime_format }}
+
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    {# =========================================
+       カテゴリ切り替え
+    ========================================= #}
+
+    {% if category_navigation is defined
+          and category_navigation %}
+
+        <nav
+            class="price-down-category-navigation"
+            aria-label="値下げ実機の種類"
+        >
+
+            <ul class="price-down-category-list">
+
+                {% for category_item in category_navigation %}
+
+                    <li class="price-down-category-item">
+
+                        {% if category_item.is_current %}
+
+                            <span
+                                class="
+                                    price-down-category-link
+                                    is-current
+                                "
+                                aria-current="page"
+                            >
+                                {{ category_item.label }}
+                            </span>
+
+                        {% else %}
+
+                            <a
+                                class="price-down-category-link"
+                                href="{{ category_item.url }}"
+                            >
+                                {{ category_item.label }}
+                            </a>
+
+                        {% endif %}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </nav>
+
+    {% endif %}
+
+
+    {# =========================================
+       比較期間
+    ========================================= #}
+
+    {% if previous_record_date_display
+          and latest_record_date_display %}
+
+        <section
+            class="price-down-period"
+            aria-label="価格比較期間"
+        >
+
+            <p class="price-down-period-text">
+
+                比較期間：
+
+                <time datetime="{{ previous_record_date }}">
+                    {{ previous_record_date_display }}
+                </time>
+
+                から
+
+                <time datetime="{{ latest_record_date }}">
+                    {{ latest_record_date_display }}
+                </time>
+
+            </p>
+
+        </section>
+
+    {% endif %}
+
+
+    {# =========================================
+       本日の値下げ機種一覧
+    ========================================= #}
+
+    {% if machines is defined
+          and machines %}
+
+        <section
+            class="price-down-section"
+            aria-labelledby="price-down-list-title"
+        >
+
+            <div class="price-down-section-heading">
+
+                <h2
+                    id="price-down-list-title"
+                    class="price-down-section-title"
+                >
+
+                    {% if page_type == "pachinko" %}
+
+                        本日値下げされたパチンコ実機
+
+                    {% elif page_type == "slot" %}
+
+                        本日値下げされたパチスロ実機
+
+                    {% else %}
+
+                        本日値下げされた実機
+
+                    {% endif %}
+
+                </h2>
+
+
+                <p class="price-down-section-count">
+
+                    {{ machine_count | number }}機種
+
+                    {% if total_machine_count > machine_count %}
+
+                        ／全{{ total_machine_count | number }}機種
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+            <ul class="price-down-list">
+
+                {% for machine in machines %}
+
+                    {% include
+                        "price_down_today/price_down_today_detail.html"
+                    %}
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+
+    {% else %}
+
+
+        {# =========================================
+           データが存在しない場合
+        ========================================= #}
+
+        <section
+            class="price-down-empty-section"
+            aria-labelledby="price-down-empty-title"
+        >
+
+            <div class="price-down-empty">
+
+                <h2
+                    id="price-down-empty-title"
+                    class="price-down-empty-title"
+                >
+
+                    {% if page_type == "pachinko" %}
+
+                        本日値下げされたパチンコ実機はありません
+
+                    {% elif page_type == "slot" %}
+
+                        本日値下げされたパチスロ実機はありません
+
+                    {% else %}
+
+                        本日値下げされた機種はありません
+
+                    {% endif %}
+
+                </h2>
+
+
+                <p class="price-down-empty-description">
+
+                    {% if page_type == "pachinko" %}
+
+                        現在、本日の値下げ情報に表示できる
+                        パチンコ実機はありません。
+
+                    {% elif page_type == "slot" %}
+
+                        現在、本日の値下げ情報に表示できる
+                        パチスロ実機はありません。
+
+                    {% else %}
+
+                        現在、本日の値下げ情報に表示できる
+                        パチンコ・パチスロ実機はありません。
+
+                    {% endif %}
+
+                </p>
+
+
+                <p class="price-down-empty-link">
+
+                    <a
+                        class="button button-primary"
+                        href="{{ root_prefix }}machines/"
+                    >
+                        機種一覧を見る
+                    </a>
+
+                </p>
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+
+    {# =========================================
+       ページ下部ナビゲーション
+    ========================================= #}
+
+    <nav
+        class="price-down-bottom-navigation"
+        aria-label="本日の値下げページナビゲーション"
+    >
+
+        <a
+            class="button button-secondary"
+            href="{{ root_prefix }}"
+        >
+            トップページへ戻る
+        </a>
+
+
+        <a
+            class="button button-primary"
+            href="{{ root_prefix }}machines/"
+        >
+            機種一覧を見る
+        </a>
+
+    </nav>
+
+</div>
+
+{% endblock %}

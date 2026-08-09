@@ -1,0 +1,50 @@
+id INTEGER PRIMARY KEY AUTOINCREMENT
+sku TEXT UNIQUE
+shop_name TEXT
+shop_product_id TEXT
+scraped_date TEXT
+created_at TEXT
+updated_at TEXT
+machine_name TEXT
+normalized_machine_name TEXT
+price INTEGER
+product_url TEXT
+image_url TEXT
+stock TEXT
+maker TEXT
+
+category TEXT
+master_machine_category TEXT
+series TEXT
+machine_series TEXT
+
+master_machine_id TEXT
+master_machine_pworld_url TEXT
+master_machine_pworld_image_url TEXT
+master_machine_name TEXT
+master_machine_model_TEXT
+master_machine_maker TEXT
+master_machine_type TEXT
+master_machine_gouki TEXT
+master_machine_memo TEXT
+master_machine_introduced_date TEXT
+master_machine_game_system TEXT
+
+status TEXT
+remarks TEXT
+
+affiliate_url TEXT
+item_caption TEXT
+genre_id INTEGER
+item_code TEXT
+jan TEXT
+asin TEXT
+condition TEXT
+
+master_machine_pworld_type TEXT
+master_machine_pworld_gaiyou TEXT
+master_machine_ptown_name_kana TEXT
+master_machine_ptown_gaiyou TEXT
+master_machine_alias TEXT
+master_machine_series TEXT
+master_machine_short_name TEXT

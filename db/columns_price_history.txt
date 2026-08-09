@@ -1,0 +1,22 @@
+id                   INTEGER PRIMARY KEY AUTOINCREMENT
+master_machine_id    TEXT NOT NULL
+master_machine_name  TEXT
+master_machine_maker TEXT
+record_date          TEXT NOT NULL
+
+latest_price         INTEGER
+min_price            INTEGER
+max_price            INTEGER
+avg_price            REAL
+median_price         REAL
+
+price_count          INTEGER DEFAULT 0
+shop_count           INTEGER DEFAULT 0
+
+lowest_shop_name     TEXT
+lowest_product_url   TEXT
+
+created_at           TEXT
+updated_at           TEXT
+
+UNIQUE(master_machine_id, record_date)

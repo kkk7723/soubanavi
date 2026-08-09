@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "実機相場ナビ",
+    "url": "https://blog-pachislot.com/"
+}
+</script>
+{% endblock %}
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/index.css"
+>
+{% endblock %}
+
+{% block main %}
+
+<div class="page-content">
+
+{% include "includes/top/keyword_section.html" %}
+
+{% include "includes/top/quick_menu_section.html" %}
+
+{% include "includes/top/today_price_drop_section.html" %}
+
+{% include "includes/top/recent_machines_section.html" %}
+
+{% include "includes/top/lowest_price_ranking_section.html" %}
+
+{% include "includes/top/highest_price_ranking_section.html" %}
+
+{% include "includes/top/top_guide_section.html" %}
+
+</div>
+
+{% endblock %}

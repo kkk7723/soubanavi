@@ -1,0 +1,613 @@
+/* ==================================================
+   最近導入された機種・詳細ページ
+================================================== */
+
+
+/* ==================================================
+   ページ全体
+================================================== */
+
+.recent-machine-detail-page {
+    width: min(
+        1180px,
+        calc(100% - 32px)
+    );
+    margin: 0 auto;
+}
+
+
+/* ==================================================
+   詳細ページヘッダー
+================================================== */
+
+.recent-machine-detail-header {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.recent-machine-detail-header-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.recent-machine-detail-heading-area {
+    min-width: 0;
+}
+
+.recent-machine-detail-category-area {
+    margin: 0 0 10px;
+}
+
+.recent-machine-detail-category {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.recent-machine-detail-category-pachinko {
+    background: #555;
+}
+
+.recent-machine-detail-category-slot {
+    background: #333;
+}
+
+.recent-machine-detail-category-other {
+    background: #777;
+}
+
+.recent-machine-detail-maker {
+    margin: 0 0 5px;
+    color: #666;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-title {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.recent-machine-detail-model {
+    margin: 10px 0 0;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.recent-machine-detail-introduced {
+    flex: 0 0 auto;
+    min-width: 180px;
+    padding: 16px 18px;
+    border: 1px solid #e1e4e8;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 3px 14px rgb(0 0 0 / 5%);
+}
+
+.recent-machine-detail-introduced-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #777;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-introduced-value {
+    color: #222;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   メイン情報
+================================================== */
+
+.recent-machine-detail-overview {
+    display: grid;
+    grid-template-columns:
+        minmax(280px, 420px)
+        minmax(0, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.recent-machine-detail-image-column,
+.recent-machine-detail-info-column {
+    min-width: 0;
+}
+
+.recent-machine-detail-image-area {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 6%);
+}
+
+.recent-machine-detail-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.recent-machine-detail-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #f4f5f6;
+    color: #999;
+    font-size: 14px;
+}
+
+.recent-machine-detail-source-link {
+    margin: 12px 0 0;
+    font-size: 13px;
+    text-align: center;
+}
+
+.recent-machine-detail-source-link a {
+    color: #555;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.recent-machine-detail-source-link a:hover {
+    color: #222;
+}
+
+
+/* ==================================================
+   情報パネル共通
+================================================== */
+
+.recent-machine-detail-stock-panel,
+.recent-machine-detail-price-panel {
+    padding: 24px;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgb(0 0 0 / 6%);
+}
+
+.recent-machine-detail-price-panel {
+    margin-top: 20px;
+}
+
+.recent-machine-detail-panel-title {
+    margin: 0 0 20px;
+    color: #222;
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+
+/* ==================================================
+   在庫状況
+================================================== */
+
+.recent-machine-detail-stock-status {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    margin: 0 0 16px;
+    padding: 5px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-stock-status.is-available {
+    background: #e9f7ef;
+    color: #176b3a;
+}
+
+.recent-machine-detail-stock-status.is-empty {
+    background: #f1f2f3;
+    color: #666;
+}
+
+.recent-machine-detail-lowest-price {
+    margin-bottom: 20px;
+}
+
+.recent-machine-detail-price-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #777;
+    font-size: 13px;
+}
+
+.recent-machine-detail-price-value {
+    color: #222;
+    font-size: clamp(
+        28px,
+        4vw,
+        38px
+    );
+    line-height: 1.2;
+}
+
+.recent-machine-detail-market-counts {
+    display: grid;
+    grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+    );
+    gap: 12px;
+    margin: 0;
+}
+
+.recent-machine-detail-market-count {
+    padding: 14px;
+    border-radius: 8px;
+    background: #f6f7f8;
+}
+
+.recent-machine-detail-market-count dt {
+    margin-bottom: 5px;
+    color: #777;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-market-count dd {
+    margin: 0;
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-purchase-action {
+    margin: 22px 0 0;
+}
+
+.recent-machine-detail-purchase-action .button {
+    width: 100%;
+}
+
+.recent-machine-detail-stock-description {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   価格一覧
+================================================== */
+
+.recent-machine-detail-price-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+    );
+    gap: 12px;
+    margin: 0;
+}
+
+.recent-machine-detail-price-item {
+    padding: 15px;
+    border: 1px solid #e7e9ec;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.recent-machine-detail-price-item dt {
+    margin-bottom: 6px;
+    color: #777;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-price-item dd {
+    margin: 0;
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   詳細セクション
+================================================== */
+
+.recent-machine-detail-section {
+    margin-bottom: 36px;
+}
+
+.recent-machine-detail-section > .section-title {
+    margin-bottom: 20px;
+}
+
+
+/* ==================================================
+   基本情報
+================================================== */
+
+.recent-machine-detail-definition-list {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.recent-machine-detail-definition-row {
+    display: grid;
+    grid-template-columns:
+        minmax(130px, 200px)
+        minmax(0, 1fr);
+    border-bottom: 1px solid #e7e9ec;
+}
+
+.recent-machine-detail-definition-row:last-child {
+    border-bottom: 0;
+}
+
+.recent-machine-detail-definition-row dt,
+.recent-machine-detail-definition-row dd {
+    padding: 17px 20px;
+    line-height: 1.7;
+}
+
+.recent-machine-detail-definition-row dt {
+    background: #f6f7f8;
+    color: #555;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.recent-machine-detail-definition-row dd {
+    min-width: 0;
+    margin: 0;
+    color: #222;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   機種説明
+================================================== */
+
+.recent-machine-detail-description {
+    padding: 24px;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    background: #fff;
+    color: #444;
+    font-size: 15px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   更新情報
+================================================== */
+
+.recent-machine-detail-update-section {
+    margin-top: 36px;
+    padding: 20px 22px;
+    border: 1px solid #e1e4e8;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.recent-machine-detail-update-title {
+    margin: 0 0 14px;
+    color: #444;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.recent-machine-detail-update-list {
+    display: grid;
+    grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+    );
+    gap: 10px 22px;
+    margin: 0;
+}
+
+.recent-machine-detail-update-list > div {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 10px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.recent-machine-detail-update-list dt {
+    font-weight: 700;
+}
+
+.recent-machine-detail-update-list dd {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   下部ナビゲーション
+================================================== */
+
+.recent-machine-detail-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 38px 0 10px;
+}
+
+.recent-machine-detail-footer-nav .button {
+    min-width: 210px;
+}
+
+
+/* ==================================================
+   タブレット
+================================================== */
+
+@media (max-width: 960px) {
+
+    .recent-machine-detail-overview {
+        grid-template-columns:
+            minmax(240px, 340px)
+            minmax(0, 1fr);
+        gap: 22px;
+    }
+
+    .recent-machine-detail-price-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-machine-detail-update-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==================================================
+   スマートフォン
+================================================== */
+
+@media (max-width: 720px) {
+
+    .recent-machine-detail-page {
+        width: min(
+            100%,
+            calc(100% - 20px)
+        );
+    }
+
+    .recent-machine-detail-header-main {
+        display: block;
+    }
+
+    .recent-machine-detail-introduced {
+        width: 100%;
+        min-width: 0;
+        margin-top: 18px;
+        text-align: left;
+    }
+
+    .recent-machine-detail-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-machine-detail-image-area {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .recent-machine-detail-market-counts {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-machine-detail-definition-row {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-machine-detail-definition-row dt {
+        padding-bottom: 8px;
+    }
+
+    .recent-machine-detail-definition-row dd {
+        padding-top: 8px;
+    }
+
+    .recent-machine-detail-footer-nav {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .recent-machine-detail-footer-nav .button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* ==================================================
+   小さいスマートフォン
+================================================== */
+
+@media (max-width: 420px) {
+
+    .recent-machine-detail-stock-panel,
+    .recent-machine-detail-price-panel {
+        padding: 18px;
+    }
+
+    .recent-machine-detail-price-value {
+        font-size: 26px;
+    }
+
+    .recent-machine-detail-definition-row dt,
+    .recent-machine-detail-definition-row dd {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .recent-machine-detail-description {
+        padding: 18px;
+        font-size: 14px;
+    }
+
+    .recent-machine-detail-update-section {
+        padding: 18px;
+    }
+
+    .recent-machine-detail-update-list > div {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+}
+
+
+/* ==================================================
+   キーボード操作
+================================================== */
+
+.recent-machine-detail-source-link a:focus-visible,
+.recent-machine-detail-purchase-action .button:focus-visible,
+.recent-machine-detail-footer-nav .button:focus-visible {
+    outline: 3px solid #555;
+    outline-offset: 3px;
+}
+
+
+/* ==================================================
+   動きを減らす設定
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .recent-machine-detail-source-link a,
+    .recent-machine-detail-purchase-action .button,
+    .recent-machine-detail-footer-nav .button {
+        transition: none;
+    }
+}

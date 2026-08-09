@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{# =========================================
+お気に入りページ専用CSS
+========================================= #}
+
+
+
+{# =========================================
+メインコンテンツ
+========================================= #}
+
+{% block main %}
+
+<div class="page-content">
+
+    <section
+        class="user-machine-section"
+        aria-labelledby="favorites-page-title"
+    >
+        <div class="user-machine-heading">
+
+            <div>
+
+                <h1
+                    id="favorites-page-title"
+                    class="page-title"
+                >
+                    お気に入り
+                </h1>
+
+                <p class="user-machine-description">
+                    お気に入りに登録した機種を表示します。
+                </p>
+
+            </div>
+
+
+            <button
+                id="clear-favorites-button"
+                class="user-machine-clear-button"
+                type="button"
+                hidden
+            >
+                お気に入りをすべて削除
+            </button>
+
+        </div>
+
+
+        <div
+            id="favorites-list"
+            class="user-machine-list"
+            aria-live="polite"
+            aria-busy="true"
+        >
+        </div>
+
+
+        <div
+            id="favorites-empty"
+            class="user-machine-empty"
+            hidden
+        >
+            <p class="user-machine-empty-title">
+                お気に入りはありません
+            </p>
+
+            <p class="user-machine-empty-description">
+                機種詳細ページでお気に入りに登録すると、
+                ここに表示されます。
+            </p>
+
+            <p class="user-machine-empty-action">
+
+                <a
+                    class="button button-primary"
+                    href="{{ root_prefix }}machines/"
+                >
+                    機種一覧を見る
+                </a>
+
+            </p>
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

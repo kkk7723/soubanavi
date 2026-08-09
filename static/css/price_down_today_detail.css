@@ -1,0 +1,577 @@
+/* ==================================================
+   1. Price Down Item
+================================================== */
+
+.price-down-item {
+    min-width: 0;
+    margin: 0;
+}
+
+
+/* ==================================================
+   2. Card
+================================================== */
+
+.price-down-machine-link {
+    display: grid;
+    grid-template-columns:
+        105px
+        minmax(0, 1fr);
+    gap: 12px;
+    align-items: stretch;
+    min-width: 0;
+    height: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.price-down-machine-link:hover {
+    color: inherit;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.price-down-machine-link:focus-visible {
+    outline: 3px solid rgb(25 118 210 / 25%);
+    outline-offset: 2px;
+}
+
+
+/* ==================================================
+   3. Image
+================================================== */
+
+.price-down-image-area {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    width: 105px;
+    height: 145px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f7f8fa;
+}
+
+.price-down-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    object-fit: contain;
+}
+
+
+/* ==================================================
+   4. Content
+================================================== */
+
+.price-down-content {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    min-height: 145px;
+    flex-direction: column;
+}
+
+
+/* ==================================================
+   5. Maker
+================================================== */
+
+.price-down-maker {
+    order: 1;
+    margin: 0 0 2px;
+    overflow: hidden;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   6. Machine Name
+================================================== */
+
+.price-down-machine-name {
+    display: -webkit-box;
+    order: 2;
+    margin: 0 0 4px;
+    overflow: hidden;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* ==================================================
+   7. Machine Subinformation
+================================================== */
+
+.price-down-machine-subinformation {
+    display: flex;
+    order: 3;
+    flex-wrap: wrap;
+    gap: 3px 8px;
+    margin: 0 0 4px;
+    color: #777;
+    font-size: 9px;
+    line-height: 1.3;
+}
+
+.price-down-machine-model,
+.price-down-machine-gouki {
+    overflow-wrap: anywhere;
+}
+
+
+/* ==================================================
+   8. Badge Area
+================================================== */
+
+.price-down-badge-area {
+    display: flex;
+    order: 4;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+    margin: 0 0 4px;
+}
+
+.price-down-badge,
+.price-down-category-badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.price-down-badge {
+    background: #1976d2;
+    color: #fff;
+}
+
+.price-down-category-badge-pachinko {
+    background: #fff2f2;
+    color: #c62828;
+}
+
+.price-down-category-badge-slot {
+    background: #f2f5ff;
+    color: #3949ab;
+}
+
+.price-down-record-date {
+    min-width: 0;
+    overflow: hidden;
+    color: #777;
+    font-size: 10px;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   9. Price Down Summary
+================================================== */
+
+.price-down-summary {
+    display: grid;
+    order: 5;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    gap: 5px;
+    margin: 0 0 4px;
+}
+
+.price-down-summary-item {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin: 0;
+    padding: 3px 5px;
+    border: 1px solid #bbdefb;
+    border-radius: 5px;
+    background: #eef6ff;
+}
+
+.price-down-summary-label {
+    overflow: hidden;
+    color: #555;
+    font-size: 9px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.price-down-summary-value,
+.price-down-summary-rate {
+    min-width: 0;
+    color: #1565c0;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: right;
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   10. Price List
+================================================== */
+
+.price-down-price-list {
+    order: 6;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #e4e7eb;
+}
+
+.price-down-price-row {
+    display: grid;
+    grid-template-columns:
+        78px
+        minmax(0, 1fr);
+    align-items: center;
+    gap: 5px;
+    min-height: 21px;
+    padding: 1px 0;
+    border-bottom: 1px solid #e4e7eb;
+}
+
+.price-down-price-row dt {
+    color: #666;
+    font-size: 9px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.price-down-price-row dd {
+    min-width: 0;
+    margin: 0;
+    color: #222;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.price-down-price-row-primary dd {
+    color: #d32f2f;
+    font-size: 15px;
+}
+
+.price-down-price-row .price-down-previous-price {
+    color: #777;
+    font-size: 11px;
+    text-decoration: line-through;
+}
+
+
+/* ==================================================
+   11. Meta
+================================================== */
+
+.price-down-meta {
+    display: flex;
+    order: 7;
+    flex-wrap: wrap;
+    gap: 3px 10px;
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.price-down-meta-item {
+    margin: 0;
+}
+
+.price-down-meta-label {
+    margin-right: 3px;
+    color: #777;
+}
+
+.price-down-meta-value {
+    color: #333;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   12. Lowest Shop
+================================================== */
+
+.price-down-lowest-shop {
+    order: 8;
+    margin: 3px 0 0;
+    overflow: hidden;
+    color: #666;
+    font-size: 10px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.price-down-lowest-shop-label {
+    color: #777;
+}
+
+
+/* ==================================================
+   13. Detail Link
+================================================== */
+
+.price-down-detail-button {
+    display: block;
+    order: 9;
+    margin-top: auto;
+    padding: 4px 0 0;
+    border-radius: 0;
+    background: transparent;
+    color: #1264a3;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: right;
+}
+
+
+/* ==================================================
+   14. Mobile
+================================================== */
+
+@media (max-width: 767px) {
+
+    .price-down-machine-link {
+        grid-template-columns:
+            90px
+            minmax(0, 1fr);
+        gap: 10px;
+        align-items: stretch;
+        padding: 10px;
+    }
+
+    .price-down-image-area {
+        width: 90px;
+        height: 125px;
+    }
+
+    .price-down-content {
+        min-height: 125px;
+    }
+
+    .price-down-maker {
+        margin-bottom: 1px;
+        font-size: 9px;
+    }
+
+    .price-down-machine-name {
+        margin-bottom: 3px;
+        font-size: 13px;
+        line-height: 1.2;
+        -webkit-line-clamp: 2;
+    }
+
+    .price-down-machine-subinformation {
+        gap: 2px 5px;
+        margin-bottom: 3px;
+        font-size: 7px;
+    }
+
+    .price-down-badge-area {
+        gap: 3px;
+        margin-bottom: 3px;
+    }
+
+    .price-down-badge,
+    .price-down-category-badge {
+        padding: 1px 5px;
+        font-size: 8px;
+    }
+
+    .price-down-record-date {
+        font-size: 8px;
+    }
+
+    .price-down-summary {
+        gap: 3px;
+        margin-bottom: 3px;
+    }
+
+    .price-down-summary-item {
+        gap: 2px;
+        padding: 2px 3px;
+    }
+
+    .price-down-summary-label {
+        font-size: 7px;
+    }
+
+    .price-down-summary-value,
+    .price-down-summary-rate {
+        font-size: 10px;
+    }
+
+    .price-down-price-row {
+        grid-template-columns:
+            65px
+            minmax(0, 1fr);
+        min-height: 17px;
+        gap: 3px;
+        padding: 0;
+    }
+
+    .price-down-price-row dt {
+        font-size: 8px;
+    }
+
+    .price-down-price-row dd {
+        font-size: 10px;
+    }
+
+    .price-down-price-row-primary dd {
+        font-size: 13px;
+    }
+
+    .price-down-price-row .price-down-previous-price {
+        font-size: 9px;
+    }
+
+    .price-down-meta,
+    .price-down-lowest-shop {
+        display: none;
+    }
+
+    .price-down-detail-button {
+        padding-top: 2px;
+        font-size: 9px;
+    }
+}
+
+
+/* ==================================================
+   15. Small Mobile
+================================================== */
+
+@media (max-width: 380px) {
+
+    .price-down-machine-link {
+        grid-template-columns:
+            82px
+            minmax(0, 1fr);
+        gap: 8px;
+        padding: 9px;
+    }
+
+    .price-down-image-area {
+        width: 82px;
+        height: 115px;
+    }
+
+    .price-down-content {
+        min-height: 115px;
+    }
+
+    .price-down-maker {
+        font-size: 8px;
+    }
+
+    .price-down-machine-name {
+        margin-bottom: 2px;
+        font-size: 12px;
+        line-height: 1.15;
+    }
+
+    .price-down-machine-subinformation {
+        display: none;
+    }
+
+    .price-down-badge,
+    .price-down-category-badge {
+        font-size: 7px;
+    }
+
+    .price-down-record-date {
+        font-size: 7px;
+    }
+
+    .price-down-summary {
+        gap: 2px;
+        margin-bottom: 2px;
+    }
+
+    .price-down-summary-item {
+        padding: 1px 2px;
+    }
+
+    .price-down-summary-label {
+        font-size: 6px;
+    }
+
+    .price-down-summary-value,
+    .price-down-summary-rate {
+        font-size: 9px;
+    }
+
+    .price-down-price-row {
+        grid-template-columns:
+            59px
+            minmax(0, 1fr);
+        min-height: 15px;
+    }
+
+    .price-down-price-row dt {
+        font-size: 7px;
+    }
+
+    .price-down-price-row dd {
+        font-size: 9px;
+    }
+
+    .price-down-price-row-primary dd {
+        font-size: 12px;
+    }
+
+    .price-down-price-row .price-down-previous-price {
+        font-size: 8px;
+    }
+
+    .price-down-detail-button {
+        padding-top: 1px;
+        font-size: 8px;
+    }
+}

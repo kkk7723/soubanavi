@@ -1,0 +1,971 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ machine.master_machine_name }}の中古価格・相場｜実機相場サイト
+{% endblock %}
+
+
+{% block description %}
+{{ machine.master_machine_name }}の中古実機価格、最安値、平均価格、出品情報を掲載しています。
+{% endblock %}
+
+
+{% block page_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/machine_detail.css"
+>
+
+{% endblock %}
+
+
+{% block head_extra %}
+
+    {{ super() }}
+
+    {% if machine.price_count
+          and machine.min_price is not none
+          and machine.max_price is not none %}
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "@id": {{ (canonical_url ~ "#product") | tojson }},
+            "name": {{ machine.master_machine_name | tojson }},
+            "url": {{ canonical_url | tojson }},
+            "image": {{ og_image | tojson }}
+            {% if machine.master_machine_maker %},
+            "brand": {
+                "@type": "Brand",
+                "name": {{ machine.master_machine_maker | tojson }}
+            }
+            {% endif %}
+            {% if machine.master_machine_model is defined
+                  and machine.master_machine_model %},
+            "model": {{ machine.master_machine_model | tojson }}
+            {% endif %},
+            "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "JPY",
+                "lowPrice": {{ machine.min_price | int }},
+                "highPrice": {{ machine.max_price | int }},
+                "offerCount": {{ machine.price_count | int }}
+            }
+        }
+        </script>
+
+    {% endif %}
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page-content">
+
+    <article class="machine-detail">
+
+        {# =========================================
+           ページ見出し
+        ========================================= #}
+
+        <header class="page-header machine-detail-header">
+
+            <div class="machine-detail-heading">
+
+                <div class="machine-detail-heading-content">
+
+                    <h1 class="page-title">
+                        {{ machine.master_machine_name }}
+                    </h1>
+
+                    {% if machine.master_machine_maker %}
+
+                        <p class="page-description">
+                            メーカー：
+                            {{ machine.master_machine_maker }}
+                        </p>
+
+                    {% endif %}
+
+                    {% if updated_at %}
+
+                        <p class="updated-at">
+                            最終更新：
+                            {{ updated_at | datetime_format }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <button
+                    id="favorite-toggle-button"
+                    class="favorite-toggle-button"
+                    type="button"
+                    aria-pressed="false"
+                >
+                    <span
+                        class="favorite-toggle-icon"
+                        aria-hidden="true"
+                    >
+                        ☆
+                    </span>
+
+                    <span class="favorite-toggle-label">
+                        お気に入りに追加
+                    </span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        {# =========================================
+           機種基本情報
+        ========================================= #}
+
+        <section
+            class="machine-overview"
+            aria-labelledby="machine-overview-title"
+        >
+            <h2
+                id="machine-overview-title"
+                class="section-title"
+            >
+                基本情報
+            </h2>
+
+            <div class="machine-overview-grid">
+
+                <div class="machine-image-area">
+
+                    <img
+                        class="machine-main-image"
+                        src="{{ machine_image_path }}"
+                        alt="{{ machine.master_machine_name }}の実機画像"
+                        width="300"
+                        height="300"
+                        loading="lazy"
+                        decoding="async"
+                        onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
+                    >
+
+                </div>
+
+
+                <div class="machine-information">
+
+                    <dl class="machine-information-list">
+
+                        <div class="machine-information-row">
+
+                            <dt>
+                                機種名
+                            </dt>
+
+                            <dd>
+                                {{ machine.master_machine_name }}
+                            </dd>
+
+                        </div>
+
+
+                        {% if machine.master_machine_maker %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    メーカー
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_maker }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_model is defined
+                              and machine.master_machine_model %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    型式
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_model }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_type is defined
+                              and machine.master_machine_type %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    遊戯方式
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_type }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_game_system is defined
+                              and machine.master_machine_game_system %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    ゲーム性
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_game_system }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_gouki is defined
+                              and machine.master_machine_gouki %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    号機
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_gouki }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_introduced_date is defined
+                              and machine.master_machine_introduced_date %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    導入日
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_introduced_date }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if machine.master_machine_memo is defined
+                              and machine.master_machine_memo %}
+
+                            <div class="machine-information-row">
+
+                                <dt>
+                                    備考
+                                </dt>
+
+                                <dd>
+                                    {{ machine.master_machine_memo }}
+                                </dd>
+
+                            </div>
+
+                        {% endif %}
+
+                    </dl>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {# =========================================
+           価格相場
+        ========================================= #}
+
+        <section
+            class="price-summary-section"
+            aria-labelledby="price-summary-title"
+        >
+            <h2
+                id="price-summary-title"
+                class="section-title"
+            >
+                中古実機の価格相場
+            </h2>
+
+
+            <div class="summary">
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        最安価格
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.min_price | price }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        平均価格
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.avg_price | price }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        中央価格
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.median_price | price }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        最高価格
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.max_price | price }}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        商品数
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.price_count | number }}件
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        ショップ数
+                    </span>
+
+                    <strong class="summary-value">
+                        {{ machine.shop_count | number }}店
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {# =========================================
+           価格推移
+        ========================================= #}
+
+        {% if price_history
+              and price_history | length >= 2 %}
+
+            <section
+                class="price-history-section"
+                aria-labelledby="price-history-title"
+            >
+                <div class="section-heading">
+
+                    <h2
+                        id="price-history-title"
+                        class="section-title"
+                    >
+                        中古実機の価格推移
+                    </h2>
+
+                    <p class="section-count">
+                        過去{{ price_history | length }}日分
+                    </p>
+
+                </div>
+
+
+                <div class="price-history-chart-container">
+
+                    <canvas
+                        id="price-history-chart"
+                        class="price-history-chart"
+                        aria-label="{{ machine.master_machine_name }}の価格推移グラフ"
+                        role="img"
+                    ></canvas>
+
+                </div>
+
+
+                <div class="price-history-legend">
+
+                    <span class="price-history-legend-item">
+                        最安価格
+                    </span>
+
+                    <span class="price-history-legend-item">
+                        平均価格
+                    </span>
+
+                    <span class="price-history-legend-item">
+                        最高価格
+                    </span>
+
+                </div>
+
+
+                <p class="price-history-note">
+                    掲載価格を日ごとに集計した価格推移です。
+                    商品構成や在庫状況により価格は変動します。
+                </p>
+
+            </section>
+
+
+        {% elif price_history %}
+
+            <section
+                class="price-history-section"
+                aria-labelledby="price-history-title"
+            >
+                <h2
+                    id="price-history-title"
+                    class="section-title"
+                >
+                    中古実機の価格推移
+                </h2>
+
+
+                <div class="empty-state">
+
+                    <p class="empty-state-title">
+                        価格履歴を蓄積しています。
+                    </p>
+
+                    <p class="empty-state-description">
+                        2日分以上のデータが集まると、
+                        価格推移グラフを表示します。
+                    </p>
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+
+        {# =========================================
+           最安商品
+        ========================================= #}
+
+        {% if lowest_product %}
+
+            <section
+                class="lowest-product-section"
+                aria-labelledby="lowest-product-title"
+            >
+                <h2
+                    id="lowest-product-title"
+                    class="section-title"
+                >
+                    現在の最安商品
+                </h2>
+
+
+                <div class="lowest-product">
+
+                    {% if lowest_product.image_url %}
+
+                        <div class="lowest-product-image-area">
+
+                            <img
+                                class="lowest-product-image"
+                                src="{{ lowest_product.image_url }}"
+                                alt="{{ lowest_product.machine_name or machine.master_machine_name }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="lowest-product-content">
+
+                        <p class="lowest-product-shop">
+                            {{ lowest_product.shop_name or "ショップ情報なし" }}
+                        </p>
+
+                        <h3 class="lowest-product-name">
+                            {{ lowest_product.machine_name or machine.master_machine_name }}
+                        </h3>
+
+                        <p class="lowest-product-price">
+                            {{ lowest_product.price | price }}
+                        </p>
+
+
+                        {% if lowest_product.scraped_date %}
+
+                            <p class="lowest-product-date">
+                                確認日時：
+                                {{ lowest_product.scraped_date | datetime_format }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if lowest_product.product_url %}
+
+                            <p class="lowest-product-link">
+
+                                <a
+                                    class="button button-primary"
+                                    href="{{ lowest_product.product_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer nofollow sponsored"
+                                >
+                                    ショップで商品を見る
+                                </a>
+
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+
+        {# =========================================
+           ショップ別商品一覧
+        ========================================= #}
+
+        <section
+            class="product-list-section"
+            aria-labelledby="product-list-title"
+        >
+            <div class="section-heading">
+
+                <h2
+                    id="product-list-title"
+                    class="section-title"
+                >
+                    ショップ別の中古実機一覧
+                </h2>
+
+                <p class="section-count">
+                    {{ product_count | default(products | length) | number }}件
+                </p>
+
+            </div>
+
+
+            {% if products %}
+
+                <div class="product-grid">
+
+                    {% for product in products %}
+
+                        <article class="product-card">
+
+                            {% if product.product_url %}
+
+                                <a
+                                    class="product-card-full-link"
+                                    href="{{ product.product_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer nofollow sponsored"
+                                >
+                                    <div class="product-card-image-area">
+
+                                        {% if product.image_url %}
+
+                                            <img
+                                                class="product-card-image"
+                                                src="{{ product.image_url }}"
+                                                alt="{{ product.machine_name or machine.master_machine_name }}"
+                                                loading="lazy"
+                                                decoding="async"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="product-image-placeholder">
+                                                画像なし
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="product-card-body">
+
+                                        <p class="product-shop-name">
+                                            {{ product.shop_name or "ショップ情報なし" }}
+                                        </p>
+
+                                        <h3 class="product-name">
+                                            {{ product.machine_name or machine.master_machine_name }}
+                                        </h3>
+
+                                        <p class="product-price">
+                                            {{ product.price | price }}
+                                        </p>
+
+                                    </div>
+
+
+                                    <span
+                                        class="product-card-arrow"
+                                        aria-hidden="true"
+                                    >
+                                        ›
+                                    </span>
+
+                                </a>
+
+
+                            {% else %}
+
+                                <div
+                                    class="
+                                        product-card-full-link
+                                        product-card-full-link-disabled
+                                    "
+                                >
+                                    <div class="product-card-image-area">
+
+                                        {% if product.image_url %}
+
+                                            <img
+                                                class="product-card-image"
+                                                src="{{ product.image_url }}"
+                                                alt="{{ product.machine_name or machine.master_machine_name }}"
+                                                loading="lazy"
+                                                decoding="async"
+                                            >
+
+                                        {% else %}
+
+                                            <div class="product-image-placeholder">
+                                                画像なし
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="product-card-body">
+
+                                        <p class="product-shop-name">
+                                            {{ product.shop_name or "ショップ情報なし" }}
+                                        </p>
+
+                                        <h3 class="product-name">
+                                            {{ product.machine_name or machine.master_machine_name }}
+                                        </h3>
+
+                                        <p class="product-price">
+                                            {{ product.price | price }}
+                                        </p>
+
+                                        <p class="product-url-missing">
+                                            商品ページ情報なし
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <p class="empty-state-title">
+                        現在、掲載中の商品はありません。
+                    </p>
+
+                    <p class="empty-state-description">
+                        商品情報が取得され次第、
+                        このページに表示されます。
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        {# =========================================
+           関連機種
+        ========================================= #}
+        
+        {% if related_machines %}
+        
+            <section
+                class="related-machines-section"
+                aria-labelledby="related-machines-title"
+            >
+                <div class="section-heading">
+        
+                    <h2
+                        id="related-machines-title"
+                        class="section-title"
+                    >
+                        {{ machine.master_machine_maker }}の関連機種
+                    </h2>
+        
+                    <p class="section-count">
+                        {{ related_machine_count | number }}機種
+                    </p>
+        
+                </div>
+        
+        
+                <div class="related-machine-grid">
+        
+                    {% for related_machine in related_machines %}
+        
+                        <article class="related-machine-card">
+        
+                            <a
+                                class="related-machine-link"
+                                href="{{ related_machine.detail_url }}"
+                            >
+                                <div class="related-machine-image-area">
+        
+                                    <img
+                                        class="related-machine-image"
+                                        src="{{ related_machine.machine_image_path }}"
+                                        alt="{{ related_machine.master_machine_name }}の実機画像"
+                                        width="240"
+                                        height="240"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
+                                    >
+        
+                                </div>
+        
+        
+                                <div class="related-machine-body">
+        
+                                    <h3 class="related-machine-name">
+                                        {{ related_machine.master_machine_name }}
+                                    </h3>
+        
+        
+                                    {% if related_machine.min_price %}
+        
+                                        <p class="related-machine-price">
+                                            最安価格
+        
+                                            <strong>
+                                                {{ related_machine.min_price | price }}
+                                            </strong>
+                                        </p>
+        
+                                    {% endif %}
+        
+                                </div>
+        
+                            </a>
+        
+                        </article>
+        
+                    {% endfor %}
+        
+                </div>
+        
+            </section>
+        
+        {% endif %}
+
+        {# =========================================
+           補足情報
+        ========================================= #}
+        
+        {% if machine.master_machine_ptown_name_kana
+              or machine.master_machine_alias
+              or machine.master_machine_series
+              or machine.master_machine_short_name %}
+        
+        <section
+            class="machine-supplement-section"
+            aria-labelledby="machine-supplement-title"
+        >
+        
+            <h2
+                id="machine-supplement-title"
+                class="section-title"
+            >
+                補足情報
+            </h2>
+        
+            <dl class="machine-supplement-list">
+        
+                {% if machine.master_machine_ptown_name_kana %}
+                <div class="machine-supplement-row">
+                    <dt>読み仮名</dt>
+                    <dd>{{ machine.master_machine_ptown_name_kana }}</dd>
+                </div>
+                {% endif %}
+        
+                {% if machine.master_machine_alias %}
+                <div class="machine-supplement-row">
+                    <dt>別名</dt>
+                    <dd>{{ machine.master_machine_alias }}</dd>
+                </div>
+                {% endif %}
+        
+                {% if machine.master_machine_series %}
+                <div class="machine-supplement-row">
+                    <dt>シリーズ</dt>
+                    <dd>{{ machine.master_machine_series }}</dd>
+                </div>
+                {% endif %}
+        
+                {% if machine.master_machine_short_name %}
+                <div class="machine-supplement-row">
+                    <dt>略称</dt>
+                    <dd>{{ machine.master_machine_short_name }}</dd>
+                </div>
+                {% endif %}
+        
+            </dl>
+        
+        </section>
+        
+        {% endif %}        
+
+        {# =========================================
+           SNSシェア
+        ========================================= #}
+
+        {% include "includes/share_buttons.html" %}
+
+    </article>
+
+</div>
+
+{% endblock %}
+
+
+{% block page_js %}
+
+    {{ super() }}
+
+
+    {# =========================================
+       閲覧履歴・お気に入り用の機種情報
+    ========================================= #}
+
+    <script
+        id="current-machine-data"
+        type="application/json"
+    >
+        {
+            "id": {{ machine.master_machine_id | string | tojson }},
+            "name": {{ machine.master_machine_name | tojson }},
+            "maker": {{ (machine.master_machine_maker or "") | tojson }},
+            "image": {{ machine_image_path | tojson }},
+            "price": {{ machine.min_price | default(none) | tojson }},
+            "url": {{ canonical_url | tojson }}
+        }
+    </script>
+
+
+    {# =========================================
+       価格推移グラフ
+    ========================================= #}
+
+    {% if price_history
+          and price_history | length >= 2 %}
+
+        <script
+            id="price-history-data"
+            type="application/json"
+        >
+            {{ price_history | tojson }}
+        </script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+        ></script>
+
+        <script
+            src="{{ asset_prefix }}js/machine_detail.js"
+        ></script>
+
+    {% endif %}
+
+{% endblock %}

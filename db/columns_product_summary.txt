@@ -1,0 +1,40 @@
+id INTEGER PRIMARY KEY AUTOINCREMENT
+master_machine_id INTEGER UNIQUE
+master_machine_name TEXT
+master_machine_maker TEXT
+
+master_machine_model TEXT
+master_machine_type TEXT
+master_machine_gouki TEXT
+master_machine_memo TEXT
+master_machine_introduced_date TEXT
+master_machine_pworld_url TEXT
+master_machine_pworld_image_url TEXT
+master_machine_game_system TEXT
+
+category TEXT
+machine_series TEXT
+master_machine_category TEXT
+
+latest_price INTEGER
+min_price INTEGER
+max_price INTEGER
+avg_price REAL
+median_price INTEGER
+price_count INTEGER
+shop_count INTEGER
+lowest_shop_name TEXT
+lowest_product_url TEXT
+first_seen DATETIME
+last_seen DATETIME
+latest_scraped_at DATETIME
+created_at DATETIME
+updated_at DATETIME
+
+master_machine_pworld_type TEXT
+master_machine_pworld_gaiyou TEXT
+master_machine_ptown_name_kana TEXT
+master_machine_ptown_gaiyou TEXT
+master_machine_alias TEXT
+master_machine_series TEXT
+master_machine_short_name TEXT

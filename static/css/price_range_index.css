@@ -1,0 +1,590 @@
+/* ==================================================
+   価格帯一覧ページ
+================================================== */
+
+.page-content{
+    max-width:1200px;
+    margin:0 auto;
+    padding:24px;
+}
+
+
+/* ==================================================
+   パンくず
+================================================== */
+
+.breadcrumb{
+    margin-bottom:24px;
+    font-size:14px;
+}
+
+.breadcrumb-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+    margin:0;
+    padding:0;
+
+    list-style:none;
+}
+
+.breadcrumb-item{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.breadcrumb-item a{
+    color:#1976d2;
+    text-decoration:none;
+}
+
+.breadcrumb-item a:hover{
+    text-decoration:underline;
+}
+
+
+/* ==================================================
+   ページヘッダー
+================================================== */
+
+.ranking-header{
+    margin-bottom:40px;
+}
+
+.ranking-header-label{
+    margin:0 0 8px;
+
+    color:#777;
+    font-size:14px;
+}
+
+.ranking-title{
+    margin:0 0 12px;
+
+    font-size:34px;
+    line-height:1.4;
+}
+
+.ranking-description{
+    max-width:800px;
+    margin:0 0 16px;
+
+    line-height:1.8;
+}
+
+.ranking-count,
+.ranking-updated-at{
+    margin:6px 0 0;
+
+    color:#666;
+    font-size:14px;
+}
+
+.ranking-count strong{
+    color:#333;
+}
+
+
+/* ==================================================
+   価格帯一覧セクション
+================================================== */
+
+.price-range-index-section{
+    margin-bottom:48px;
+}
+
+.price-range-index-heading{
+    margin:0 0 10px;
+
+    font-size:26px;
+    line-height:1.5;
+}
+
+.price-range-index-introduction{
+    margin:0 0 24px;
+
+    color:#555;
+    line-height:1.8;
+}
+
+
+/* ==================================================
+   価格帯カードグリッド
+================================================== */
+
+.price-range-index-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap:20px;
+}
+
+
+/* ==================================================
+   価格帯カード
+================================================== */
+
+.price-range-index-card{
+    min-width:0;
+
+    background:#fff;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    overflow:hidden;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+.price-range-index-card:has(
+    .price-range-index-card-link:hover
+){
+    border-color:#1976d2;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+    transform:translateY(-2px);
+}
+
+.price-range-index-card-link{
+    display:block;
+    height:100%;
+
+    color:inherit;
+    text-decoration:none;
+}
+
+.price-range-index-card-link:focus-visible{
+    outline:3px solid rgba(25,118,210,.35);
+    outline-offset:-3px;
+}
+
+.price-range-index-card-content{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    min-height:250px;
+
+    padding:24px;
+}
+
+
+/* ==================================================
+   カード見出し
+================================================== */
+
+.price-range-index-card-label{
+    margin:0 0 8px;
+
+    color:#777;
+    font-size:13px;
+}
+
+.price-range-index-card-title{
+    margin:0 0 10px;
+
+    color:#222;
+    font-size:24px;
+    line-height:1.4;
+
+    overflow-wrap:anywhere;
+}
+
+.price-range-index-card-range{
+    margin:0 0 20px;
+
+    color:#666;
+    font-size:14px;
+    line-height:1.7;
+}
+
+
+/* ==================================================
+   掲載機種数
+================================================== */
+
+.price-range-index-card-count{
+    margin:auto 0 20px;
+
+    color:#555;
+    line-height:1.6;
+}
+
+.price-range-index-card-count strong{
+    margin-right:4px;
+
+    color:#d32f2f;
+    font-size:28px;
+    line-height:1.2;
+}
+
+.price-range-index-card-count span{
+    font-size:14px;
+}
+
+
+/* ==================================================
+   カード内ボタン
+================================================== */
+
+.price-range-index-card-button{
+    display:block;
+
+    padding:11px 16px;
+
+    background:#1976d2;
+    border-radius:6px;
+
+    color:#fff;
+    font-weight:bold;
+    text-align:center;
+
+    transition:
+        background-color .2s,
+        transform .2s;
+}
+
+.price-range-index-card-link:hover
+.price-range-index-card-button{
+    background:#125ca5;
+}
+
+
+/* ==================================================
+   掲載機種なしカード
+================================================== */
+
+.price-range-index-card-empty{
+    background:#f7f7f7;
+    border-color:#e2e2e2;
+}
+
+.price-range-index-card-empty
+.price-range-index-card-content{
+    opacity:.72;
+}
+
+.price-range-index-card-empty
+.price-range-index-card-count{
+    margin-top:auto;
+    margin-bottom:0;
+
+    color:#777;
+    font-size:14px;
+}
+
+
+/* ==================================================
+   価格帯ページについて
+================================================== */
+
+.price-range-index-guide{
+    margin-top:48px;
+    padding:28px 32px;
+
+    background:#f5f7fa;
+    border-radius:10px;
+}
+
+.price-range-index-guide-title{
+    margin:0 0 16px;
+
+    font-size:22px;
+    line-height:1.5;
+}
+
+.price-range-index-guide-content{
+    color:#555;
+    line-height:1.9;
+}
+
+.price-range-index-guide-content p{
+    margin:0 0 12px;
+}
+
+.price-range-index-guide-content p:last-child{
+    margin-bottom:0;
+}
+
+
+/* ==================================================
+   データなし
+================================================== */
+
+.ranking-empty-section{
+    margin-bottom:48px;
+}
+
+.ranking-empty{
+    padding:80px 20px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    text-align:center;
+}
+
+.ranking-empty-title{
+    margin:0 0 16px;
+}
+
+.ranking-empty-description{
+    margin:0 0 24px;
+
+    color:#555;
+    line-height:1.8;
+}
+
+.ranking-empty-link{
+    margin:0;
+}
+
+
+/* ==================================================
+   下部ナビゲーション
+================================================== */
+
+.ranking-bottom-navigation{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+
+    margin-top:50px;
+}
+
+.ranking-bottom-navigation a{
+    text-decoration:none;
+}
+
+
+/* ==================================================
+   共通ボタン
+================================================== */
+
+.button{
+    display:inline-block;
+
+    padding:12px 24px;
+
+    border-radius:6px;
+
+    font-weight:bold;
+    text-decoration:none;
+
+    transition:
+        background-color .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+.button:hover{
+    transform:translateY(-1px);
+}
+
+.button:focus-visible{
+    outline:3px solid rgba(25,118,210,.35);
+    outline-offset:3px;
+}
+
+.button-primary{
+    background:#1976d2;
+    color:#fff;
+}
+
+.button-primary:hover{
+    background:#125ca5;
+}
+
+.button-secondary{
+    background:#f3f3f3;
+    color:#333;
+}
+
+.button-secondary:hover{
+    background:#e5e5e5;
+}
+
+
+/* ==================================================
+   visually-hidden
+================================================== */
+
+.visually-hidden{
+    position:absolute;
+
+    width:1px;
+    height:1px;
+
+    margin:-1px;
+    padding:0;
+
+    overflow:hidden;
+
+    clip:rect(0,0,0,0);
+    clip-path:inset(50%);
+
+    white-space:nowrap;
+
+    border:0;
+}
+
+
+/* ==================================================
+   タブレット
+================================================== */
+
+@media (max-width:900px){
+
+    .price-range-index-grid{
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .price-range-index-card-content{
+        min-height:230px;
+        padding:20px;
+    }
+
+    .price-range-index-card-title{
+        font-size:22px;
+    }
+
+}
+
+
+/* ==================================================
+   スマートフォン
+================================================== */
+
+@media (max-width:640px){
+
+    .page-content{
+        padding:16px;
+    }
+
+    .ranking-header{
+        margin-bottom:28px;
+    }
+
+    .ranking-title{
+        font-size:26px;
+    }
+
+    .ranking-description{
+        font-size:15px;
+    }
+
+    .price-range-index-section{
+        margin-bottom:36px;
+    }
+
+    .price-range-index-heading{
+        font-size:22px;
+    }
+
+    .price-range-index-introduction{
+        margin-bottom:18px;
+        font-size:15px;
+    }
+
+    .price-range-index-grid{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+
+    .price-range-index-card-content{
+        min-height:0;
+        padding:18px;
+    }
+
+    .price-range-index-card-title{
+        margin-bottom:6px;
+        font-size:21px;
+    }
+
+    .price-range-index-card-range{
+        margin-bottom:16px;
+    }
+
+    .price-range-index-card-count{
+        margin-top:8px;
+        margin-bottom:16px;
+    }
+
+    .price-range-index-card-count strong{
+        font-size:25px;
+    }
+
+    .price-range-index-guide{
+        margin-top:36px;
+        padding:22px 18px;
+    }
+
+    .price-range-index-guide-title{
+        font-size:20px;
+    }
+
+    .ranking-empty{
+        padding:56px 18px;
+    }
+
+    .ranking-bottom-navigation{
+        flex-direction:column;
+        gap:12px;
+
+        margin-top:36px;
+    }
+
+    .ranking-bottom-navigation .button{
+        text-align:center;
+    }
+
+}
+
+
+/* ==================================================
+   :has()非対応ブラウザ向け
+================================================== */
+
+@supports not selector(:has(*)){
+
+    .price-range-index-card:hover{
+        border-color:#1976d2;
+        box-shadow:0 6px 20px rgba(0,0,0,.08);
+        transform:translateY(-2px);
+    }
+
+}
+
+
+/* ==================================================
+   モーションを抑制する設定
+================================================== */
+
+@media (prefers-reduced-motion:reduce){
+
+    .price-range-index-card,
+    .price-range-index-card-button,
+    .button{
+        transition:none;
+    }
+
+    .price-range-index-card:has(
+        .price-range-index-card-link:hover
+    ),
+    .price-range-index-card:hover,
+    .button:hover{
+        transform:none;
+    }
+
+}

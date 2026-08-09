@@ -1,0 +1,48 @@
+{# =====================================
+   ランキングデータがない場合
+===================================== #}
+
+{% if (
+    lowest_price_machines is not defined
+    or not lowest_price_machines
+) and (
+    highest_avg_price_machines is not defined
+    or not highest_avg_price_machines
+) %}
+
+<section
+    class="top-guide-section"
+    aria-labelledby="top-guide-title"
+>
+
+    <h2
+        id="top-guide-title"
+        class="section-title"
+    >
+        実機の中古相場を確認
+    </h2>
+
+    <div class="top-guide">
+
+        <p>
+            機種一覧ページでは、各実機の最安価格、
+            平均価格、最高価格、商品数、
+            ショップ数を確認できます。
+        </p>
+
+        <p>
+
+            <a
+                class="button button-primary"
+                href="{{ root_prefix }}machines/"
+            >
+                中古実機の価格を確認する
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endif %}

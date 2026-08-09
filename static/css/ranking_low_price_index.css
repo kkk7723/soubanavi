@@ -1,0 +1,394 @@
+/* ==================================================
+   ランキングページ
+================================================== */
+
+.page-content{
+    max-width:1200px;
+    margin:0 auto;
+    padding:24px;
+}
+
+
+/* ==================================================
+   パンくず
+================================================== */
+
+.breadcrumb{
+    margin-bottom:24px;
+    font-size:14px;
+}
+
+.breadcrumb-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.breadcrumb-item a{
+    text-decoration:none;
+}
+
+
+/* ==================================================
+   ヘッダー
+================================================== */
+
+.ranking-header{
+    margin-bottom:40px;
+}
+
+.ranking-header-label{
+    color:#777;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.ranking-title{
+    margin:0 0 12px;
+    font-size:34px;
+    line-height:1.4;
+}
+
+.ranking-description{
+    margin-bottom:16px;
+    line-height:1.8;
+}
+
+.ranking-count,
+.ranking-updated-at{
+    color:#666;
+    font-size:14px;
+}
+
+
+/* ==================================================
+   ランキング一覧
+================================================== */
+
+.ranking-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.ranking-item{
+    margin-bottom:20px;
+}
+
+
+/* ==================================================
+   リンク全体
+================================================== */
+
+.ranking-machine-link{
+    display:flex;
+    gap:24px;
+
+    padding:20px;
+
+    background:#fff;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    color:inherit;
+    text-decoration:none;
+
+    transition:.2s;
+}
+
+.ranking-machine-link:hover{
+    border-color:#1976d2;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+
+/* ==================================================
+   順位
+================================================== */
+
+.ranking-position-area{
+    width:70px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    flex-shrink:0;
+}
+
+.ranking-position{
+    font-size:34px;
+    font-weight:bold;
+    color:#d32f2f;
+}
+
+.ranking-position-label{
+    font-size:12px;
+}
+
+
+/* ==================================================
+   画像
+================================================== */
+
+.ranking-image-area{
+    width:180px;
+    flex-shrink:0;
+}
+
+.ranking-image{
+    width:100%;
+    display:block;
+
+    border-radius:8px;
+}
+
+.ranking-image-placeholder{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:100%;
+    height:180px;
+
+    background:#eee;
+
+    border-radius:8px;
+
+    color:#888;
+    font-size:13px;
+}
+
+
+/* ==================================================
+   コンテンツ
+================================================== */
+
+.ranking-content{
+    flex:1;
+}
+
+.ranking-maker{
+    color:#777;
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.ranking-machine-name{
+    margin:0 0 18px;
+    font-size:24px;
+    line-height:1.5;
+}
+
+
+/* ==================================================
+   価格一覧
+================================================== */
+
+.ranking-price-list{
+    margin:0 0 20px;
+}
+
+.ranking-price-row{
+    display:flex;
+    justify-content:space-between;
+
+    padding:8px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.ranking-price-row dt{
+    font-weight:normal;
+    color:#666;
+}
+
+.ranking-price-row dd{
+    margin:0;
+    font-weight:bold;
+}
+
+.ranking-price-row-primary dd{
+    color:#d32f2f;
+    font-size:24px;
+}
+
+
+/* ==================================================
+   商品数
+================================================== */
+
+.ranking-meta{
+    display:flex;
+    gap:24px;
+
+    margin-bottom:18px;
+}
+
+.ranking-meta-item{
+    margin:0;
+}
+
+.ranking-meta-label{
+    color:#666;
+    margin-right:6px;
+}
+
+.ranking-meta-value{
+    font-size:18px;
+}
+
+
+/* ==================================================
+   最安ショップ
+================================================== */
+
+.ranking-lowest-shop{
+    margin-bottom:18px;
+    color:#555;
+}
+
+
+/* ==================================================
+   ボタン
+================================================== */
+
+.ranking-detail-button{
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border-radius:6px;
+
+    background:#1976d2;
+    color:#fff;
+
+    font-weight:bold;
+}
+
+
+/* ==================================================
+   データなし
+================================================== */
+
+.ranking-empty{
+    text-align:center;
+
+    padding:80px 20px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.ranking-empty-title{
+    margin-bottom:16px;
+}
+
+.ranking-empty-description{
+    margin-bottom:24px;
+}
+
+
+/* ==================================================
+   下部ナビ
+================================================== */
+
+.ranking-bottom-navigation{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+
+    margin-top:50px;
+}
+
+.ranking-bottom-navigation a{
+    text-decoration:none;
+}
+
+
+/* ==================================================
+   ボタン
+================================================== */
+
+.button{
+    display:inline-block;
+
+    padding:12px 24px;
+
+    border-radius:6px;
+
+    text-decoration:none;
+}
+
+.button-primary{
+    background:#1976d2;
+    color:#fff;
+}
+
+.button-secondary{
+    background:#f3f3f3;
+    color:#333;
+}
+
+
+/* ==================================================
+   visually-hidden
+================================================== */
+
+.visually-hidden{
+    position:absolute;
+
+    width:1px;
+    height:1px;
+
+    margin:-1px;
+    padding:0;
+
+    overflow:hidden;
+
+    clip:rect(0,0,0,0);
+
+    border:0;
+}
+
+
+/* ==================================================
+   レスポンシブ
+================================================== */
+
+@media (max-width:900px){
+
+    .ranking-machine-link{
+        flex-direction:column;
+    }
+
+    .ranking-position-area{
+        width:auto;
+        flex-direction:row;
+        gap:6px;
+    }
+
+    .ranking-image-area{
+        width:100%;
+    }
+
+    .ranking-image{
+        max-width:300px;
+        margin:auto;
+    }
+
+    .ranking-meta{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .ranking-bottom-navigation{
+        flex-direction:column;
+    }
+
+}

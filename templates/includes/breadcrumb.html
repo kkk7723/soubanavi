@@ -1,0 +1,55 @@
+{# =========================================
+   パンくずリスト
+
+   breadcrumbs の形式:
+   [
+       {"title": "ホーム", "url": ""},
+       {"title": "機種一覧", "url": "machines/"},
+       {"title": "機種名", "url": None},
+   ]
+========================================= #}
+
+{% if breadcrumbs %}
+<nav
+    class="breadcrumb"
+    aria-label="パンくずリスト"
+>
+    <ol
+        class="breadcrumb-list"
+        itemscope
+        itemtype="https://schema.org/BreadcrumbList"
+    >
+        {% for breadcrumb in breadcrumbs %}
+            <li
+                class="breadcrumb-item"
+                itemprop="itemListElement"
+                itemscope
+                itemtype="https://schema.org/ListItem"
+            >
+                {% if breadcrumb.url is not none %}
+                    <a
+                        href="{{ root_prefix }}{{ breadcrumb.url }}"
+                        itemprop="item"
+                    >
+                        <span itemprop="name">
+                            {{ breadcrumb.title }}
+                        </span>
+                    </a>
+                {% else %}
+                    <span
+                        itemprop="name"
+                        aria-current="page"
+                    >
+                        {{ breadcrumb.title }}
+                    </span>
+                {% endif %}
+
+                <meta
+                    itemprop="position"
+                    content="{{ loop.index }}"
+                >
+            </li>
+        {% endfor %}
+    </ol>
+</nav>
+{% endif %}

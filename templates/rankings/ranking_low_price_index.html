@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ ranking_title }}｜{{ site_name }}
+{% endblock %}
+
+
+{% block description %}
+{{ ranking_description }}
+{% endblock %}
+
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/ranking.css"
+>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page-content">
+
+
+    {# =========================================
+       ページ見出し
+    ========================================= #}
+
+    <section class="ranking-header">
+
+        <p class="ranking-header-label">
+            パチンコ・パチスロ中古実機
+        </p>
+
+        <h1 class="ranking-title">
+            {{ ranking_title }}
+        </h1>
+
+        <p class="ranking-description">
+            {{ ranking_description }}
+        </p>
+
+
+        {% if machine_count is defined %}
+
+            <p class="ranking-count">
+
+                掲載機種数：
+
+                <strong>
+                    {{ machine_count | number }}機種
+                </strong>
+
+            </p>
+
+        {% endif %}
+
+
+        {% if updated_at is defined and updated_at %}
+
+            <p class="ranking-updated-at">
+
+                最終更新：
+                {{ updated_at | datetime_format }}
+
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    {# =========================================
+       ランキング本体
+    ========================================= #}
+
+    {% if machines is defined and machines %}
+
+        <section
+            class="ranking-section"
+            aria-labelledby="ranking-list-title"
+        >
+
+            <h2
+                id="ranking-list-title"
+                class="visually-hidden"
+            >
+                {{ ranking_title }}一覧
+            </h2>
+
+
+            <ol class="ranking-list">
+
+                {% for machine in machines %}
+
+                    <li class="ranking-item">
+
+
+                        <div class="ranking-position-area">
+
+                            <span class="ranking-position">
+                                {{ loop.index }}
+                            </span>
+
+                            <span class="ranking-position-label">
+                                位
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            class="ranking-machine-link"
+                            href="{{ root_prefix }}machines/{{ machine.master_machine_id }}.html"
+                        >
+
+
+                            {# =========================
+                               機種画像
+                            ========================= #}
+
+                            <div class="ranking-image-area">
+
+                                <img
+                                    class="ranking-image"
+                                    src="{{ asset_prefix }}img/machines/{{ machine.master_machine_id }}.webp"
+                                    alt="{{ machine.master_machine_name }}の実機画像"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="
+                                        this.onerror = null;
+                                        this.src = '{{ asset_prefix }}img/machines/no_image.webp';
+                                    "
+                                >
+
+                            </div>
+
+
+                            {# =========================
+                               機種情報
+                            ========================= #}
+
+                            <div class="ranking-content">
+
+
+                                {% if (
+                                    machine.master_machine_maker
+                                    is defined
+                                    and machine.master_machine_maker
+                                ) %}
+
+                                    <p class="ranking-maker">
+                                        {{ machine.master_machine_maker }}
+                                    </p>
+
+                                {% endif %}
+
+
+                                <h3 class="ranking-machine-name">
+                                    {{ machine.master_machine_name }}
+                                </h3>
+
+
+                                <dl class="ranking-price-list">
+
+
+                                    <div class="ranking-price-row ranking-price-row-primary">
+
+                                        <dt>
+                                            最安価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.min_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="ranking-price-row">
+
+                                        <dt>
+                                            平均価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.avg_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                    <div class="ranking-price-row">
+
+                                        <dt>
+                                            最高価格
+                                        </dt>
+
+                                        <dd>
+                                            {{ machine.max_price | price }}
+                                        </dd>
+
+                                    </div>
+
+
+                                </dl>
+
+
+                                <div class="ranking-meta">
+
+
+                                    <p class="ranking-meta-item">
+
+                                        <span class="ranking-meta-label">
+                                            商品数
+                                        </span>
+
+                                        <strong class="ranking-meta-value">
+                                            {{ machine.price_count | number }}件
+                                        </strong>
+
+                                    </p>
+
+
+                                    <p class="ranking-meta-item">
+
+                                        <span class="ranking-meta-label">
+                                            ショップ数
+                                        </span>
+
+                                        <strong class="ranking-meta-value">
+                                            {{ machine.shop_count | number }}店
+                                        </strong>
+
+                                    </p>
+
+
+                                </div>
+
+
+                                {% if (
+                                    machine.lowest_shop_name
+                                    is defined
+                                    and machine.lowest_shop_name
+                                ) %}
+
+                                    <p class="ranking-lowest-shop">
+
+                                        最安ショップ：
+                                        {{ machine.lowest_shop_name }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <span class="ranking-detail-button">
+                                    相場を見る
+                                </span>
+
+
+                            </div>
+
+                        </a>
+
+                    </li>
+
+                {% endfor %}
+
+            </ol>
+
+        </section>
+
+
+    {% else %}
+
+
+        {# =========================================
+           データが存在しない場合
+        ========================================= #}
+
+        <section
+            class="ranking-empty-section"
+            aria-labelledby="ranking-empty-title"
+        >
+
+            <div class="ranking-empty">
+
+                <h2
+                    id="ranking-empty-title"
+                    class="ranking-empty-title"
+                >
+                    ランキングデータがありません
+                </h2>
+
+                <p class="ranking-empty-description">
+
+                    現在、このランキングに表示できる
+                    機種情報はありません。
+
+                </p>
+
+                <p class="ranking-empty-link">
+
+                    <a
+                        class="button button-primary"
+                        href="{{ root_prefix }}machines/"
+                    >
+                        機種一覧を見る
+                    </a>
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+    {% endif %}
+
+
+    {# =========================================
+       ページ下部ナビゲーション
+    ========================================= #}
+
+    <nav
+        class="ranking-bottom-navigation"
+        aria-label="ランキングページナビゲーション"
+    >
+
+        <a
+            class="button button-secondary"
+            href="{{ root_prefix }}rankings/"
+        >
+            ランキング一覧へ戻る
+        </a>
+
+        <a
+            class="button button-primary"
+            href="{{ root_prefix }}machines/"
+        >
+            機種一覧を見る
+        </a>
+
+    </nav>
+
+
+</div>
+
+{% endblock %}

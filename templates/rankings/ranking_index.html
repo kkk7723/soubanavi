@@ -1,0 +1,318 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}
+ランキング一覧｜{{ site_name }}
+{% endblock %}
+
+
+{% block description %}
+パチンコ・パチスロ中古実機の価格や出品情報を比較できるランキング一覧です。
+{% endblock %}
+
+
+{% block page_css %}
+<link
+    rel="stylesheet"
+    href="{{ asset_prefix }}css/ranking_list.css"
+>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="page-content">
+
+    {# =========================================
+       ページ見出し
+    ========================================= #}
+
+    <section class="ranking-header">
+
+        <p class="ranking-header-label">
+            中古実機の価格・出品情報
+        </p>
+
+        <h1 class="ranking-title">
+            ランキング一覧
+        </h1>
+
+        <p class="ranking-description">
+
+            パチンコ・パチスロ中古実機を、
+            最安価格や出品数などの条件ごとに
+            ランキング形式で確認できます。
+
+        </p>
+
+
+        {% if ranking_count is defined %}
+
+            <p class="ranking-count">
+
+                公開中のランキング：
+
+                <strong>
+                    {{ ranking_count | number }}件
+                </strong>
+
+            </p>
+
+        {% endif %}
+
+
+        {% if generated_at is defined and generated_at %}
+
+            <p class="ranking-updated-at">
+
+                ページ更新：
+                {{ generated_at | datetime_format }}
+
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    {# =========================================
+       ランキング一覧
+    ========================================= #}
+
+    {% if rankings is defined and rankings %}
+
+        <section
+            class="ranking-category-section"
+            aria-labelledby="ranking-category-title"
+        >
+
+            <h2
+                id="ranking-category-title"
+                class="ranking-category-title"
+            >
+                ランキングを選ぶ
+            </h2>
+
+
+            <div class="ranking-category-list">
+
+                {% for ranking in rankings %}
+
+                    <article class="ranking-category-card">
+
+
+                        <a
+                            class="ranking-category-link"
+                            href="{{ ranking.url }}"
+                        >
+
+
+                            <div class="ranking-category-content">
+
+
+                                {% if (
+                                    ranking.label is defined
+                                    and ranking.label
+                                ) %}
+
+                                    <p class="ranking-category-label">
+
+                                        {{ ranking.label }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <h3 class="ranking-category-name">
+
+                                    {{ ranking.title }}
+
+                                </h3>
+
+
+                                {% if (
+                                    ranking.description is defined
+                                    and ranking.description
+                                ) %}
+
+                                    <p class="ranking-category-description">
+
+                                        {{ ranking.description }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                {% if (
+                                    ranking.machine_count is defined
+                                    and ranking.machine_count is not none
+                                ) %}
+
+                                    <p class="ranking-category-count">
+
+                                        掲載機種数：
+
+                                        <strong>
+                                            {{ ranking.machine_count | number }}機種
+                                        </strong>
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <span class="ranking-category-button">
+
+                                    ランキングを見る
+
+                                </span>
+
+
+                            </div>
+
+
+                            <div
+                                class="ranking-category-arrow"
+                                aria-hidden="true"
+                            >
+                                &gt;
+                            </div>
+
+
+                        </a>
+
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+    {% else %}
+
+
+        {# =========================================
+           ランキングがない場合
+        ========================================= #}
+
+        <section
+            class="ranking-empty-section"
+            aria-labelledby="ranking-empty-title"
+        >
+
+            <div class="ranking-empty">
+
+                <h2
+                    id="ranking-empty-title"
+                    class="ranking-empty-title"
+                >
+                    公開中のランキングはありません
+                </h2>
+
+                <p class="ranking-empty-description">
+
+                    現在、表示できるランキングはありません。
+                    データの準備ができ次第公開します。
+
+                </p>
+
+                <p class="ranking-empty-link">
+
+                    <a
+                        class="button button-primary"
+                        href="{{ root_prefix }}machines/"
+                    >
+                        機種一覧を見る
+                    </a>
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+    {% endif %}
+
+
+    {# =========================================
+       ランキングについて
+    ========================================= #}
+
+    <section
+        class="ranking-guide"
+        aria-labelledby="ranking-guide-title"
+    >
+
+        <h2
+            id="ranking-guide-title"
+            class="ranking-guide-title"
+        >
+            ランキングについて
+        </h2>
+
+        <div class="ranking-guide-content">
+
+            <p>
+
+                各ランキングは、サイトに登録されている
+                中古実機の商品情報をもとに作成しています。
+
+            </p>
+
+            <p>
+
+                販売価格や商品数は更新によって変動するため、
+                実際の販売ページに掲載されている内容と
+                異なる場合があります。
+
+            </p>
+
+            <p>
+
+                商品の購入を検討する場合は、
+                各ショップの商品ページで
+                最新の価格や在庫状況をご確認ください。
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    {# =========================================
+       ページ下部ナビゲーション
+    ========================================= #}
+
+    <nav
+        class="ranking-bottom-navigation"
+        aria-label="ページナビゲーション"
+    >
+
+        <a
+            class="button button-secondary"
+            href="{{ root_prefix }}index.html"
+        >
+            トップへ戻る
+        </a>
+
+        <a
+            class="button button-primary"
+            href="{{ root_prefix }}machines/"
+        >
+            機種一覧を見る
+        </a>
+
+    </nav>
+
+
+</div>
+
+{% endblock %}
