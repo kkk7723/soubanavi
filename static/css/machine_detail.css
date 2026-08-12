@@ -1639,37 +1639,81 @@
 ================================================== */
 
 .price-change-details {
+    width: 100%;
     margin-top: 10px;
 }
 
+/*
+ * detailsのsummaryを明確なボタンとして見せる。
+ */
 .price-change-details-summary {
     display: flex;
-    min-height: 42px;
+    width: 100%;
+    min-height: 40px;
     align-items: center;
     justify-content: center;
-    padding: 9px 14px;
-    border: 1px solid #ddd;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid #cfd6dc;
     border-radius: 8px;
     background: #fff;
-    color: #444;
-    font-size: 13px;
+    color: #1d73b7;
+    font-size: 12px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.35;
     text-align: center;
     cursor: pointer;
     user-select: none;
     list-style: none;
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease;
 }
 
 .price-change-details-summary:hover {
-    border-color: #bbb;
-    background: #fafafa;
+    border-color: #1d73b7;
+    background: #f7fbfe;
 }
 
+.price-change-details-summary:focus-visible {
+    outline: 3px solid rgb(29 115 183 / 20%);
+    outline-offset: 2px;
+}
+
+/*
+ * ブラウザ標準の三角マーカーを消し、
+ * CSS側の矢印に統一する。
+ */
 .price-change-details-summary::-webkit-details-marker {
     display: none;
 }
 
+.price-change-details-summary::marker {
+    content: "";
+}
+
+.price-change-details-summary::before {
+    content: "▼";
+    flex-shrink: 0;
+    font-size: 9px;
+    line-height: 1;
+}
+
+.price-change-details[open]
+.price-change-details-summary::before {
+    content: "▲";
+}
+
+/*
+ * 閉じている時は「さらに○日分を見る」だけ。
+ * 開いている時は「閉じる」だけ。
+ */
+.price-change-details
+.price-change-details-open {
+    display: inline;
+}
+
+.price-change-details
 .price-change-details-close {
     display: none;
 }
@@ -1685,8 +1729,146 @@
 }
 
 .price-change-table-more {
-    margin-top: 10px;
+    margin-top: 8px;
 }
+
+
+/* ==================================================
+   19-1. Recent Price Change Mobile UI
+================================================== */
+
+@media (max-width: 700px) {
+
+    .recent-price-changes-section .section-heading {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .recent-price-changes-section .section-count {
+        font-size: 10px;
+    }
+
+    .price-change-table-wrapper {
+        border-radius: 8px;
+    }
+
+    .price-change-table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        font-size: 9px;
+    }
+
+    .price-change-table th,
+    .price-change-table td {
+        padding: 7px 2px;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .price-change-table th {
+        font-size: 8px;
+    }
+
+    /*
+     * 日付だけ少し広め。
+     * 4列を画面内に必ず収める。
+     */
+    .price-change-table th:nth-child(1),
+    .price-change-table td:nth-child(1) {
+        width: 29%;
+    }
+
+    .price-change-table th:nth-child(2),
+    .price-change-table td:nth-child(2) {
+        width: 29%;
+    }
+
+    .price-change-table th:nth-child(3),
+    .price-change-table td:nth-child(3) {
+        width: 22%;
+    }
+
+    .price-change-table th:nth-child(4),
+    .price-change-table td:nth-child(4) {
+        width: 20%;
+    }
+
+    /*
+     * スマホでは日付を YYYY/MM/DD にしても
+     * 崩れにくいサイズへ。
+     */
+    .price-change-table td:first-child {
+        font-size: 9px;
+    }
+
+    .price-change-details {
+        margin-top: 7px;
+    }
+
+    .price-change-details-summary {
+        min-height: 36px;
+        padding: 7px 10px;
+        border-radius: 7px;
+        font-size: 10px;
+    }
+
+    .price-change-details-summary::before {
+        font-size: 8px;
+    }
+
+    .price-change-table-more {
+        margin-top: 7px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .price-change-table {
+        font-size: 8px;
+    }
+
+    .price-change-table th,
+    .price-change-table td {
+        padding: 6px 1px;
+    }
+
+    .price-change-table th {
+        font-size: 7px;
+    }
+
+    .price-change-table td:first-child {
+        font-size: 8px;
+    }
+
+    .price-change-details-summary {
+        min-height: 34px;
+        padding: 6px 8px;
+        font-size: 9px;
+    }
+}
+
+
+@media (max-width: 360px) {
+
+    .price-change-table {
+        font-size: 7px;
+    }
+
+    .price-change-table th {
+        font-size: 6px;
+    }
+
+    .price-change-table td:first-child {
+        font-size: 7px;
+    }
+
+    .price-change-details-summary {
+        font-size: 8px;
+    }
+}
+
 
 /* ==================================================
    20. Market Analysis
@@ -1908,36 +2090,6 @@ h3.section-title {
 
 @media (max-width: 700px) {
 
-    /* =========================
-       日別価格変動
-    ========================= */
-
-    .price-change-table {
-        width: 100%;
-        min-width: 0;
-        table-layout: fixed;
-        font-size: 10px;
-    }
-
-    .price-change-table th,
-    .price-change-table td {
-        padding: 8px 4px;
-        white-space: nowrap;
-    }
-
-    .price-change-table th {
-        font-size: 9px;
-    }
-
-    .price-change-details {
-        margin-top: 8px;
-    }
-
-    .price-change-details-summary {
-        min-height: 38px;
-        padding: 8px 10px;
-        font-size: 11px;
-    }
 
 
     /* =========================
@@ -2079,28 +2231,6 @@ h3.section-title {
 
 @media (max-width: 520px) {
 
-    /* =========================
-       日別価格変動
-    ========================= */
-
-    .price-change-table {
-        font-size: 9px;
-    }
-
-    .price-change-table th,
-    .price-change-table td {
-        padding: 7px 2px;
-    }
-
-    .price-change-table th {
-        font-size: 8px;
-    }
-
-    .price-change-details-summary {
-        min-height: 36px;
-        padding: 7px 9px;
-        font-size: 10px;
-    }
 
 
     /* =========================
