@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[22]:
-
-
 import os
 import re
 import sqlite3
@@ -115,6 +109,7 @@ LOWEST_PRICE_MACHINE_LIMIT = 10
 HIGHEST_AVG_PRICE_MACHINE_LIMIT = 10
 RECENT_MACHINE_LIMIT = 10
 RECENT_MONTHS = 10
+
 
 # ==================================================
 # 共通処理
@@ -1172,8 +1167,8 @@ def build_index_page_context(
     """
     seo = build_seo_data(
         title=(
-            "実機相場ナビ｜"
-            "パチンコ・パチスロ中古実機の価格比較"
+            f"{SITE_NAME}｜"
+            "中古実機の価格比較・値下げ・ランキング"
         ),
         description=(
             "パチンコ・パチスロ実機の中古価格、"
@@ -1576,10 +1571,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-# In[ ]:
-
-
-
-
