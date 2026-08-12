@@ -235,6 +235,36 @@
 }
 
 
+/*
+ * PCでは価格相場カードを横いっぱいまで引き伸ばさない。
+ * 8項目を4列×2段でコンパクトに表示する。
+ */
+.price-summary-section .summary {
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(150px, 190px)
+        );
+    justify-content: start;
+    gap: 8px;
+}
+
+.price-summary-section .summary-item {
+    min-width: 0;
+    padding: 10px 12px;
+}
+
+.price-summary-section .summary-label {
+    font-size: 11px;
+}
+
+.price-summary-section .summary-value {
+    margin-top: 4px;
+    font-size: 17px;
+    line-height: 1.25;
+}
+
+
 /* ==================================================
    5. Price History
 ================================================== */
@@ -288,6 +318,8 @@
 
 .lowest-product {
     display: flex;
+    width: 100%;
+    max-width: 780px;
     align-items: center;
     overflow: hidden;
     border: 1px solid #ddd;
@@ -937,6 +969,10 @@
 
 
     /* 現在の最安商品 */
+
+    .lowest-product {
+        max-width: none;
+    }
 
     .lowest-product-image-area {
         width: 120px;
@@ -1634,20 +1670,6 @@
     display: none;
 }
 
-.price-change-details-open {
-    display: inline;
-}
-
-.price-change-details-close {
-    display: none;
-}
-
-.price-change-details:not([open])
-.price-change-details-open {
-    display: inline;
-}
-
-.price-change-details:not([open])
 .price-change-details-close {
     display: none;
 }
@@ -1747,8 +1769,9 @@ h3.section-title {
     grid-template-columns:
         repeat(
             3,
-            minmax(0, 1fr)
+            minmax(170px, 240px)
         );
+    justify-content: start;
     gap: 7px;
 }
 
@@ -1893,43 +1916,17 @@ h3.section-title {
         width: 100%;
         min-width: 0;
         table-layout: fixed;
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .price-change-table th,
     .price-change-table td {
-        padding: 8px 2px;
-        line-height: 1.35;
+        padding: 8px 4px;
         white-space: nowrap;
     }
 
     .price-change-table th {
-        font-size: 10px;
-    }
-
-    /* 日付 */
-    .price-change-table th:nth-child(1),
-    .price-change-table td:nth-child(1) {
-        width: 28%;
-        text-align: left;
-    }
-
-    /* 最安価格 */
-    .price-change-table th:nth-child(2),
-    .price-change-table td:nth-child(2) {
-        width: 30%;
-    }
-
-    /* 前日比 */
-    .price-change-table th:nth-child(3),
-    .price-change-table td:nth-child(3) {
-        width: 20%;
-    }
-
-    /* 変動率 */
-    .price-change-table th:nth-child(4),
-    .price-change-table td:nth-child(4) {
-        width: 22%;
+        font-size: 9px;
     }
 
     .price-change-details {
@@ -1992,6 +1989,12 @@ h3.section-title {
     .market-analysis-section
     .price-position-section
     .summary {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+        justify-content: stretch;
         gap: 5px;
     }
 
@@ -2078,13 +2081,19 @@ h3.section-title {
 
     /* =========================
        日別価格変動
-       4列の可読性を優先し、
-       700px以下の文字サイズを維持する
     ========================= */
+
+    .price-change-table {
+        font-size: 9px;
+    }
 
     .price-change-table th,
     .price-change-table td {
-        padding: 7px 1px;
+        padding: 7px 2px;
+    }
+
+    .price-change-table th {
+        font-size: 8px;
     }
 
     .price-change-details-summary {
@@ -2208,9 +2217,17 @@ h3.section-title {
 
 @media (max-width: 360px) {
 
+    .price-change-table {
+        font-size: 8px;
+    }
+
     .price-change-table th,
     .price-change-table td {
-        padding: 6px 0;
+        padding: 6px 1px;
+    }
+
+    .price-change-table th {
+        font-size: 7px;
     }
 
     .market-analysis-section {
