@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 # upload_output.py
 
 from __future__ import annotations
@@ -865,10 +859,3 @@ if __name__ == "__main__":
         )
 
         raise
-
-
-# In[ ]:
-
-
-
-
