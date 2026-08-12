@@ -72,9 +72,6 @@
    3. Machine Overview Card
 ================================================== */
 
-
-
-
 .machine-overview-grid {
     display: grid;
     grid-template-columns:
@@ -130,7 +127,6 @@
     align-items: stretch;
 }
 
-/* 情報全体を1つの表のようにする */
 .machine-information-list {
     width: 100%;
     margin: 0;
@@ -140,7 +136,6 @@
     background: #fff;
 }
 
-/* ラベルと値を常に横並び */
 .machine-information-row {
     display: grid;
     grid-template-columns:
@@ -641,6 +636,7 @@
 /* ==================================================
    10. Machine Note
 ================================================== */
+
 .machine-supplement-section {
     min-width: 0;
     margin-top: 0;
@@ -849,7 +845,7 @@
     .section-title {
         font-size: 18px;
     }
-    
+
     .page-header.machine-detail-header {
         padding: 9px 11px;
     }
@@ -910,6 +906,35 @@
         font-size: 10px;
         line-height: 1.35;
     }
+
+
+    /* =============================================
+       中古実機の価格相場
+    ============================================= */
+
+    .price-summary-section .summary {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+        gap: 6px;
+    }
+
+    .price-summary-section .summary-item {
+        padding: 9px 7px;
+    }
+
+    .price-summary-section .summary-label {
+        font-size: 10px;
+    }
+
+    .price-summary-section .summary-value {
+        margin-top: 4px;
+        font-size: 15px;
+        line-height: 1.3;
+    }
+
 
     /* 現在の最安商品 */
 
@@ -994,6 +1019,7 @@
         font-size: 29px;
     }
 }
+
 
 /* ==================================================
    15. Small Mobile Responsive
@@ -1102,6 +1128,31 @@
     }
 
 
+    /* =============================================
+       中古実機の価格相場
+    ============================================= */
+
+    .price-summary-section .summary {
+        gap: 5px;
+    }
+
+    .price-summary-section .summary-item {
+        padding: 8px 5px;
+        border-radius: 7px;
+    }
+
+    .price-summary-section .summary-label {
+        font-size: 9px;
+        line-height: 1.35;
+    }
+
+    .price-summary-section .summary-value {
+        margin-top: 4px;
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+
     /* 現在の最安商品 */
 
     .lowest-product-image-area {
@@ -1201,8 +1252,9 @@
     }
 }
 
+
 /* ==================================================
-   kanren
+   Related / Supplement Responsive
 ================================================== */
 
 @media (max-width: 700px) {
@@ -1227,7 +1279,7 @@
         font-size: 11px;
         line-height: 1.5;
     }
-    
+
     .related-machine-grid {
         gap: 9px;
         padding-bottom: 10px;
@@ -1305,6 +1357,7 @@
     }
 }
 
+
 /* ==================================================
    16. Extra Small Mobile
 ================================================== */
@@ -1354,6 +1407,23 @@
 
     .machine-information-row dd {
         font-size: 8px;
+    }
+
+
+    /* 中古実機の価格相場 */
+
+    .price-summary-section .summary-item {
+        padding:
+            7px
+            4px;
+    }
+
+    .price-summary-section .summary-label {
+        font-size: 8px;
+    }
+
+    .price-summary-section .summary-value {
+        font-size: 12px;
     }
 
 
@@ -1413,5 +1483,759 @@
     .product-card-arrow {
         width: 16px;
         font-size: 24px;
+    }
+}
+
+
+/* ==================================================
+   17. Recent Price Changes
+================================================== */
+
+.recent-price-changes-section {
+    min-width: 0;
+    margin-top: 0;
+}
+
+
+/* ==================================================
+   18. Recent Price Change Table
+   4列固定・横スクロールなし
+================================================== */
+
+.price-change-table-wrapper {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.price-change-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: #fff;
+    color: #222;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.price-change-table th,
+.price-change-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #e7e7e7;
+    line-height: 1.45;
+    white-space: nowrap;
+}
+
+.price-change-table th {
+    background: #fafafa;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.price-change-table td {
+    text-align: right;
+}
+
+
+/* 列幅 */
+
+.price-change-table th:nth-child(1),
+.price-change-table td:nth-child(1) {
+    width: 22%;
+    text-align: left;
+}
+
+.price-change-table th:nth-child(2),
+.price-change-table td:nth-child(2) {
+    width: 30%;
+}
+
+.price-change-table th:nth-child(3),
+.price-change-table td:nth-child(3) {
+    width: 27%;
+}
+
+.price-change-table th:nth-child(4),
+.price-change-table td:nth-child(4) {
+    width: 21%;
+}
+
+.price-change-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* 最安価格列 */
+
+.price-change-table td:nth-child(2) {
+    font-weight: 700;
+}
+
+
+/* 最新日の行 */
+
+.price-change-table tbody tr:first-child {
+    background: #fffdfb;
+}
+
+.price-change-table tbody tr:first-child td {
+    font-weight: 700;
+}
+
+@media (hover: hover) {
+
+    .price-change-table tbody tr:hover {
+        background: #fafafa;
+    }
+}
+
+
+/* ==================================================
+   19. Price Change Details
+   JSなし開閉
+================================================== */
+
+.price-change-details {
+    margin-top: 10px;
+}
+
+.price-change-details-summary {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    color: #444;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+}
+
+.price-change-details-summary:hover {
+    border-color: #bbb;
+    background: #fafafa;
+}
+
+.price-change-details-summary::-webkit-details-marker {
+    display: none;
+}
+
+.price-change-details-close {
+    display: none;
+}
+
+.price-change-details[open]
+.price-change-details-open {
+    display: none;
+}
+
+.price-change-details[open]
+.price-change-details-close {
+    display: inline;
+}
+
+.price-change-table-more {
+    margin-top: 10px;
+}
+
+/* ==================================================
+   20. Market Analysis
+================================================== */
+
+.market-analysis-section {
+    min-width: 0;
+    margin-top: 0;
+    padding: 12px;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    background: #fafafa;
+}
+
+.market-analysis-section > .section-title {
+    margin-bottom: 12px;
+}
+
+.market-analysis-section
+.price-comparison-section,
+.market-analysis-section
+.price-statistics-section,
+.market-analysis-section
+.price-position-section {
+    min-width: 0;
+    margin: 0;
+}
+
+.market-analysis-section
+.price-comparison-section
++
+.price-statistics-section,
+.market-analysis-section
+.price-statistics-section
++
+.price-position-section {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e2e2;
+}
+
+.market-analysis-section h3.section-title,
+.market-analysis-section .analysis-title {
+    margin: 0 0 8px;
+    color: #333;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.market-analysis-section .section-heading {
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.market-analysis-section
+.section-heading
+h3.section-title {
+    margin-bottom: 0;
+}
+
+.market-analysis-section .section-count {
+    font-size: 11px;
+}
+
+
+/* =========================
+   Market Analysis Cards
+========================= */
+
+.market-analysis-section
+.price-comparison-section
+.summary,
+.market-analysis-section
+.price-statistics-section
+.summary,
+.market-analysis-section
+.price-position-section
+.summary {
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 7px;
+}
+
+.market-analysis-section
+.price-comparison-section
+.summary-item,
+.market-analysis-section
+.price-statistics-section
+.summary-item,
+.market-analysis-section
+.price-position-section
+.summary-item {
+    min-width: 0;
+    padding: 9px 10px;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.market-analysis-section
+.price-comparison-section
+.summary-label,
+.market-analysis-section
+.price-statistics-section
+.summary-label,
+.market-analysis-section
+.price-position-section
+.summary-label {
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+.market-analysis-section
+.price-comparison-section
+.summary-value,
+.market-analysis-section
+.price-statistics-section
+.summary-value,
+.market-analysis-section
+.price-position-section
+.summary-value {
+    margin-top: 3px;
+    font-size: 15px;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+}
+
+/*
+ * 通常のsummary先頭値は赤になるため、
+ * 相場分析では必要箇所だけ色を指定する。
+ */
+.market-analysis-section
+.price-comparison-section
+.summary-item:first-child
+.summary-value,
+.market-analysis-section
+.price-position-section
+.summary-item:first-child
+.summary-value {
+    color: #222;
+}
+
+/* 90日最安値 */
+.market-analysis-section
+.price-statistics-section
+.summary-item:first-child
+.summary-value {
+    color: #d13b2f;
+}
+
+/* 現在の最安価格 */
+.market-analysis-section
+.price-position-section
+.summary-item:nth-child(3)
+.summary-value {
+    color: #d13b2f;
+}
+
+/* 現在の価格水準3項目の数値サイズを統一 */
+.market-analysis-section
+.price-position-section
+.summary-item:first-child
+.summary-value,
+.market-analysis-section
+.price-position-section
+.summary-item:nth-child(2)
+.summary-value,
+.market-analysis-section
+.price-position-section
+.summary-item:nth-child(3)
+.summary-value {
+    font-size: 15px;
+}
+
+/* 「7日前 ○円」「日次最安価格の平均」などの補足 */
+.market-analysis-section
+.price-comparison-section
+.summary-value
++
+.summary-label,
+.market-analysis-section
+.price-statistics-section
+.summary-value
++
+.summary-label {
+    margin-top: 3px;
+    color: #777;
+    font-size: 9px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.market-analysis-section .price-history-note {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+
+/* ==================================================
+   21. Price Change / Market Analysis Tablet
+================================================== */
+
+@media (max-width: 900px) {
+
+    .market-analysis-section {
+        padding: 11px;
+    }
+}
+
+
+/* ==================================================
+   22. Price Change / Market Analysis Mobile
+================================================== */
+
+@media (max-width: 700px) {
+
+    /* =========================
+       日別価格変動
+    ========================= */
+
+    .price-change-table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        font-size: 10px;
+    }
+
+    .price-change-table th,
+    .price-change-table td {
+        padding: 8px 4px;
+        white-space: nowrap;
+    }
+
+    .price-change-table th {
+        font-size: 9px;
+    }
+
+    .price-change-details {
+        margin-top: 8px;
+    }
+
+    .price-change-details-summary {
+        min-height: 38px;
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+
+    /* =========================
+       相場分析
+    ========================= */
+
+    .market-analysis-section {
+        padding: 9px;
+        border-radius: 8px;
+    }
+
+    .market-analysis-section > .section-title {
+        margin-bottom: 10px;
+    }
+
+    .market-analysis-section h3.section-title,
+    .market-analysis-section .analysis-title {
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+
+    .market-analysis-section .section-heading {
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+
+    .market-analysis-section .section-count {
+        font-size: 9px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    +
+    .price-statistics-section,
+    .market-analysis-section
+    .price-statistics-section
+    +
+    .price-position-section {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary,
+    .market-analysis-section
+    .price-statistics-section
+    .summary,
+    .market-analysis-section
+    .price-position-section
+    .summary {
+        gap: 5px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-item,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-item,
+    .market-analysis-section
+    .price-position-section
+    .summary-item {
+        padding: 7px 5px;
+        border-radius: 6px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-label,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-label,
+    .market-analysis-section
+    .price-position-section
+    .summary-label {
+        font-size: 9px;
+        line-height: 1.3;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-value,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:first-child
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(2)
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(3)
+    .summary-value {
+        margin-top: 3px;
+        font-size: 12px;
+        line-height: 1.25;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-value
+    +
+    .summary-label,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-value
+    +
+    .summary-label {
+        margin-top: 3px;
+        font-size: 8px;
+        line-height: 1.3;
+    }
+
+    .market-analysis-section .price-history-note {
+        margin-top: 4px;
+        font-size: 9px;
+        line-height: 1.5;
+    }
+}
+
+
+/* ==================================================
+   23. Price Change / Market Analysis Small Mobile
+================================================== */
+
+@media (max-width: 520px) {
+
+    /* =========================
+       日別価格変動
+    ========================= */
+
+    .price-change-table {
+        font-size: 9px;
+    }
+
+    .price-change-table th,
+    .price-change-table td {
+        padding: 7px 2px;
+    }
+
+    .price-change-table th {
+        font-size: 8px;
+    }
+
+    .price-change-details-summary {
+        min-height: 36px;
+        padding: 7px 9px;
+        font-size: 10px;
+    }
+
+
+    /* =========================
+       相場分析
+    ========================= */
+
+    .market-analysis-section {
+        padding: 8px;
+    }
+
+    .market-analysis-section > .section-title {
+        margin-bottom: 9px;
+    }
+
+    .market-analysis-section h3.section-title,
+    .market-analysis-section .analysis-title {
+        font-size: 12px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    +
+    .price-statistics-section,
+    .market-analysis-section
+    .price-statistics-section
+    +
+    .price-position-section {
+        margin-top: 9px;
+        padding-top: 9px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary,
+    .market-analysis-section
+    .price-statistics-section
+    .summary,
+    .market-analysis-section
+    .price-position-section
+    .summary {
+        gap: 4px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-item,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-item,
+    .market-analysis-section
+    .price-position-section
+    .summary-item {
+        padding: 6px 4px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-label,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-label,
+    .market-analysis-section
+    .price-position-section
+    .summary-label {
+        font-size: 8px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-value,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:first-child
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(2)
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(3)
+    .summary-value {
+        font-size: 11px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-value
+    +
+    .summary-label,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-value
+    +
+    .summary-label {
+        font-size: 7px;
+    }
+
+    .market-analysis-section .price-history-note {
+        font-size: 8px;
+    }
+}
+
+
+/* ==================================================
+   24. Price Change / Market Analysis Extra Small
+================================================== */
+
+@media (max-width: 360px) {
+
+    .price-change-table {
+        font-size: 8px;
+    }
+
+    .price-change-table th,
+    .price-change-table td {
+        padding: 6px 1px;
+    }
+
+    .price-change-table th {
+        font-size: 7px;
+    }
+
+    .market-analysis-section {
+        padding: 7px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-item,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-item,
+    .market-analysis-section
+    .price-position-section
+    .summary-item {
+        padding: 5px 3px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-label,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-label,
+    .market-analysis-section
+    .price-position-section
+    .summary-label {
+        font-size: 7px;
+    }
+
+    .market-analysis-section
+    .price-comparison-section
+    .summary-value,
+    .market-analysis-section
+    .price-statistics-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:first-child
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(2)
+    .summary-value,
+    .market-analysis-section
+    .price-position-section
+    .summary-item:nth-child(3)
+    .summary-value {
+        font-size: 10px;
     }
 }

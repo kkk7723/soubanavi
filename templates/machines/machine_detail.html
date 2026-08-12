@@ -382,6 +382,40 @@
                 <div class="summary-item">
 
                     <span class="summary-label">
+                        過去最安
+                    </span>
+
+                    <strong class="summary-value">
+                        {% if all_time_min_price is not none %}
+                            {{ all_time_min_price | price }}
+                        {% else %}
+                            データなし
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
+                        過去最高
+                    </span>
+
+                    <strong class="summary-value">
+                        {% if all_time_max_price is not none %}
+                            {{ all_time_max_price | price }}
+                        {% else %}
+                            データなし
+                        {% endif %}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span class="summary-label">
                         商品数
                     </span>
 
@@ -499,6 +533,553 @@
                     </p>
 
                 </div>
+
+            </section>
+
+        {% endif %}
+
+
+        {# =========================================
+           最近の日別価格変動
+        ========================================= #}
+        
+        {% if recent_price_changes %}
+        
+            <section
+                class="recent-price-changes-section"
+                aria-labelledby="recent-price-changes-title"
+            >
+        
+                <div class="section-heading">
+        
+                    <h2
+                        id="recent-price-changes-title"
+                        class="section-title"
+                    >
+                        最近の日別価格変動
+                    </h2>
+        
+                    <p class="section-count">
+                        最大30日分
+                    </p>
+        
+                </div>
+        
+        
+                {# =========================================
+                   最初に表示する直近7日分
+                ========================================= #}
+        
+                <div class="price-change-table-wrapper">
+        
+                    <table class="price-change-table">
+        
+                        <thead>
+        
+                            <tr>
+                                <th>日付</th>
+                                <th>最安価格</th>
+                                <th>前日比</th>
+                                <th>変動率</th>
+                            </tr>
+        
+                        </thead>
+        
+                        <tbody>
+        
+                            {% for item in recent_price_changes[:7] %}
+        
+                                <tr>
+        
+                                    <td>
+                                        {{ item.record_date }}
+                                    </td>
+        
+                                    <td>
+                                        {{ item.min_price | price }}
+                                    </td>
+        
+                                    <td>
+        
+                                        {% if item.change_amount is not none %}
+        
+                                            {% if item.change_amount > 0 %}
+                                                +{{ item.change_amount | price }}
+                                            {% elif item.change_amount < 0 %}
+                                                {{ item.change_amount | price }}
+                                            {% else %}
+                                                ±0円
+                                            {% endif %}
+        
+                                        {% else %}
+        
+                                            -
+        
+                                        {% endif %}
+        
+                                    </td>
+        
+                                    <td>
+        
+                                        {% if item.change_rate is not none %}
+        
+                                            {% if item.change_rate > 0 %}
+                                                +{{ "%.1f" | format(item.change_rate) }}%
+                                            {% elif item.change_rate < 0 %}
+                                                {{ "%.1f" | format(item.change_rate) }}%
+                                            {% else %}
+                                                ±0.0%
+                                            {% endif %}
+        
+                                        {% else %}
+        
+                                            -
+        
+                                        {% endif %}
+        
+                                    </td>
+        
+                                </tr>
+        
+                            {% endfor %}
+        
+                        </tbody>
+        
+                    </table>
+        
+                </div>
+        
+        
+                {# =========================================
+                   8日目以降
+                ========================================= #}
+        
+                {% if recent_price_changes | length > 7 %}
+        
+                    <details class="price-change-details">
+        
+                        <summary class="price-change-details-summary">
+        
+                            <span class="price-change-details-open">
+                                さらに
+                                {{ (recent_price_changes | length) - 7 }}
+                                日分を見る
+                            </span>
+        
+                            <span class="price-change-details-close">
+                                閉じる
+                            </span>
+        
+                        </summary>
+        
+        
+                        <div class="price-change-table-wrapper price-change-table-more">
+        
+                            <table class="price-change-table">
+        
+                                <thead>
+        
+                                    <tr>
+                                        <th>日付</th>
+                                        <th>最安価格</th>
+                                        <th>前日比</th>
+                                        <th>変動率</th>
+                                    </tr>
+        
+                                </thead>
+        
+                                <tbody>
+        
+                                    {% for item in recent_price_changes[7:] %}
+        
+                                        <tr>
+        
+                                            <td>
+                                                {{ item.record_date }}
+                                            </td>
+        
+                                            <td>
+                                                {{ item.min_price | price }}
+                                            </td>
+        
+                                            <td>
+        
+                                                {% if item.change_amount is not none %}
+        
+                                                    {% if item.change_amount > 0 %}
+                                                        +{{ item.change_amount | price }}
+                                                    {% elif item.change_amount < 0 %}
+                                                        {{ item.change_amount | price }}
+                                                    {% else %}
+                                                        ±0円
+                                                    {% endif %}
+        
+                                                {% else %}
+        
+                                                    -
+        
+                                                {% endif %}
+        
+                                            </td>
+        
+                                            <td>
+        
+                                                {% if item.change_rate is not none %}
+        
+                                                    {% if item.change_rate > 0 %}
+                                                        +{{ "%.1f" | format(item.change_rate) }}%
+                                                    {% elif item.change_rate < 0 %}
+                                                        {{ "%.1f" | format(item.change_rate) }}%
+                                                    {% else %}
+                                                        ±0.0%
+                                                    {% endif %}
+        
+                                                {% else %}
+        
+                                                    -
+        
+                                                {% endif %}
+        
+                                            </td>
+        
+                                        </tr>
+        
+                                    {% endfor %}
+        
+                                </tbody>
+        
+                            </table>
+        
+                        </div>
+        
+                    </details>
+        
+                {% endif %}
+        
+            </section>
+        
+        {% endif %}
+        {# =========================================
+           相場分析
+        ========================================= #}
+
+        {% if current_history_min_price
+              or period_90_days > 0
+              or (price_position_percent is not none
+                  and price_level_label) %}
+
+            <section
+                class="market-analysis-section"
+                aria-labelledby="market-analysis-title"
+            >
+                <h2
+                    id="market-analysis-title"
+                    class="section-title"
+                >
+                    相場分析
+                </h2>
+
+
+        {# =========================================
+           前日・7日前・30日前との価格比較
+        ========================================= #}
+
+        {% if current_history_min_price %}
+
+            <div
+                class="price-comparison-section"
+                aria-labelledby="price-comparison-title"
+            >
+                <div class="section-heading">
+
+                    <h3
+                        id="price-comparison-title"
+                        class="section-title"
+                    >
+                        最近の価格変動
+                    </h3>
+
+                    {% if latest_history_date %}
+
+                        <p class="section-count">
+                            {{ latest_history_date.strftime('%Y/%m/%d') }}時点
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="summary">
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            前日比
+                        </span>
+
+                        {% if price_change_1d is not none %}
+
+                            <strong class="summary-value">
+                                {% if price_change_1d > 0 %}+{% elif price_change_1d < 0 %}-{% endif %}{{ price_change_1d | abs | price }}
+                            </strong>
+
+                            <span class="summary-label">
+                                {% if price_change_rate_1d > 0 %}+{% endif %}{{ "%.1f" | format(price_change_rate_1d) }}%
+                                ／ 前日 {{ previous_day_price | price }}
+                            </span>
+
+                        {% else %}
+
+                            <strong class="summary-value">
+                                データなし
+                            </strong>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            7日前比
+                        </span>
+
+                        {% if price_change_7d is not none %}
+
+                            <strong class="summary-value">
+                                {% if price_change_7d > 0 %}+{% elif price_change_7d < 0 %}-{% endif %}{{ price_change_7d | abs | price }}
+                            </strong>
+
+                            <span class="summary-label">
+                                {% if price_change_rate_7d > 0 %}+{% endif %}{{ "%.1f" | format(price_change_rate_7d) }}%
+                                ／ 7日前 {{ price_7_days_ago | price }}
+                            </span>
+
+                        {% else %}
+
+                            <strong class="summary-value">
+                                データなし
+                            </strong>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            30日前比
+                        </span>
+
+                        {% if price_change_30d is not none %}
+
+                            <strong class="summary-value">
+                                {% if price_change_30d > 0 %}+{% elif price_change_30d < 0 %}-{% endif %}{{ price_change_30d | abs | price }}
+                            </strong>
+
+                            <span class="summary-label">
+                                {% if price_change_rate_30d > 0 %}+{% endif %}{{ "%.1f" | format(price_change_rate_30d) }}%
+                                ／ 30日前 {{ price_30_days_ago | price }}
+                            </span>
+
+                        {% else %}
+
+                            <strong class="summary-value">
+                                データなし
+                            </strong>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <p class="price-history-note">
+                    日次の最安価格を基準に比較しています。
+                    対象日の価格履歴がない場合は「データなし」と表示します。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        {# =========================================
+           90日価格統計
+        ========================================= #}
+
+        {% if period_90_days > 0 %}
+
+            <div
+                class="price-statistics-section"
+                aria-labelledby="price-statistics-title"
+            >
+                <div class="section-heading">
+
+                    <h3
+                        id="price-statistics-title"
+                        class="section-title"
+                    >
+                        過去90日の価格統計
+                    </h3>
+
+                    <p class="section-count">
+                        {{ period_90_days | number }}日分
+                    </p>
+
+                </div>
+
+
+                <div class="summary">
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            90日最安値
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ period_90_min_price | price }}
+                        </strong>
+
+                        {% if period_90_min_date %}
+
+                            <span class="summary-label">
+                                {{ period_90_min_date.strftime('%Y/%m/%d') }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            90日最高値
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ period_90_max_price | price }}
+                        </strong>
+
+                        {% if period_90_max_date %}
+
+                            <span class="summary-label">
+                                {{ period_90_max_date.strftime('%Y/%m/%d') }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            90日平均値
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ period_90_avg_price | price }}
+                        </strong>
+
+                        <span class="summary-label">
+                            日次最安価格の平均
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p class="price-history-note">
+                    最大90日分の日次最安価格を集計しています。
+                    90日分に満たない場合は、蓄積済みの期間で集計します。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        {# =========================================
+           現在の価格水準
+        ========================================= #}
+
+        {% if price_position_percent is not none
+              and price_level_label %}
+
+            <div
+                class="price-position-section"
+                aria-labelledby="price-position-title"
+            >
+                <h3
+                    id="price-position-title"
+                    class="section-title"
+                >
+                    現在の価格水準
+                </h3>
+
+
+                <div class="summary">
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            現在の水準
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ price_level_label }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            90日価格帯での位置
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ "%.1f" | format(price_position_percent) }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-item">
+
+                        <span class="summary-label">
+                            現在の最安価格
+                        </span>
+
+                        <strong class="summary-value">
+                            {{ current_history_min_price | price }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <p class="price-history-note">
+                    90日最安値を0%、90日最高値を100%として、
+                    現在の最安価格が価格帯のどの位置にあるかを示しています。
+                    0～約33%を安値圏、約33～67%を中間圏、約67～100%を高値圏として表示します。
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
 
             </section>
 
@@ -766,43 +1347,45 @@
 
 
         {# =========================================
-           関連機種
+           同シリーズの関連機種
         ========================================= #}
-        
-        {% if related_machines %}
-        
+
+        {% if series_related_machines %}
+
             <section
                 class="related-machines-section"
-                aria-labelledby="related-machines-title"
+                aria-labelledby="series-related-machines-title"
             >
+
                 <div class="section-heading">
-        
+
                     <h2
-                        id="related-machines-title"
+                        id="series-related-machines-title"
                         class="section-title"
                     >
-                        {{ machine.master_machine_maker }}の関連機種
+                        {{ machine.master_machine_series }}シリーズの関連機種
                     </h2>
-        
+
                     <p class="section-count">
-                        {{ related_machine_count | number }}機種
+                        {{ series_related_machine_count | number }}機種
                     </p>
-        
+
                 </div>
-        
-        
+
+
                 <div class="related-machine-grid">
-        
-                    {% for related_machine in related_machines %}
-        
+
+                    {% for related_machine in series_related_machines %}
+
                         <article class="related-machine-card">
-        
+
                             <a
                                 class="related-machine-link"
                                 href="{{ related_machine.detail_url }}"
                             >
+
                                 <div class="related-machine-image-area">
-        
+
                                     <img
                                         class="related-machine-image"
                                         src="{{ related_machine.machine_image_path }}"
@@ -813,42 +1396,307 @@
                                         decoding="async"
                                         onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
                                     >
-        
+
                                 </div>
-        
-        
+
+
                                 <div class="related-machine-body">
-        
+
                                     <h3 class="related-machine-name">
                                         {{ related_machine.master_machine_name }}
                                     </h3>
-        
-        
+
+
                                     {% if related_machine.min_price %}
-        
+
                                         <p class="related-machine-price">
                                             最安価格
-        
+
                                             <strong>
                                                 {{ related_machine.min_price | price }}
                                             </strong>
                                         </p>
-        
+
                                     {% endif %}
-        
+
                                 </div>
-        
+
                             </a>
-        
+
                         </article>
-        
+
                     {% endfor %}
-        
+
                 </div>
-        
+
             </section>
-        
+
         {% endif %}
+
+
+        {# =========================================
+           価格が近い機種
+        ========================================= #}
+
+        {% if near_price_machines %}
+
+            <section
+                class="related-machines-section"
+                aria-labelledby="near-price-machines-title"
+            >
+
+                <div class="section-heading">
+
+                    <h2
+                        id="near-price-machines-title"
+                        class="section-title"
+                    >
+                        価格が近い機種
+                    </h2>
+
+                    <p class="section-count">
+                        {{ near_price_machine_count | number }}機種
+                    </p>
+
+                </div>
+
+
+                <div class="related-machine-grid">
+
+                    {% for related_machine in near_price_machines %}
+
+                        <article class="related-machine-card">
+
+                            <a
+                                class="related-machine-link"
+                                href="{{ related_machine.detail_url }}"
+                            >
+
+                                <div class="related-machine-image-area">
+
+                                    <img
+                                        class="related-machine-image"
+                                        src="{{ related_machine.machine_image_path }}"
+                                        alt="{{ related_machine.master_machine_name }}の実機画像"
+                                        width="240"
+                                        height="240"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
+                                    >
+
+                                </div>
+
+
+                                <div class="related-machine-body">
+
+                                    <h3 class="related-machine-name">
+                                        {{ related_machine.master_machine_name }}
+                                    </h3>
+
+
+                                    {% if related_machine.min_price %}
+
+                                        <p class="related-machine-price">
+                                            最安価格
+
+                                            <strong>
+                                                {{ related_machine.min_price | price }}
+                                            </strong>
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+
+        {# =========================================
+           同タイプの関連機種
+        ========================================= #}
+
+        {% if type_related_machines %}
+
+            <section
+                class="related-machines-section"
+                aria-labelledby="type-related-machines-title"
+            >
+
+                <div class="section-heading">
+
+                    <h2
+                        id="type-related-machines-title"
+                        class="section-title"
+                    >
+                        {{ machine.master_machine_type }}の関連機種
+                    </h2>
+
+                    <p class="section-count">
+                        {{ type_related_machine_count | number }}機種
+                    </p>
+
+                </div>
+
+
+                <div class="related-machine-grid">
+
+                    {% for related_machine in type_related_machines %}
+
+                        <article class="related-machine-card">
+
+                            <a
+                                class="related-machine-link"
+                                href="{{ related_machine.detail_url }}"
+                            >
+
+                                <div class="related-machine-image-area">
+
+                                    <img
+                                        class="related-machine-image"
+                                        src="{{ related_machine.machine_image_path }}"
+                                        alt="{{ related_machine.master_machine_name }}の実機画像"
+                                        width="240"
+                                        height="240"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
+                                    >
+
+                                </div>
+
+
+                                <div class="related-machine-body">
+
+                                    <h3 class="related-machine-name">
+                                        {{ related_machine.master_machine_name }}
+                                    </h3>
+
+
+                                    {% if related_machine.min_price %}
+
+                                        <p class="related-machine-price">
+                                            最安価格
+
+                                            <strong>
+                                                {{ related_machine.min_price | price }}
+                                            </strong>
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+
+        {# =========================================
+           同メーカーの関連機種
+        ========================================= #}
+
+        {% if related_machines %}
+
+            <section
+                class="related-machines-section"
+                aria-labelledby="related-machines-title"
+            >
+
+                <div class="section-heading">
+
+                    <h2
+                        id="related-machines-title"
+                        class="section-title"
+                    >
+                        {{ machine.master_machine_maker }}の関連機種
+                    </h2>
+
+                    <p class="section-count">
+                        {{ related_machine_count | number }}機種
+                    </p>
+
+                </div>
+
+
+                <div class="related-machine-grid">
+
+                    {% for related_machine in related_machines %}
+
+                        <article class="related-machine-card">
+
+                            <a
+                                class="related-machine-link"
+                                href="{{ related_machine.detail_url }}"
+                            >
+
+                                <div class="related-machine-image-area">
+
+                                    <img
+                                        class="related-machine-image"
+                                        src="{{ related_machine.machine_image_path }}"
+                                        alt="{{ related_machine.master_machine_name }}の実機画像"
+                                        width="240"
+                                        height="240"
+                                        loading="lazy"
+                                        decoding="async"
+                                        onerror="this.onerror=null; this.src='{{ asset_prefix }}img/no_image.webp';"
+                                    >
+
+                                </div>
+
+
+                                <div class="related-machine-body">
+
+                                    <h3 class="related-machine-name">
+                                        {{ related_machine.master_machine_name }}
+                                    </h3>
+
+
+                                    {% if related_machine.min_price %}
+
+                                        <p class="related-machine-price">
+                                            最安価格
+
+                                            <strong>
+                                                {{ related_machine.min_price | price }}
+                                            </strong>
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </a>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
 
         {# =========================================
            補足情報
