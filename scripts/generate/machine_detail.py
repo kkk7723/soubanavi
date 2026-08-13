@@ -1963,6 +1963,217 @@ def build_recent_price_changes(
 
 
 # ==================================================
+# 価格相場解説文作成
+# ==================================================
+
+def build_price_market_commentary(
+    machine_name: str,
+    current_price: Any,
+    price_7_days_ago: Any,
+    price_change_7d: int | None,
+    price_change_rate_7d: float | None,
+    price_30_days_ago: Any,
+    price_change_30d: int | None,
+    price_change_rate_30d: float | None,
+    period_90_min_price: Any,
+    period_90_max_price: Any,
+    period_90_avg_price: Any,
+    period_90_days: int,
+    price_level_label: str,
+) -> list[str]:
+    """
+    既存の価格履歴集計結果から、
+    機種詳細ページへ表示する
+    価格相場の解説文を作成する。
+
+    推測や主観的な「買い時」判定は行わず、
+    現在価格・過去比較・90日統計・価格水準の
+    事実だけを文章化する。
+    """
+    commentary: list[str] = []
+
+    normalized_current_price = (
+        normalize_history_price(
+            current_price
+        )
+    )
+
+    normalized_7_days_ago = (
+        normalize_history_price(
+            price_7_days_ago
+        )
+    )
+
+    normalized_30_days_ago = (
+        normalize_history_price(
+            price_30_days_ago
+        )
+    )
+
+    normalized_90_min_price = (
+        normalize_history_price(
+            period_90_min_price
+        )
+    )
+
+    normalized_90_max_price = (
+        normalize_history_price(
+            period_90_max_price
+        )
+    )
+
+    normalized_90_avg_price = (
+        normalize_history_price(
+            period_90_avg_price
+        )
+    )
+
+    clean_machine_name = str(
+        machine_name
+        or ""
+    ).strip()
+
+    # ----------------------------------------------
+    # 現在価格
+    # ----------------------------------------------
+    if normalized_current_price is not None:
+        if clean_machine_name:
+            commentary.append(
+                f"{clean_machine_name}の中古実機は、"
+                f"現在の最安価格が"
+                f"{normalized_current_price:,}円です。"
+            )
+        else:
+            commentary.append(
+                "現在の中古実機の最安価格は"
+                f"{normalized_current_price:,}円です。"
+            )
+
+    # ----------------------------------------------
+    # 7日前との比較
+    # ----------------------------------------------
+    if (
+        normalized_7_days_ago is not None
+        and price_change_7d is not None
+        and price_change_rate_7d is not None
+    ):
+        change_amount = abs(
+            int(price_change_7d)
+        )
+
+        change_rate = abs(
+            float(price_change_rate_7d)
+        )
+
+        if price_change_7d < 0:
+            commentary.append(
+                "7日前の最安価格"
+                f"{normalized_7_days_ago:,}円と比べて、"
+                f"{change_amount:,}円"
+                f"（{change_rate:.1f}%）"
+                "下落しています。"
+            )
+
+        elif price_change_7d > 0:
+            commentary.append(
+                "7日前の最安価格"
+                f"{normalized_7_days_ago:,}円と比べて、"
+                f"{change_amount:,}円"
+                f"（{change_rate:.1f}%）"
+                "上昇しています。"
+            )
+
+        else:
+            commentary.append(
+                "7日前の最安価格"
+                f"{normalized_7_days_ago:,}円から"
+                "変動していません。"
+            )
+
+    # ----------------------------------------------
+    # 30日前との比較
+    # ----------------------------------------------
+    if (
+        normalized_30_days_ago is not None
+        and price_change_30d is not None
+        and price_change_rate_30d is not None
+    ):
+        change_amount = abs(
+            int(price_change_30d)
+        )
+
+        change_rate = abs(
+            float(price_change_rate_30d)
+        )
+
+        if price_change_30d < 0:
+            commentary.append(
+                "30日前の最安価格"
+                f"{normalized_30_days_ago:,}円と比べて、"
+                f"{change_amount:,}円"
+                f"（{change_rate:.1f}%）"
+                "下落しています。"
+            )
+
+        elif price_change_30d > 0:
+            commentary.append(
+                "30日前の最安価格"
+                f"{normalized_30_days_ago:,}円と比べて、"
+                f"{change_amount:,}円"
+                f"（{change_rate:.1f}%）"
+                "上昇しています。"
+            )
+
+        else:
+            commentary.append(
+                "30日前の最安価格"
+                f"{normalized_30_days_ago:,}円から"
+                "変動していません。"
+            )
+
+    # ----------------------------------------------
+    # 90日価格統計
+    # ----------------------------------------------
+    if (
+        period_90_days > 0
+        and normalized_90_min_price is not None
+        and normalized_90_max_price is not None
+    ):
+        if normalized_90_avg_price is not None:
+            commentary.append(
+                f"直近{period_90_days:,}日間の"
+                "日次最安価格は、"
+                f"{normalized_90_min_price:,}円から"
+                f"{normalized_90_max_price:,}円の範囲で推移し、"
+                f"平均は{normalized_90_avg_price:,}円です。"
+            )
+        else:
+            commentary.append(
+                f"直近{period_90_days:,}日間の"
+                "日次最安価格は、"
+                f"{normalized_90_min_price:,}円から"
+                f"{normalized_90_max_price:,}円の範囲で"
+                "推移しています。"
+            )
+
+    # ----------------------------------------------
+    # 現在の価格水準
+    # ----------------------------------------------
+    if (
+        normalized_current_price is not None
+        and price_level_label
+        and period_90_days > 0
+    ):
+        commentary.append(
+            "現在の最安価格は、"
+            f"直近{period_90_days:,}日間の価格帯では"
+            f"「{price_level_label}」に位置しています。"
+        )
+
+    return commentary
+
+
+# ==================================================
 # SEO用テキスト作成
 # ==================================================
 
@@ -2356,6 +2567,59 @@ def build_machine_page_context(
     )
 
 
+    # ----------------------------------------------
+    # 価格相場の文章による解説
+    # ----------------------------------------------
+
+    price_market_commentary = (
+        build_price_market_commentary(
+            machine_name=(
+                machine_name
+            ),
+            current_price=(
+                current_history_min_price
+                if current_history_min_price is not None
+                else machine.get(
+                    "min_price"
+                )
+            ),
+            price_7_days_ago=(
+                price_7_days_ago
+            ),
+            price_change_7d=(
+                price_change_7d
+            ),
+            price_change_rate_7d=(
+                price_change_rate_7d
+            ),
+            price_30_days_ago=(
+                price_30_days_ago
+            ),
+            price_change_30d=(
+                price_change_30d
+            ),
+            price_change_rate_30d=(
+                price_change_rate_30d
+            ),
+            period_90_min_price=(
+                period_90_min_price
+            ),
+            period_90_max_price=(
+                period_90_max_price
+            ),
+            period_90_avg_price=(
+                period_90_avg_price
+            ),
+            period_90_days=(
+                period_90_days
+            ),
+            price_level_label=(
+                price_level_label
+            ),
+        )
+    )
+
+
     meta_description = (
         build_machine_meta_description(
             machine=machine,
@@ -2621,6 +2885,11 @@ def build_machine_page_context(
         # 最近の日別価格変動
         "recent_price_changes": (
             recent_price_changes
+        ),
+
+        # 価格相場の文章による解説
+        "price_market_commentary": (
+            price_market_commentary
         ),
 
         # 更新日時

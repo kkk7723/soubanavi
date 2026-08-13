@@ -308,6 +308,93 @@
 
         </section>
 
+        {# =========================================
+           最安商品
+        ========================================= #}
+
+        {% if lowest_product %}
+
+            <section
+                class="lowest-product-section"
+                aria-labelledby="lowest-product-title"
+            >
+                <h2
+                    id="lowest-product-title"
+                    class="section-title"
+                >
+                    現在の最安商品
+                </h2>
+
+
+                <div class="lowest-product">
+
+                    {% if lowest_product.image_url %}
+
+                        <div class="lowest-product-image-area">
+
+                            <img
+                                class="lowest-product-image"
+                                src="{{ lowest_product.image_url }}"
+                                alt="{{ lowest_product.machine_name or machine.master_machine_name }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="lowest-product-content">
+
+                        <p class="lowest-product-shop">
+                            {{ lowest_product.shop_name or "ショップ情報なし" }}
+                        </p>
+
+                        <h3 class="lowest-product-name">
+                            {{ lowest_product.machine_name or machine.master_machine_name }}
+                        </h3>
+
+                        <p class="lowest-product-price">
+                            {{ lowest_product.price | price }}
+                        </p>
+
+
+                        {% if lowest_product.scraped_date %}
+
+                            <p class="lowest-product-date">
+                                確認日時：
+                                {{ lowest_product.scraped_date | datetime_format }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if lowest_product.product_url %}
+
+                            <p class="lowest-product-link">
+
+                                <a
+                                    class="button button-primary"
+                                    href="{{ lowest_product.product_url }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer nofollow sponsored"
+                                >
+                                    ショップで商品を見る
+                                </a>
+
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
 
         {# =========================================
            価格相場
@@ -442,6 +529,40 @@
 
         </section>
 
+
+        {# =========================================
+           価格相場の解説
+        ========================================= #}
+
+        {% if price_market_commentary %}
+
+            <section
+                class="machine-note-section price-market-commentary-section"
+                aria-labelledby="price-market-commentary-title"
+            >
+                <h2
+                    id="price-market-commentary-title"
+                    class="section-title"
+                >
+                    価格相場の解説
+                </h2>
+
+
+                <div class="machine-note price-market-commentary">
+
+                    {% for commentary in price_market_commentary %}
+
+                        <p class="price-market-commentary-text">
+                            {{ commentary }}
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
 
         {# =========================================
            価格推移
@@ -1080,94 +1201,6 @@
         {% endif %}
 
 
-
-            </section>
-
-        {% endif %}
-
-
-        {# =========================================
-           最安商品
-        ========================================= #}
-
-        {% if lowest_product %}
-
-            <section
-                class="lowest-product-section"
-                aria-labelledby="lowest-product-title"
-            >
-                <h2
-                    id="lowest-product-title"
-                    class="section-title"
-                >
-                    現在の最安商品
-                </h2>
-
-
-                <div class="lowest-product">
-
-                    {% if lowest_product.image_url %}
-
-                        <div class="lowest-product-image-area">
-
-                            <img
-                                class="lowest-product-image"
-                                src="{{ lowest_product.image_url }}"
-                                alt="{{ lowest_product.machine_name or machine.master_machine_name }}"
-                                loading="lazy"
-                                decoding="async"
-                            >
-
-                        </div>
-
-                    {% endif %}
-
-
-                    <div class="lowest-product-content">
-
-                        <p class="lowest-product-shop">
-                            {{ lowest_product.shop_name or "ショップ情報なし" }}
-                        </p>
-
-                        <h3 class="lowest-product-name">
-                            {{ lowest_product.machine_name or machine.master_machine_name }}
-                        </h3>
-
-                        <p class="lowest-product-price">
-                            {{ lowest_product.price | price }}
-                        </p>
-
-
-                        {% if lowest_product.scraped_date %}
-
-                            <p class="lowest-product-date">
-                                確認日時：
-                                {{ lowest_product.scraped_date | datetime_format }}
-                            </p>
-
-                        {% endif %}
-
-
-                        {% if lowest_product.product_url %}
-
-                            <p class="lowest-product-link">
-
-                                <a
-                                    class="button button-primary"
-                                    href="{{ lowest_product.product_url }}"
-                                    target="_blank"
-                                    rel="noopener noreferrer nofollow sponsored"
-                                >
-                                    ショップで商品を見る
-                                </a>
-
-                            </p>
-
-                        {% endif %}
-
-                    </div>
-
-                </div>
 
             </section>
 
